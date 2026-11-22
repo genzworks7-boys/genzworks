@@ -20,7 +20,7 @@
  * 
  * 3. Delete any placeholder code inside `Code.gs` and PASTE THIS ENTIRE FILE.
  * 
- * 4. Verify NOTIFY_EMAIL = "genzworks7@gmail.com".
+ * 4. Verify NOTIFY_EMAIL = "contact@genzworks.in".
  * 
  * 5. Click the "Save" icon (💾) or press Ctrl + S.
  * 
@@ -46,7 +46,7 @@
  * ==============================================================================
  */
 
-var NOTIFY_EMAIL = "genzworks7@gmail.com";
+var NOTIFY_EMAIL = "contact@genzworks.in";
 
 function doPost(e) {
   var lock = LockService.getScriptLock();

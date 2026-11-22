@@ -1,0 +1,21 @@
+{
+  "name": "GENZWORKS Technology & Creative Studio",
+  "short_name": "GENZWORKS",
+  "description": "We Build Digital. We Design Possibilities. Technology and creative studio in Coimbatore.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060608",
+  "theme_color": "#D9FF3F",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

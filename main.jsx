@@ -74,7 +74,7 @@ const BRAND_CONFIG = {
   heroSubheading: "We design innovative solutions that captivate audiences, and every interaction inspires action.",
   heroText: "Ideas are everywhere. What makes the difference is how you bring them to life. GenzWorks is a technology and creative studio where development meets design, and imagination meets execution.",
   location: "Coimbatore, TN — Working Worldwide",
-  email: "genzworks7@gmail.com",
+  email: "contact@genzworks.in",
   phone: "+91 87542 77982",
   phone2: "+91 95669 80426",
   instagram: "@gen__z__works",
@@ -806,7 +806,7 @@ const LEGAL_DOCS = {
     sections: [
       {
         heading: "1. Information We Collect",
-        body: "When you submit an enquiry through our 'Let's Make It Happen' contact portal or email us at genzworks7@gmail.com, we collect the information you voluntarily provide: your Full Name, Email Address, Selected Service Category, Estimated Budget/Timeline, and Project Description. We do not use invasive tracking cookies or sell user telemetry."
+        body: "When you submit an enquiry through our 'Let's Make It Happen' contact portal or email us at contact@genzworks.in, we collect the information you voluntarily provide: your Full Name, Email Address, Selected Service Category, Estimated Budget/Timeline, and Project Description. We do not use invasive tracking cookies or sell user telemetry."
       },
       {
         heading: "2. How We Use Your Information",
@@ -826,7 +826,7 @@ const LEGAL_DOCS = {
       },
       {
         heading: "6. Your Data Rights & Contact Grievance Officer",
-        body: "You have the right to request access to, correction of, or complete deletion of any personal enquiry data you have shared with GENZWORKS. To exercise these rights, please email our Studio Lead directly at genzworks7@gmail.com."
+        body: "You have the right to request access to, correction of, or complete deletion of any personal enquiry data you have shared with GENZWORKS. To exercise these rights, please email our Studio Lead directly at contact@genzworks.in."
       }
     ]
   }
