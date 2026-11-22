@@ -418,8 +418,8 @@ const SHARP_CRACKERS_STACK = [
     subtitle: "First Flagship Client Launch • sharpcrackers.com",
     desc: "Full-stack factory-direct Sivakasi fireworks e-commerce platform engineered for high-volume seasonal traffic, featuring festive dark-mode UI and instant order booking.",
     tags: ["https://sharpcrackers.com", "Factory-Direct", "100% Green Crackers"],
-    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsharpcrackers.com?w=1600",
-    fallbackImage: "https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?auto=format&fit=crop&w=1600&q=85",
+    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsharpcrackers.com?w=900",
+    fallbackImage: "https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?auto=format&fit=crop&w=900&q=75",
     isLiveBrowser: true
   },
   {
@@ -429,7 +429,7 @@ const SHARP_CRACKERS_STACK = [
     subtitle: "Seamless Tamil & English Shopping Experience",
     desc: "Structured product discovery across Sparklers (கம்பி மத்தாப்பு), Flower Pots (பூந்தொட்டி), Ground Chakkars (சக்கரம்), Sky Shots, and Family Gift Boxes.",
     tags: ["Tamil & English UI", "14 Categories", "76+ Crackers"],
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=85"
+    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=75"
   },
   {
     id: "03",
@@ -438,7 +438,7 @@ const SHARP_CRACKERS_STACK = [
     subtitle: "Real-Time Discount & Bulk Estimate Calculator",
     desc: "Interactive price-list table with instant quantity steppers, automated MRP vs. factory-direct savings calculation, and one-click PDF/WhatsApp order summary.",
     tags: ["Up to 75% Off", "Instant Cart Drawer", "Bulk Estimator"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=85"
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75"
   },
   {
     id: "04",
@@ -447,7 +447,7 @@ const SHARP_CRACKERS_STACK = [
     subtitle: "Eco-Conscious Quality & Direct Dispatch Logistics",
     desc: "Built-in trust architecture showcasing certified low-emission Sivakasi fireworks, safe packaging standards, and Tamil Nadu & pan-India transport tracking.",
     tags: ["CSIR-NEERI Certified", "Safe Packaging", "Express Dispatch"],
-    image: "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=1600&q=85"
+    image: "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=900&q=75"
   },
   {
     id: "05",
@@ -456,7 +456,7 @@ const SHARP_CRACKERS_STACK = [
     subtitle: "Built for Peak Diwali Rush Operations",
     desc: "Dedicated backend dashboard allowing the Sharp Crackers team to update live stock status, adjust seasonal discounts, and process customer enquiries effortlessly.",
     tags: ["Admin Dashboard", "Live Inventory", "Coimbatore & Sivakasi"],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=85"
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=75"
   }
 ];
 
@@ -642,7 +642,7 @@ const DETAILED_SERVICES = [
     title: "Web Development",
     subtitle: "Build your digital presence.",
     desc: "We create modern, responsive websites and web applications that combine thoughtful interfaces with practical functionality and reliable implementation.",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=720&q=75",
     macTag: "macOS Pacific Blue",
     tabGradTop: "#50A6FF",
     tabGradMid: "#1B84FF",
@@ -663,7 +663,7 @@ const DETAILED_SERVICES = [
     title: "Graphic Design",
     subtitle: "Visuals that communicate. Designs that connect.",
     desc: "We transform ideas into compelling visual assets through typography, color composition, and deliberate creative direction.",
-    image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=720&q=75",
     macTag: "macOS Sunset Coral",
     tabGradTop: "#FFA057",
     tabGradMid: "#FF661F",
@@ -684,7 +684,7 @@ const DETAILED_SERVICES = [
     title: "Commercial Poster Design",
     subtitle: "Make the first impression count.",
     desc: "We create visually engaging promotional posters that combine bold visuals, clear messaging, and purposeful layouts.",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=720&q=75",
     macTag: "macOS Royal Purple",
     tabGradTop: "#BF7EFF",
     tabGradMid: "#8E35F7",
@@ -705,7 +705,7 @@ const DETAILED_SERVICES = [
     title: "Academic Mentorship",
     subtitle: "Turn academic concepts into reality.",
     desc: "We provide technical mentorship, architecture guidance, prototype development, and code reviews for college and academic capstone projects.",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=720&q=75",
     macTag: "macOS Mint Emerald",
     tabGradTop: "#44E9A7",
     tabGradMid: "#10B981",
@@ -726,7 +726,7 @@ const DETAILED_SERVICES = [
     title: "Video & Multimedia",
     subtitle: "Dynamic visual storytelling.",
     desc: "We craft cinematic edits, promotional teasers, social media reels, and motion graphic assets that captivate viewers and retain attention.",
-    image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=720&q=75",
     macTag: "macOS Hot Rose",
     tabGradTop: "#FF6FA4",
     tabGradMid: "#F43F5E",
@@ -747,7 +747,7 @@ const DETAILED_SERVICES = [
     title: "Content & Copywriting",
     subtitle: "Words that convert and inspire.",
     desc: "We craft deliberate website messaging, brand positioning, and clear value propositions that articulate your offering and drive conversion.",
-    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=720&q=75",
     macTag: "macOS Warm Amber",
     tabGradTop: "#FFCD47",
     tabGradMid: "#F59E0B",
@@ -832,6 +832,61 @@ const LEGAL_DOCS = {
   }
 };
 
+function CustomCursor() {
+  const cursorRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia('(pointer: fine)').matches) {
+      return;
+    }
+    const el = cursorRef.current;
+    if (!el) return;
+
+    let rafId = null;
+    let targetX = -100;
+    let targetY = -100;
+    let visible = false;
+
+    const render = () => {
+      el.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+      rafId = null;
+    };
+
+    const handlePointerMove = (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (!visible) {
+        visible = true;
+        el.style.opacity = '1';
+      }
+      if (!rafId) {
+        rafId = requestAnimationFrame(render);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      visible = false;
+      el.style.opacity = '0';
+    };
+
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      window.removeEventListener('mousemove', handlePointerMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={cursorRef}
+      className="fixed pointer-events-none z-[9999] w-4 h-4 rounded-full bg-[#FF4F18] shadow-[0_0_16px_rgba(255,79,24,0.95)] -left-2 -top-2 opacity-0 hidden lg:block will-change-transform"
+    />
+  );
+}
+
 export default function App() {
   const [themeChoice, setThemeChoice] = useState('light');
   const [resolvedTheme, setResolvedTheme] = useState('light');
@@ -840,8 +895,6 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [phoneCopied, setPhoneCopied] = useState(false);
   const [toast, setToast] = useState(null);
-
-  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
 
   const processRef = useRef(null);
   const [processFill, setProcessFill] = useState(0.2);
@@ -875,7 +928,6 @@ export default function App() {
 
   // Enhanced Tools & Ecosystem interactive states
   const [activeToolCategory, setActiveToolCategory] = useState('All');
-  const [ecosystemMouse, setEcosystemMouse] = useState({ x: 0, y: 0, normX: 0, normY: 0, active: false });
 
   // Senior UI/UX Editorial Contact & Footer States
   const [selectedServices, setSelectedServices] = useState(['Web Development']);
@@ -985,15 +1037,17 @@ export default function App() {
     return () => media.removeEventListener('change', apply);
   }, [themeChoice]);
 
-  // High-DPI Retina Particle Text ("GenzWorks")
+  // High-DPI Retina Particle Text ("GenzWorks") with mobile & scroll pausing optimizations
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return;
-    let animationFrameId;
+    let animationFrameId = null;
+    let isCanvasVisible = true;
 
-    const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2.5);
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 640;
+    const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, isMobileDevice ? 1.5 : 2);
 
     // Deep high-contrast palette so text is crisp and solid in both dark and light modes
     const palette = resolvedTheme === 'dark'
@@ -1007,14 +1061,13 @@ export default function App() {
       const height = container.clientHeight;
       if (!width || !height) return;
 
-      // Set physical canvas pixel buffer to DPR for 100% razor-sharp Retina clarity
+      // Set physical canvas pixel buffer to DPR
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
       const isMobile = width < 640;
-      // Responsive font sizing: bold, prominent, and perfectly proportioned on mobile
       const fontSize = isMobile
         ? Math.min(Math.max(width * 0.15, 48), 64)
         : Math.min(Math.max(width * 0.125, 56), 140);
@@ -1034,9 +1087,9 @@ export default function App() {
 
       const imageData = offCtx.getImageData(0, 0, width, height).data;
 
-      // Ultra-fine sampling: on mobile step = 2 (high density, smooth letterforms!), desktop step = 2.6
-      const step = isMobile ? 2 : 2.6;
-      const particleRadius = isMobile ? 0.95 : 1.15;
+      // On mobile step = 3.6 for huge performance boost, desktop step = 2.6
+      const step = isMobile ? 3.6 : 2.6;
+      const particleRadius = isMobile ? 1.05 : 1.15;
       const nextParticles = [];
 
       for (let y = 0; y < height; y += step) {
@@ -1066,6 +1119,11 @@ export default function App() {
     let waveFrame = 0;
 
     const renderLoop = () => {
+      if (!isCanvasVisible) {
+        animationFrameId = null;
+        return;
+      }
+
       waveFrame += 0.024;
       
       ctx.save();
@@ -1074,6 +1132,7 @@ export default function App() {
 
       const list = particlesRef.current;
       const m = mouseRef.current;
+      const isMobile = canvas.width / dpr < 640;
 
       for (let i = 0; i < list.length; i++) {
         const p = list[i];
@@ -1104,9 +1163,13 @@ export default function App() {
         p.y += p.vy;
 
         ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
+        if (isMobile) {
+          ctx.fillRect(p.x - p.radius, p.y - p.radius, p.radius * 2, p.radius * 2);
+        } else {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
       ctx.restore();
@@ -1121,87 +1184,115 @@ export default function App() {
       buildParticles();
     }
 
-    renderLoop();
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      animationFrameId = requestAnimationFrame(renderLoop);
+    }
+
+    // Pause canvas physics when hero is scrolled out of view to save 100% CPU on mobile
+    const canvasObserver = new IntersectionObserver(
+      ([entry]) => {
+        isCanvasVisible = entry.isIntersecting;
+        if (isCanvasVisible && !animationFrameId && !prefersReducedMotion) {
+          animationFrameId = requestAnimationFrame(renderLoop);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    canvasObserver.observe(canvas);
+
     window.addEventListener('resize', buildParticles);
 
     return () => {
       window.removeEventListener('resize', buildParticles);
-      cancelAnimationFrame(animationFrameId);
+      canvasObserver.disconnect();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, [resolvedTheme]);
 
+  // Throttled high-performance scroll handler with rAF
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      if (processRef.current) {
-        const rect = processRef.current.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const progress = (vh * 0.65 - rect.top) / (rect.height * 0.85);
-        setProcessFill(Math.max(0.05, Math.min(1, progress)));
-      }
-
-      const ids = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el) {
-          const r = el.getBoundingClientRect();
-          if (r.top <= 240 && r.bottom >= 240) {
-            setActiveNav(id);
-            break;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (processRef.current) {
+            const rect = processRef.current.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const progress = (vh * 0.65 - rect.top) / (rect.height * 0.85);
+            const clamped = Math.max(0.05, Math.min(1, progress));
+            setProcessFill((prev) => (Math.abs(prev - clamped) > 0.02 ? clamped : prev));
           }
-        }
-      }
 
-      // Compute smooth 0..1 overlap progress for each card in the 3D Scroll Stack
-      const stackCards = document.querySelectorAll('.product-stack-card');
-      if (stackCards.length > 0) {
-        const nextProgress = Array.from(stackCards).map((card, idx) => {
-          let coveredDepth = 0;
-          for (let j = idx + 1; j < stackCards.length; j++) {
-            const nextRect = stackCards[j].getBoundingClientRect();
-            const nextStickyTop = 104 + j * 22;
-            const distance = nextRect.top - nextStickyTop;
-            const ratio = Math.max(0, Math.min(1, 1 - distance / 420));
-            coveredDepth += ratio;
+          const ids = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
+          for (const id of ids) {
+            const el = document.getElementById(id);
+            if (el) {
+              const r = el.getBoundingClientRect();
+              if (r.top <= 240 && r.bottom >= 240) {
+                setActiveNav((prev) => (prev !== id ? id : prev));
+                break;
+              }
+            }
           }
-          return coveredDepth;
+
+          // Compute smooth 0..1 overlap progress for cards (desktop only)
+          if (window.innerWidth >= 640) {
+            const stackCards = document.querySelectorAll('.product-stack-card');
+            if (stackCards.length > 0) {
+              const nextProgress = Array.from(stackCards).map((card, idx) => {
+                let coveredDepth = 0;
+                for (let j = idx + 1; j < stackCards.length; j++) {
+                  const nextRect = stackCards[j].getBoundingClientRect();
+                  const nextStickyTop = 104 + j * 22;
+                  const distance = nextRect.top - nextStickyTop;
+                  const ratio = Math.max(0, Math.min(1, 1 - distance / 420));
+                  coveredDepth += ratio;
+                }
+                return coveredDepth;
+              });
+              setStackProgress((prev) => {
+                const changed = nextProgress.some((v, i) => Math.abs((prev[i] || 0) - v) > 0.04);
+                return changed ? nextProgress : prev;
+              });
+            }
+          }
+
+          const whyCards = document.querySelectorAll('.why-pillar-card');
+          if (whyCards.length > 0) {
+            const stickyNav = document.getElementById('why-sticky-nav');
+            const triggerY = stickyNav
+              ? stickyNav.getBoundingClientRect().top + 90
+              : window.innerHeight * 0.34;
+
+            let currentWhy = 0;
+            whyCards.forEach((card, idx) => {
+              const rect = card.getBoundingClientRect();
+              if (rect.top <= triggerY + 80) {
+                currentWhy = idx;
+              }
+            });
+            setActiveWhyIndex((prev) => (prev !== currentWhy ? currentWhy : prev));
+          }
+
+          if (footerBrandRef.current) {
+            const fRect = footerBrandRef.current.getBoundingClientRect();
+            if (fRect.top <= window.innerHeight * 0.96) {
+              setFooterBrandVisible((prev) => (!prev ? true : prev));
+            } else if (fRect.top > window.innerHeight * 1.12) {
+              setFooterBrandVisible((prev) => (prev ? false : prev));
+            }
+          }
+
+          // Track scroll state for dynamic floating dock collapse smoothly
+          const currentScrollY = window.scrollY;
+          const scrolled = currentScrollY > 80;
+          setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
+
+          ticking = false;
         });
-        setStackProgress(nextProgress);
+        ticking = true;
       }
-
-      const whyCards = document.querySelectorAll('.why-pillar-card');
-      const stickyNav = document.getElementById('why-sticky-nav');
-      const triggerY = stickyNav
-        ? stickyNav.getBoundingClientRect().top + 90
-        : window.innerHeight * 0.34;
-
-      let currentWhy = 0;
-      let smallestDist = Infinity;
-      whyCards.forEach((card, idx) => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top <= triggerY + 80) {
-          currentWhy = idx;
-        } else if (idx === 0 && rect.top > triggerY + 80) {
-          currentWhy = 0;
-        }
-        const dist = Math.abs(rect.top - triggerY);
-        if (dist < smallestDist && rect.bottom > triggerY) {
-          smallestDist = dist;
-        }
-      });
-      setActiveWhyIndex(currentWhy);
-
-      if (footerBrandRef.current) {
-        const fRect = footerBrandRef.current.getBoundingClientRect();
-        if (fRect.top <= window.innerHeight * 0.96) {
-          setFooterBrandVisible(true);
-        } else if (fRect.top > window.innerHeight * 1.12) {
-          setFooterBrandVisible(false);
-        }
-      }
-
-      // Track scroll state for dynamic floating dock collapse smoothly
-      const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 80);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -1221,9 +1312,10 @@ export default function App() {
     return () => document.removeEventListener('pointerdown', handleOutsideClick);
   }, []);
 
+  // Mouse move updates canvas interaction directly WITHOUT re-rendering App component
   useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia('(pointer: fine)').matches) return;
     const onMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
       if (canvasRef.current) {
         const rect = canvasRef.current.getBoundingClientRect();
         mouseRef.current.x = e.clientX - rect.left;
@@ -1485,282 +1577,8 @@ export default function App() {
       } antialiased overflow-x-clip relative has-custom-cursor`}
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Syne:wght@800&display=swap');
-
-        .font-editorial { font-family: 'Instrument Serif', Georgia, serif; }
-        .font-mono-tech { font-family: 'Space Mono', monospace; }
-        .font-funky { font-family: 'Syne', sans-serif; }
-
-        @keyframes blobFloat {
-          0%, 100% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(40px, -60px) scale(1.12); }
-          66% { transform: translate(-30px, 30px) scale(0.92); }
-        }
-
-        .liquid-blob-1 {
-          position: absolute;
-          width: 550px;
-          height: 550px;
-          background: radial-gradient(circle, rgba(217, 255, 63, 0.35) 0%, rgba(255, 79, 24, 0.18) 60%, transparent 100%);
-          filter: blur(100px);
-          border-radius: 50%;
-          top: -120px;
-          left: 10%;
-          animation: blobFloat 14s ease-in-out infinite;
-          pointer-events: none;
-          z-index: 0;
-        }
-
-        .liquid-blob-2 {
-          position: absolute;
-          width: 600px;
-          height: 600px;
-          background: radial-gradient(circle, rgba(79, 70, 229, 0.28) 0%, rgba(217, 255, 63, 0.22) 60%, transparent 100%);
-          filter: blur(110px);
-          border-radius: 50%;
-          top: 25%;
-          right: 5%;
-          animation: blobFloat 18s ease-in-out infinite reverse;
-          pointer-events: none;
-          z-index: 0;
-        }
-
-        /* Ultra-Luxe Liquid Glass Theme */
-        .liquid-glass {
-          background: ${isDark
-            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.05) 100%)'
-            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.45) 100%)'};
-          backdrop-filter: blur(32px) saturate(210%) contrast(102%);
-          -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(102%);
-          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.85)'};
-          box-shadow: ${isDark
-            ? '0 25px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1.5px 1px rgba(255, 255, 255, 0.22), inset 0 -1.5px 2px rgba(0, 0, 0, 0.35)'
-            : '0 20px 45px -10px rgba(15, 23, 42, 0.06), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.95), inset 0 -1.5px 2px rgba(0, 0, 0, 0.03)'};
-          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease;
-        }
-
-        .liquid-glass:hover {
-          transform: translateY(-4px);
-          box-shadow: ${isDark
-            ? '0 30px 60px -10px rgba(0, 0, 0, 0.75), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.35)'
-            : '0 28px 55px -10px rgba(15, 23, 42, 0.1), inset 0 1.5px 1.5px rgba(255, 255, 255, 1)'};
-          border-color: ${isDark ? 'rgba(217, 255, 63, 0.4)' : 'rgba(255, 255, 255, 0.95)'};
-        }
-
-        /* Authentic Liquid Glass Navbar (Ultra-Visible & Glossy) */
-        .liquid-glass-nav {
-          position: relative;
-          background: ${isDark
-            ? 'linear-gradient(135deg, rgba(28, 28, 36, 0.88) 0%, rgba(16, 16, 22, 0.82) 50%, rgba(22, 22, 30, 0.88) 100%)'
-            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.78) 50%, rgba(246, 248, 252, 0.88) 100%)'};
-          backdrop-filter: blur(28px) saturate(190%) contrast(104%);
-          -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(104%);
-          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.16)' : 'rgba(255, 255, 255, 0.95)'};
-          box-shadow: ${isDark
-            ? '0 24px 50px -12px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.32), inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.5), inset 1.5px 0 1.5px 0 rgba(255, 255, 255, 0.12)'
-            : '0 20px 40px -10px rgba(15, 23, 42, 0.12), 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.06), inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1), inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.04), inset 1.5px 0 1.5px 0 rgba(255, 255, 255, 0.8)'};
-          overflow: hidden;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
-        }
-
-        .liquid-glass-nav::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: radial-gradient(110% 60% at 50% 0%, ${isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(255, 255, 255, 0.85)'} 0%, transparent 70%);
-          pointer-events: none;
-          z-index: 0;
-        }
-
-        .liquid-glass-nav::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 8%;
-          right: 8%;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, ${isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 1)'}, transparent);
-          pointer-events: none;
-          z-index: 1;
-        }
-
-        /* Action Buttons with Liquid Lens Glass */
-        .liquid-glass-btn {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          background: ${isDark
-            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 100%)'
-            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 242, 248, 0.75) 100%)'};
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.08)'};
-          box-shadow: ${isDark
-            ? '0 3px 10px rgba(0, 0, 0, 0.4), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.28)'
-            : '0 2px 8px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.04), inset 0 1.5px 1px 0 rgba(255, 255, 255, 1)'};
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-          overflow: hidden;
-        }
-
-        .liquid-glass-btn::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: radial-gradient(circle at 50% 15%, ${isDark ? 'rgba(255, 255, 255, 0.22)' : 'rgba(255, 255, 255, 0.9)'}, transparent 65%);
-          pointer-events: none;
-        }
-
-        .liquid-glass-btn:hover {
-          transform: translateY(-2px) scale(1.08);
-          background: ${isDark
-            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.1) 100%)'
-            : 'linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(245, 247, 252, 0.9) 100%)'};
-          border-color: ${isDark ? 'rgba(217, 255, 63, 0.6)' : 'rgba(0, 0, 0, 0.18)'};
-          box-shadow: ${isDark
-            ? '0 6px 20px rgba(0, 0, 0, 0.5), inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.4), 0 0 12px rgba(217, 255, 63, 0.25)'
-            : '0 6px 16px rgba(15, 23, 42, 0.12), inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1), 0 0 12px rgba(255, 255, 255, 0.8)'};
-        }
-
-        .liquid-glass-btn:active {
-          transform: translateY(0px) scale(0.95);
-        }
-
-        .liquid-glass-badge {
-          background: ${isDark ? 'rgba(16, 185, 129, 0.16)' : 'rgba(16, 185, 129, 0.12)'};
-          backdrop-filter: blur(14px);
-          -webkit-backdrop-filter: blur(14px);
-          border: 1px solid ${isDark ? 'rgba(16, 185, 129, 0.45)' : 'rgba(16, 185, 129, 0.35)'};
-          box-shadow: ${isDark
-            ? 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.15)'
-            : '0 1px 4px rgba(16, 185, 129, 0.1), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9)'};
-        }
-
-        .liquid-glass-dock {
-          background: ${isDark
-            ? 'linear-gradient(135deg, rgba(20, 20, 26, 0.88) 0%, rgba(12, 12, 16, 0.82) 100%)'
-            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.72) 100%)'};
-          backdrop-filter: blur(36px) saturate(220%);
-          -webkit-backdrop-filter: blur(36px) saturate(220%);
-          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(255, 255, 255, 0.9)'};
-          box-shadow: ${isDark
-            ? '0 30px 70px rgba(0, 0, 0, 0.55), inset 0 1.5px 1px rgba(255, 255, 255, 0.25), inset 0 -1px 2px rgba(0, 0, 0, 0.4)'
-            : '0 25px 60px rgba(0, 0, 0, 0.1), inset 0 1.5px 1px rgba(255, 255, 255, 0.95), inset 0 -1px 2px rgba(0, 0, 0, 0.04)'};
-          transition: width 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-                      box-shadow 0.4s ease,
-                      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                      border-color 0.35s ease;
-          will-change: width, transform;
-        }
-
-        @keyframes framerCardExpand {
-          0% { opacity: 0; transform: scale(0.7) translateY(45px); filter: blur(12px); }
-          100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
-        }
-
-        @keyframes framerFadeRise {
-          0% { opacity: 0; transform: translateY(28px) scale(0.97); filter: blur(6px); }
-          100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
-        }
-
-        @keyframes framerDockRise {
-          0% { opacity: 0; transform: translate(-50%, 50px) scale(0.92); }
-          100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
-        }
-
-        @keyframes tickerScroll {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
-        }
-
-        .animate-ticker { display: flex; width: max-content; animation: tickerScroll 30s linear infinite; }
-        .animate-ticker:hover { animation-play-state: paused; }
-
-        .hero-visible .framer-hero-card { animation: framerCardExpand 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
-        .hero-visible .framer-hero-title { animation: framerFadeRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
-        .hero-visible .framer-hero-subtitle { animation: framerFadeRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both; }
-        .hero-visible .framer-hero-cta { animation: framerFadeRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both; }
-        .hero-visible.framer-floating-dock, .framer-floating-dock { animation: framerDockRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both; }
-
-        .reveal-on-scroll {
-          opacity: 0;
-          transform: translateY(28px);
-          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-          will-change: opacity, transform;
-        }
-        .reveal-on-scroll.reveal-active {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        @media (min-width: 1024px) {
-          .has-custom-cursor, .has-custom-cursor button, .has-custom-cursor a, .has-custom-cursor input {
-            cursor: none !important;
-          }
-        }
-
-        .framer-spring { transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .work-card { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-      `}</style>
-      <style>{`
-        @keyframes iconFloat3D {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-16px) rotate(2.5deg); }
-        }
-        @keyframes orbitPulse {
-          0%, 100% { opacity: 0.22; transform: translate(-50%, -50%) scale(1); }
-          50% { opacity: 0.45; transform: translate(-50%, -50%) scale(1.03); }
-        }
-        .icon-3d-shell {
-          box-shadow:
-            0 20px 38px -10px rgba(0, 0, 0, 0.55),
-            0 6px 0 0 ${isDark ? '#cbd5e1' : '#d4d4d8'},
-            inset 0 2px 3px rgba(255, 255, 255, 0.95),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.22);
-          transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .icon-3d-shell:hover {
-          box-shadow:
-            0 30px 55px -8px rgba(255, 79, 24, 0.48),
-            0 9px 0 0 ${isDark ? '#e2e8f0' : '#a1a1aa'},
-            inset 0 2px 4px rgba(255, 255, 255, 1),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.28);
-        }
-        .footer-gradient-text {
-          background: linear-gradient(
-            180deg,
-            #FFFFFF 0%,
-            #F5F5F7 20%,
-            #D1D1D6 42%,
-            #8E8E93 68%,
-            #48484A 88%,
-            #2C2C2E 100%
-          );
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          display: inline-block;
-          padding-bottom: 0.12em;
-          margin-bottom: -0.12em;
-          will-change: transform, opacity;
-        }
-        .footer-gradient-text:hover {
-          filter: brightness(1.15);
-        }
-      `}</style>
-
       {/* Custom Red Point Cursor */}
-      <div
-        className="fixed pointer-events-none z-[9999] w-4 h-4 rounded-full bg-[#FF4F18] shadow-[0_0_16px_rgba(255,79,24,0.95)] -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 ease-out hidden lg:block"
-        style={{
-          left: `${mousePos.x}px`,
-          top: `${mousePos.y}px`,
-          opacity: mousePos.x > 0 ? 1 : 0
-        }}
-      />
+      <CustomCursor />
 
       {/* Full-Screen "Are you ready?" Curtain Loader Animation */}
       {loaderPhase !== 'done' && (
@@ -1785,6 +1603,8 @@ export default function App() {
               <img
                 src="/logo.png"
                 alt="GENZWORKS Studio"
+                width="64"
+                height="64"
                 className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(0,240,255,0.75)]"
               />
             </div>
@@ -1842,7 +1662,7 @@ export default function App() {
       {activeLegalModal && (
         <div
           onClick={() => setActiveLegalModal(null)}
-          className="fixed inset-0 z-[120] bg-black/80 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8 overflow-y-auto"
+          className="fixed inset-0 z-[120] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 overflow-y-auto"
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -1941,7 +1761,7 @@ export default function App() {
           onClick={() => {
             if (!isSubmittingJoin) setIsJoinTeamModalOpen(false);
           }}
-          className="fixed inset-0 z-[125] bg-black/85 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+          className="fixed inset-0 z-[125] bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -2219,7 +2039,7 @@ export default function App() {
               <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                 <div className="relative w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-1 sm:p-1.5 liquid-glass-btn shadow-sm shrink-0 flex items-center justify-center">
                   <div className="w-full h-full rounded-[10px] sm:rounded-[14px] flex items-center justify-center overflow-hidden">
-                    <img src="/logo.png" alt="GENZWORKS Studio Logo" className="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,240,255,0.35)]" />
+                    <img src="/logo.png" alt="GENZWORKS Studio Logo" width="44" height="44" className="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,240,255,0.35)]" />
                   </div>
                 </div>
                 <div className="text-left min-w-0">
@@ -2494,6 +2314,8 @@ export default function App() {
 
                   <img
                     src={slide.image}
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       if (slide.fallbackImage) {
                         e.currentTarget.onerror = null;
@@ -2858,6 +2680,8 @@ export default function App() {
                       <img
                         src={member.photo}
                         alt={member.name}
+                        loading="lazy"
+                        decoding="async"
                         style={{
                           transform: isOpen ? 'scale(1)' : 'scale(1.08)',
                           transition:
@@ -3000,6 +2824,8 @@ export default function App() {
                   <img
                     src={s.image}
                     alt={s.title}
+                    loading="lazy"
+                    decoding="async"
                     style={{
                       transform: isCardHovered ? 'scale(1.08) translateY(-4px)' : 'scale(1) translateY(0px)',
                       transition: 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)'
@@ -3389,7 +3215,7 @@ export default function App() {
           {/* Clean Legal & Copyright Bar */}
           <div className="pt-8 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
             <div className="flex items-center gap-2.5">
-              <img src="/logo.png" alt="GENZWORKS Studio Logo" className="w-5 h-5 object-contain" />
+              <img src="/logo.png" alt="GENZWORKS Studio Logo" width="20" height="20" loading="lazy" decoding="async" className="w-5 h-5 object-contain" />
               <span>© {BRAND_CONFIG.year.replace('®', '')} {BRAND_CONFIG.brandName} Studio. All rights reserved.</span>
             </div>
 
