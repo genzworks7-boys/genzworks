@@ -1225,14 +1225,14 @@ export default function App() {
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -20px 0px' }
     );
 
     const elements = document.querySelectorAll('.reveal-on-scroll');
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [loaderPhase]);
+  }, [loaderPhase, activeToolCategory]);
 
   const triggerToast = (msg) => {
     setToast(msg);
@@ -1675,6 +1675,38 @@ export default function App() {
         .reveal-on-scroll.reveal-active {
           opacity: 1;
           transform: translateY(0);
+        }
+
+        /* Mobile and Tablet: Alternating slide-in animation for Craft Tools cards */
+        @media (max-width: 1023px) {
+          .tool-card-reveal.tool-reveal-left {
+            opacity: 0;
+            transform: translateX(-48px);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+          }
+          .tool-card-reveal.tool-reveal-right {
+            opacity: 0;
+            transform: translateX(48px);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+          }
+          .tool-card-reveal.reveal-active {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @media (min-width: 1024px) {
+          .tool-card-reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+          }
+          .tool-card-reveal.reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         @media (min-width: 1024px) {
@@ -2312,7 +2344,7 @@ export default function App() {
       </section>
 
       {/* PREMIUM FRAMER-MOTION STYLE TOOLS & ECOSYSTEM SECTION */}
-      <section id="tools" className="py-20 border-y border-current/10 relative z-10">
+      <section id="tools" className="py-20 border-y border-current/10 relative z-10 overflow-hidden">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal-on-scroll">
             <div>
@@ -2347,56 +2379,61 @@ export default function App() {
           </div>
 
           {/* Studio Craft Tools Cards Grid (Matches User Screenshot) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-on-scroll">
-            {filteredStudioTools.map((tool, index) => (
-              <div
-                key={tool.name}
-                style={{
-                  transitionDelay: `${index * 35}ms`
-                }}
-                className="group relative p-6 sm:p-7 rounded-[28px] bg-white/90 dark:bg-[#111116]/90 border border-black/[0.08] dark:border-white/10 hover:border-[#FF4F18]/40 dark:hover:border-[#FF4F18]/40 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 overflow-hidden flex flex-col justify-between"
-              >
-                {/* Subtle Radial Glow on Hover */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredStudioTools.map((tool, index) => {
+              const isEven = index % 2 === 0;
+              return (
                 <div
-                  className="absolute -right-12 -top-12 w-44 h-44 rounded-full opacity-0 group-hover:opacity-25 transition-opacity duration-500 blur-2xl pointer-events-none"
-                  style={{ backgroundColor: tool.accent === '#FFFFFF' ? '#FF4F18' : tool.accent }}
-                />
-
-                <div>
-                  {/* Top Row: Squircle Icon & Monospace Pill Badge */}
-                  <div className="flex items-center justify-between gap-4 mb-7">
-                    <div className="w-14 h-14 rounded-2xl bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.06] dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:rotate-[-2deg] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm">
-                      {tool.svg}
-                    </div>
-
-                    <span className="px-3.5 py-1.5 rounded-full text-[11px] font-mono-tech font-bold uppercase tracking-wider border border-black/10 dark:border-white/15 text-zinc-600 dark:text-zinc-300 bg-black/[0.02] dark:bg-white/[0.05] group-hover:border-[#FF4F18] group-hover:text-[#FF4F18] group-hover:bg-[#FF4F18]/10 transition-all duration-300">
-                      {tool.proficiency}
-                    </span>
-                  </div>
-
-                  {/* Middle Content: Title, Category & Arrow */}
-                  <div>
-                    <div className="flex items-center justify-between gap-2">
-                      <h4 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug group-hover:text-[#FF4F18] transition-colors duration-300">
-                        {tool.name}
-                      </h4>
-                      <ArrowUpRight className="w-5 h-5 text-[#FF4F18] opacity-0 -translate-x-1.5 translate-y-1.5 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
-                    </div>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium mt-1">
-                      {tool.category}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Animated Bottom Progress Accent Bar */}
-                <div className="mt-6 h-[2.5px] w-full bg-current/10 rounded-full overflow-hidden">
+                  key={tool.name}
+                  style={{
+                    transitionDelay: `${(index % 3) * 60}ms`
+                  }}
+                  className={`reveal-on-scroll tool-card-reveal ${
+                    isEven ? 'tool-reveal-left' : 'tool-reveal-right'
+                  } group relative p-6 sm:p-7 rounded-[28px] bg-white/90 dark:bg-[#111116]/90 border border-black/[0.08] dark:border-white/10 hover:border-[#FF4F18]/40 dark:hover:border-[#FF4F18]/40 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 overflow-hidden flex flex-col justify-between`}
+                >
+                  {/* Subtle Radial Glow on Hover */}
                   <div
-                    className="h-full w-0 group-hover:w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="absolute -right-12 -top-12 w-44 h-44 rounded-full opacity-0 group-hover:opacity-25 transition-opacity duration-500 blur-2xl pointer-events-none"
                     style={{ backgroundColor: tool.accent === '#FFFFFF' ? '#FF4F18' : tool.accent }}
                   />
+
+                  <div>
+                    {/* Top Row: Squircle Icon & Monospace Pill Badge */}
+                    <div className="flex items-center justify-between gap-4 mb-7">
+                      <div className="w-14 h-14 rounded-2xl bg-black/[0.04] dark:bg-white/[0.08] border border-black/[0.06] dark:border-white/10 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:rotate-[-2deg] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm">
+                        {tool.svg}
+                      </div>
+
+                      <span className="px-3.5 py-1.5 rounded-full text-[11px] font-mono-tech font-bold uppercase tracking-wider border border-black/10 dark:border-white/15 text-zinc-600 dark:text-zinc-300 bg-black/[0.02] dark:bg-white/[0.05] group-hover:border-[#FF4F18] group-hover:text-[#FF4F18] group-hover:bg-[#FF4F18]/10 transition-all duration-300">
+                        {tool.proficiency}
+                      </span>
+                    </div>
+
+                    {/* Middle Content: Title, Category & Arrow */}
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug group-hover:text-[#FF4F18] transition-colors duration-300">
+                          {tool.name}
+                        </h4>
+                        <ArrowUpRight className="w-5 h-5 text-[#FF4F18] opacity-0 -translate-x-1.5 translate-y-1.5 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
+                      </div>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium mt-1">
+                        {tool.category}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Animated Bottom Progress Accent Bar */}
+                  <div className="mt-6 h-[2.5px] w-full bg-current/10 rounded-full overflow-hidden">
+                    <div
+                      className="h-full w-0 group-hover:w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                      style={{ backgroundColor: tool.accent === '#FFFFFF' ? '#FF4F18' : tool.accent }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
