@@ -410,53 +410,34 @@ const CRAFT_TICKER = [
   "DevOps & Smooth Deployment"
 ];
 
-const SHARP_CRACKERS_STACK = [
+const FEATURED_PRODUCTS_STACK = [
   {
     id: "01",
-    badge: "01 // LIVE STOREFRONT",
+    badge: "01 // LIVE E-COMMERCE STORE",
     title: "SHARP CRACKERS — Direct From Sivakasi",
     subtitle: "First Flagship Client Launch • sharpcrackers.com",
-    desc: "Full-stack factory-direct Sivakasi fireworks e-commerce platform engineered for high-volume seasonal traffic, featuring festive dark-mode UI and instant order booking.",
-    tags: ["https://sharpcrackers.com", "Factory-Direct", "100% Green Crackers"],
+    desc: "Full-stack factory-direct Sivakasi fireworks e-commerce platform engineered for high-volume seasonal traffic, featuring festive dark-mode UI, dynamic cart pricing, and instant WhatsApp order booking.",
+    tags: ["sharpcrackers.com", "Factory-Direct", "100% Green Crackers", "E-Commerce"],
+    url: "https://sharpcrackers.com",
+    urlClean: "https://sharpcrackers.com",
+    buttonText: "Explore Live Store",
     image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsharpcrackers.com?w=1600",
     fallbackImage: "https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?auto=format&fit=crop&w=1600&q=85",
     isLiveBrowser: true
   },
   {
     id: "02",
-    badge: "02 // BILINGUAL CATALOG",
-    title: "14 Categories & 76+ Bilingual Products",
-    subtitle: "Seamless Tamil & English Shopping Experience",
-    desc: "Structured product discovery across Sparklers (கம்பி மத்தாப்பு), Flower Pots (பூந்தொட்டி), Ground Chakkars (சக்கரம்), Sky Shots, and Family Gift Boxes.",
-    tags: ["Tamil & English UI", "14 Categories", "76+ Crackers"],
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=85"
-  },
-  {
-    id: "03",
-    badge: "03 // SMART CART & PRICING",
-    title: "Up to 75% Factory Savings & Dynamic Cart",
-    subtitle: "Real-Time Discount & Bulk Estimate Calculator",
-    desc: "Interactive price-list table with instant quantity steppers, automated MRP vs. factory-direct savings calculation, and one-click PDF/WhatsApp order summary.",
-    tags: ["Up to 75% Off", "Instant Cart Drawer", "Bulk Estimator"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=85"
-  },
-  {
-    id: "04",
-    badge: "04 // GREEN CERTIFICATION & SAFETY",
-    title: "100% CSIR-NEERI Certified Green Fireworks",
-    subtitle: "Eco-Conscious Quality & Direct Dispatch Logistics",
-    desc: "Built-in trust architecture showcasing certified low-emission Sivakasi fireworks, safe packaging standards, and Tamil Nadu & pan-India transport tracking.",
-    tags: ["CSIR-NEERI Certified", "Safe Packaging", "Express Dispatch"],
-    image: "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?auto=format&fit=crop&w=1600&q=85"
-  },
-  {
-    id: "05",
-    badge: "05 // ADMIN & ORDER MANAGEMENT",
-    title: "Custom Admin Portal & Inventory Control",
-    subtitle: "Built for Peak Diwali Rush Operations",
-    desc: "Dedicated backend dashboard allowing the Sharp Crackers team to update live stock status, adjust seasonal discounts, and process customer enquiries effortlessly.",
-    tags: ["Admin Dashboard", "Live Inventory", "Coimbatore & Sivakasi"],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=85"
+    badge: "02 // INDUSTRIAL ENGINEERING",
+    title: "NANDHAKUMAR DEMOLITION — Precision Core Cutting",
+    subtitle: "Heavy Engineering Portfolio • Coimbatore",
+    desc: "High-performance digital platform for Coimbatore's leading structural demolition and diamond core-cutting contractor, featuring millimetric precision showcase, vibration-free engineering credentials, and fast quote estimation.",
+    tags: ["nandhukumar-demolition", "Diamond Core Cutting", "Controlled Demolition", "Coimbatore, TN"],
+    url: "https://nandhukumar-demolition.onrender.com/",
+    urlClean: "https://nandhukumar-demolition.onrender.com",
+    buttonText: "Explore Live Site",
+    image: "/nandhakumar-demolition.png",
+    fallbackImage: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fnandhukumar-demolition.onrender.com%2F?w=1600",
+    isLiveBrowser: true
   }
 ];
 
@@ -858,7 +839,7 @@ export default function App() {
   const [activeTeamIndex, setActiveTeamIndex] = useState(0);
 
   const [activeTooltip, setActiveTooltip] = useState(null);
-  const [stackProgress, setStackProgress] = useState([0, 0, 0, 0, 0]);
+  const [stackProgress, setStackProgress] = useState([0, 0]);
   const [activeWhyIndex, setActiveWhyIndex] = useState(0);
   const [expandedWhyIndex, setExpandedWhyIndex] = useState(null);
   const [hoveredServiceIdx, setHoveredServiceIdx] = useState(null);
@@ -2425,33 +2406,23 @@ export default function App() {
           <div>
             <div className="inline-flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>[01] / OUR PRODUCTS • FIRST FLAGSHIP PROJECT</span>
+              <span>[01] / OUR PRODUCTS • FEATURED CLIENT LAUNCHES</span>
             </div>
             <h2 className="text-4xl sm:text-6xl font-extrabold tracking-[-0.04em] leading-none">
-              SHARP <span className="font-editorial italic font-normal text-[#FF4F18]">CRACKERS.</span>
+              FEATURED <span className="font-editorial italic font-normal text-[#FF4F18]">PROJECTS.</span>
             </h2>
           </div>
 
           <div className="flex flex-col sm:items-end gap-3">
             <p className="max-w-md text-sm opacity-75 leading-relaxed sm:text-right">
-              Our very first live client launch (<span className="font-mono-tech font-bold">sharpcrackers.com</span>) — scroll through the stacked showcase cards below to explore how we engineered their Sivakasi factory-direct store.
+              Live client platforms and production-engineered digital solutions — scroll through the stacked cards below to explore our recent work.
             </p>
-            <a
-              href="https://sharpcrackers.com"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#FF4F18] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:bg-[#e03e0b] hover:scale-105 transition-all"
-            >
-              <Globe className="w-4 h-4" />
-              <span>Visit sharpcrackers.com</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
           </div>
         </div>
 
         {/* Exact Scroll-Stack Card Animation from Video */}
         <div className="mt-14 relative max-w-[1120px] mx-auto pb-16">
-          {SHARP_CRACKERS_STACK.map((slide, index) => {
+          {FEATURED_PRODUCTS_STACK.map((slide, index) => {
             const depth = stackProgress[index] || 0;
             const scaleVal = Math.max(0.84, 1 - depth * 0.042);
             const brightnessVal = Math.max(0.45, 1 - depth * 0.16);
@@ -2484,7 +2455,7 @@ export default function App() {
                       </div>
                       <div className="px-3 py-0.5 rounded-md bg-black/60 border border-white/10 text-[#D9FF3F] flex items-center gap-1.5">
                         <Globe className="w-3 h-3" />
-                        <span>https://sharpcrackers.com</span>
+                        <span>{slide.urlClean || slide.url}</span>
                       </div>
                       <span className="text-[10px] text-emerald-400 font-bold hidden sm:inline">LIVE CLIENT PROJECT</span>
                     </div>
@@ -2507,14 +2478,14 @@ export default function App() {
                   <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-white/15 via-white/50 to-white/15 pointer-events-none z-30" />
 
                   <a
-                    href="https://sharpcrackers.com"
+                    href={slide.url}
                     target="_blank"
                     rel="noreferrer"
                     className={`absolute right-5 sm:right-8 ${
                       slide.isLiveBrowser ? 'top-14 sm:top-16' : 'top-5 sm:top-8'
                     } z-30 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D9FF3F] text-[#0E0E10] text-xs font-extrabold uppercase tracking-wider whitespace-nowrap hover:scale-105 transition-transform shadow-xl`}
                   >
-                    <span>Explore Live Store</span>
+                    <span>{slide.buttonText || 'Explore Live Site'}</span>
                     <ArrowUpRight className="w-4 h-4 shrink-0" />
                   </a>
 
