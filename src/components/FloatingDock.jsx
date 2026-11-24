@@ -1,40 +1,18 @@
-import React, { useState, useRef, useEffect, memo } from 'react';
+import React from 'react';
 import { Menu, Home, Folder, Sliders, Workflow, UserCheck, Zap, Mail } from 'lucide-react';
 
-const DOCK_ITEMS = [
-  { id: 'home', label: 'Home', icon: Home },
-  { id: 'works', label: 'Products', icon: Folder },
-  { id: 'why-us', label: 'Why Us', icon: Sliders },
-  { id: 'process', label: 'Process', icon: Workflow },
-  { id: 'about', label: 'About', icon: UserCheck },
-  { id: 'services', label: 'Services', icon: Zap },
-  { id: 'contact', label: 'Contact Us', icon: Mail }
-];
-
-const FloatingDock = memo(function FloatingDock({
+export default function FloatingDock({
   heroRevealed,
+  dockRef,
+  dockHoverTimeoutRef,
+  setDockHovered,
+  setDockManuallyOpen,
+  isDockCollapsed,
   activeNav,
-  jumpTo,
-  isScrolled
+  activeTooltip,
+  setActiveTooltip,
+  jumpTo
 }) {
-  const [dockHovered, setDockHovered] = useState(false);
-  const [dockManuallyOpen, setDockManuallyOpen] = useState(false);
-  const [activeTooltip, setActiveTooltip] = useState(null);
-  const dockRef = useRef(null);
-  const dockHoverTimeoutRef = useRef(null);
-
-  const isDockCollapsed = isScrolled && !dockHovered && !dockManuallyOpen;
-
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (dockRef.current && !dockRef.current.contains(e.target)) {
-        setDockManuallyOpen(false);
-      }
-    };
-    document.addEventListener('pointerdown', handleOutsideClick);
-    return () => document.removeEventListener('pointerdown', handleOutsideClick);
-  }, []);
-
   return (
     <div
       className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ${
@@ -101,7 +79,15 @@ const FloatingDock = memo(function FloatingDock({
               : 'opacity-100 scale-100 pointer-events-auto'
           }`}
         >
-          {DOCK_ITEMS.map((item) => {
+          {[
+            { id: 'home', label: 'Home', icon: Home },
+            { id: 'works', label: 'Products', icon: Folder },
+            { id: 'why-us', label: 'Why Us', icon: Sliders },
+            { id: 'process', label: 'Process', icon: Workflow },
+            { id: 'about', label: 'About', icon: UserCheck },
+            { id: 'services', label: 'Services', icon: Zap },
+            { id: 'contact', label: 'Contact Us', icon: Mail }
+          ].map((item) => {
             const Icon = item.icon;
             const isActive = activeNav === item.id;
             const isHovered = activeTooltip === item.id;
@@ -114,7 +100,6 @@ const FloatingDock = memo(function FloatingDock({
                 onMouseLeave={() => setActiveTooltip(null)}
               >
                 <button
-                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     e.currentTarget.blur();
@@ -145,6 +130,4 @@ const FloatingDock = memo(function FloatingDock({
       </div>
     </div>
   );
-});
-
-export default FloatingDock;
+}

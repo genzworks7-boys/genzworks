@@ -1,17 +1,12 @@
-import React, { memo } from 'react';
-import { PROCESS_STEPS } from '../data/process.js';
+import React from 'react';
+import { PROCESS_STEPS } from '../data/process';
 
-const ProcessSection = memo(function ProcessSection({
-  processRef,
-  processFill
-}) {
+export default function ProcessSection({ processRef, processFill }) {
   return (
     <section id="process" ref={processRef} className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-14 border-b border-current/10 gap-6 reveal-on-scroll">
         <div>
-          <div className="font-mono-tech text-xs uppercase tracking-widest opacity-60 mb-3">
-            [03] / OUR WORK PROCESS
-          </div>
+          <div className="font-mono-tech text-xs uppercase tracking-widest opacity-60 mb-3">[03] / OUR WORK PROCESS</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             A Clear Direction. A <span className="font-editorial italic font-normal">Collaborative</span> Journey.
           </h2>
@@ -20,15 +15,9 @@ const ProcessSection = memo(function ProcessSection({
         <div className="flex items-center gap-3 px-4 py-2.5 rounded-full liquid-glass font-mono-tech text-xs shadow-sm">
           <span>TIMELINE PROGRESS</span>
           <div className="w-24 h-2 rounded-full bg-current/10 overflow-hidden">
-            <div
-              id="process-timeline-bar"
-              className="h-full bg-[#FF4F18] transition-all duration-300"
-              style={{ width: `${Math.round(processFill * 100)}%` }}
-            />
+            <div id="process-timeline-bar" className="h-full bg-[#FF4F18] transition-all duration-300" style={{ width: `${Math.round(processFill * 100)}%` }} />
           </div>
-          <span id="process-timeline-text" className="font-bold">
-            {Math.round(processFill * 100)}%
-          </span>
+          <span id="process-timeline-text" className="font-bold">{Math.round(processFill * 100)}%</span>
         </div>
       </div>
 
@@ -40,10 +29,7 @@ const ProcessSection = memo(function ProcessSection({
             const cleanNum = step.num.replace('.', '');
 
             return (
-              <div
-                key={step.num}
-                className="relative grid grid-cols-[56px_1fr] sm:grid-cols-[76px_1fr] md:grid-cols-12 gap-3.5 sm:gap-6 md:gap-10 items-stretch md:items-start"
-              >
+              <div key={step.num} className="relative grid grid-cols-[56px_1fr] sm:grid-cols-[76px_1fr] md:grid-cols-12 gap-3.5 sm:gap-6 md:gap-10 items-stretch md:items-start">
                 {/* Left Column: Number + Vertical Stem + Glowing Pulse Node */}
                 <div className="flex flex-col items-center relative self-stretch md:self-auto md:col-span-3">
                   <div
@@ -56,7 +42,7 @@ const ProcessSection = memo(function ProcessSection({
                     {cleanNum}
                   </div>
 
-                  {/* Animated Timeline Connecting Line */}
+                  {/* Animated Timeline Connecting Line (Now active on mobile, tablet & desktop) */}
                   {idx < PROCESS_STEPS.length - 1 && (
                     <div className="w-[2px] flex-1 min-h-[90px] md:h-36 md:flex-initial bg-current/10 relative mt-3 md:mt-4 overflow-hidden rounded-full">
                       <div
@@ -93,10 +79,7 @@ const ProcessSection = memo(function ProcessSection({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5 pt-3.5 sm:pt-4 border-t border-current/10">
                     {step.deliverables.map((d, i) => (
-                      <div
-                        key={i}
-                        className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl liquid-glass text-[10px] sm:text-[11px] font-bold flex items-center gap-2"
-                      >
+                      <div key={i} className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl liquid-glass text-[10px] sm:text-[11px] font-bold flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F18] shrink-0" />
                         <span className="truncate">{d}</span>
                       </div>
@@ -110,6 +93,4 @@ const ProcessSection = memo(function ProcessSection({
       </div>
     </section>
   );
-});
-
-export default ProcessSection;
+}

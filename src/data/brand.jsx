@@ -46,6 +46,19 @@ export const BRAND_CONFIG = {
   githubUrl: "https://github.com/genzworks7-boys",
   availability: "3 Open slots",
   year: "2026®",
+  // Google Apps Script Web App Deployment URL for saving inquiries to Google Sheets:
   googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbxc76o6m2v5zpxyZmFV0xl3KsGt6x5-A1BzHG9XZtASBqyOtKUkuoJXxaerJLhJ0buU/exec",
+  // Google Apps Script Web App Deployment URL for Join Our Team applications:
   joinTeamScriptUrl: "https://script.google.com/macros/s/AKfycbxc76o6m2v5zpxyZmFV0xl3KsGt6x5-A1BzHG9XZtASBqyOtKUkuoJXxaerJLhJ0buU/exec"
 };
+
+export const CRAFT_TICKER = [
+  "Web Development & Web Applications",
+  "Visual Identity & Brand Assets",
+  "Commercial Poster Design",
+  "College & Academic Project Mentorship",
+  "Video Editing & Multimedia Storytelling",
+  "Purposeful Content & Copywriting",
+  "Responsive UI/UX Engineering",
+  "DevOps & Smooth Deployment"
+];

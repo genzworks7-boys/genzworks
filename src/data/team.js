@@ -1,3 +1,5 @@
+import { resolveMemberPhoto } from '../teamImages.js';
+
 export const INITIAL_TEAM = [
   {
     id: "team-1",
@@ -89,3 +91,5 @@ export const CAREER_ROLES = [
   'AI & Data Science',
   'Other Creative'
 ];
+
+export { resolveMemberPhoto };

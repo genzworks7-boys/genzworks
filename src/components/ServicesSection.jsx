@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
-import { DETAILED_SERVICES } from '../data/services.js';
+import { DETAILED_SERVICES } from '../data/services';
 
-const ServicesSection = memo(function ServicesSection({
+export default function ServicesSection({
   hoveredServiceIdx,
   setHoveredServiceIdx,
   handleSelectServiceFromCard
@@ -11,9 +11,7 @@ const ServicesSection = memo(function ServicesSection({
     <section id="services" className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-current/10 gap-6">
         <div>
-          <div className="font-mono-tech text-xs uppercase tracking-widest opacity-60 mb-3">
-            [05] / OUR SERVICES
-          </div>
+          <div className="font-mono-tech text-xs uppercase tracking-widest opacity-60 mb-3">[05] / OUR SERVICES</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             Everything Your Idea Needs to <span className="font-editorial italic font-normal">Move Forward.</span>
           </h2>
@@ -170,6 +168,4 @@ const ServicesSection = memo(function ServicesSection({
       </div>
     </section>
   );
-});
-
-export default ServicesSection;
+}

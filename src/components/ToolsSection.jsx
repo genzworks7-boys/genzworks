@@ -1,17 +1,18 @@
-import React, { memo } from 'react';
+import React, { useMemo } from 'react';
 import { Layers, ArrowUpRight } from 'lucide-react';
-import { STUDIO_TOOLS } from '../data/tools.jsx';
+import { STUDIO_TOOLS } from '../data/tools';
 
-const ToolsSection = memo(function ToolsSection({
+export default function ToolsSection({
   activeToolCategory,
-  setActiveToolCategory
+  setActiveToolCategory,
+  filteredStudioTools: passedFilteredTools
 }) {
-  const categories = ['All', 'Frontend', 'Design', 'Motion & Media', 'Backend & Cloud'];
-  
-  const filteredTools = STUDIO_TOOLS.filter((t) => {
-    if (activeToolCategory === 'All') return true;
-    return t.group === activeToolCategory;
-  });
+  const filteredStudioTools = useMemo(() => {
+    if (passedFilteredTools) return passedFilteredTools;
+    return activeToolCategory === 'All'
+      ? STUDIO_TOOLS
+      : STUDIO_TOOLS.filter((t) => t.category === activeToolCategory);
+  }, [activeToolCategory, passedFilteredTools]);
 
   return (
     <section id="tools" className="py-20 border-y border-current/10 relative z-10 overflow-hidden">
@@ -29,13 +30,13 @@ const ToolsSection = memo(function ToolsSection({
 
           {/* Interactive Category Filter Pills with Framer Spring Physics */}
           <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl liquid-glass self-start lg:self-end">
-            {categories.map((cat) => {
+            {['All', 'Frontend', 'Design', 'Motion & Media', 'Backend & Cloud'].map((cat) => {
               const active = activeToolCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => setActiveToolCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-extrabold tracking-tight transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
+                  className={`px-4 py-2 rounded-xl text-xs font-extrabold tracking-tight transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                     active
                       ? 'bg-[#0E0E10] text-[#D9FF3F] dark:bg-white dark:text-[#0E0E10] shadow-lg scale-[1.03]'
                       : 'opacity-65 hover:opacity-100 hover:bg-current/5'
@@ -48,9 +49,9 @@ const ToolsSection = memo(function ToolsSection({
           </div>
         </div>
 
-        {/* Studio Craft Tools Cards Grid */}
+        {/* Studio Craft Tools Cards Grid (Matches User Screenshot) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTools.map((tool, index) => {
+          {filteredStudioTools.map((tool, index) => {
             const isEven = index % 2 === 0;
             return (
               <div
@@ -108,6 +109,4 @@ const ToolsSection = memo(function ToolsSection({
       </div>
     </section>
   );
-});
-
-export default ToolsSection;
+}

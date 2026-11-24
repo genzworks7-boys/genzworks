@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { ArrowUpRight, Plus } from 'lucide-react';
-import { WHY_GENZWORKS_PILLARS } from '../data/whyUs.js';
+import { WHY_GENZWORKS_PILLARS } from '../data/whyUs';
 
-const WhyUsSection = memo(function WhyUsSection({
+export default function WhyUsSection({
   activeWhyIndex,
   setActiveWhyIndex,
   expandedWhyIndex,
@@ -12,9 +12,7 @@ const WhyUsSection = memo(function WhyUsSection({
     <section id="why-us" className="py-24 border-y border-current/10 relative z-10">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="max-w-3xl mb-16">
-          <div className="font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">
-            [02] / WHY GENZWORKS?
-          </div>
+          <div className="font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">[02] / WHY GENZWORKS?</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             Different Minds. One <span className="font-editorial italic font-normal underline decoration-[#FF4F18]">Forward Vision.</span>
           </h2>
@@ -42,7 +40,7 @@ const WhyUsSection = memo(function WhyUsSection({
                         window.scrollTo({ top: y, behavior: 'smooth' });
                       }
                     }}
-                    className={`group w-full text-left py-2.5 px-3 rounded-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center cursor-pointer ${
+                    className={`group w-full text-left py-2.5 px-3 rounded-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center ${
                       isCurrent
                         ? 'opacity-100 translate-x-2'
                         : 'opacity-70 hover:opacity-100 translate-x-0'
@@ -87,12 +85,8 @@ const WhyUsSection = memo(function WhyUsSection({
                   }`}
                 >
                   <div className="p-8 sm:p-10">
-                    <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-3">
-                      {p.title}
-                    </h3>
-                    <p className="text-sm sm:text-base opacity-80 leading-relaxed mb-7">
-                      {p.desc}
-                    </p>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-3">{p.title}</h3>
+                    <p className="text-sm sm:text-base opacity-80 leading-relaxed mb-7">{p.desc}</p>
 
                     <div className="flex flex-wrap gap-2.5">
                       {p.tags.map((tag, idx) => (
@@ -151,6 +145,4 @@ const WhyUsSection = memo(function WhyUsSection({
       </div>
     </section>
   );
-});
-
-export default WhyUsSection;
+}

@@ -1,67 +1,28 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
-import { Copy, Check, ArrowRight, ArrowUpRight } from 'lucide-react';
-import { BRAND_CONFIG, WhatsApp } from '../data/brand.jsx';
+import React from 'react';
+import { Check, Copy, ArrowUpRight } from 'lucide-react';
+import { BRAND_CONFIG, WhatsApp } from '../data/brand';
 
-const ContactFooterSection = memo(function ContactFooterSection({
-  selectedServices,
-  toggleServiceChip,
+export default function ContactFooterSection({
+  copyStudioEmail,
+  copied,
+  copyStudioPhone,
+  phoneCopied,
+  coimbatoreTime,
   contactForm,
   setContactForm,
+  selectedServices,
+  toggleServiceChip,
   handleContactSubmit,
   isSubmittingForm,
   formSubmitted,
-  copied,
-  phoneCopied,
-  copyStudioEmail,
-  copyStudioPhone,
   jumpTo,
-  setActiveLegalModal
+  setActiveLegalModal,
+  footerBrandRef,
+  footerBrandVisible
 }) {
-  const [coimbatoreTime, setCoimbatoreTime] = useState('');
-  const footerBrandRef = useRef(null);
-  const [footerBrandVisible, setFooterBrandVisible] = useState(false);
-
-  // Live Coimbatore IST Clock
-  useEffect(() => {
-    const updateClock = () => {
-      try {
-        const formatted = new Intl.DateTimeFormat('en-US', {
-          timeZone: 'Asia/Kolkata',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true
-        }).format(new Date());
-        setCoimbatoreTime(`${formatted} IST`);
-      } catch (err) {
-        setCoimbatoreTime('IST (UTC+5:30)');
-      }
-    };
-    updateClock();
-    const interval = setInterval(updateClock, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Footer giant text scroll-reveal observer
-  useEffect(() => {
-    if (!footerBrandRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setFooterBrandVisible(true);
-        } else if (entry.boundingClientRect.top > window.innerHeight) {
-          setFooterBrandVisible(false);
-        }
-      },
-      { threshold: 0.1, rootMargin: '50px 0px 0px 0px' }
-    );
-    observer.observe(footerBrandRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <footer id="contact" className="relative z-10 bg-[#08080A] text-[#F5F5F3] pt-24 sm:pt-32 pb-14 sm:pb-20 rounded-t-[40px] sm:rounded-t-[64px] mt-12 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6 sm:px-12">
-        
         {/* Main Contact Split — Clean, Spacious & Refined */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 pb-24 border-b border-white/10 reveal-on-scroll">
           
@@ -90,7 +51,6 @@ const ContactFooterSection = memo(function ContactFooterSection({
                   Direct Email
                 </span>
                 <button
-                  type="button"
                   onClick={copyStudioEmail}
                   className="group inline-flex items-center gap-3 text-2xl sm:text-3xl font-bold tracking-tight text-white hover:text-[#D9FF3F] transition-colors"
                 >
@@ -108,7 +68,6 @@ const ContactFooterSection = memo(function ContactFooterSection({
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center gap-3">
                     <button
-                      type="button"
                       onClick={() => copyStudioPhone(BRAND_CONFIG.phone)}
                       className="group inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-tight text-white hover:text-[#D9FF3F] transition-colors"
                     >
@@ -131,7 +90,6 @@ const ContactFooterSection = memo(function ContactFooterSection({
 
                   <div className="flex flex-wrap items-center gap-3">
                     <button
-                      type="button"
                       onClick={() => copyStudioPhone(BRAND_CONFIG.phone2)}
                       className="group inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-tight text-white hover:text-[#D9FF3F] transition-colors"
                     >
@@ -164,10 +122,7 @@ const ContactFooterSection = memo(function ContactFooterSection({
 
           {/* Right Side: Simple, Effortless Form */}
           <div className="lg:col-span-6 lg:pl-8">
-            <form
-              onSubmit={handleContactSubmit}
-              className="space-y-8"
-            >
+            <form onSubmit={handleContactSubmit} className="space-y-8">
               {/* Interactive Service Chips */}
               <div className="space-y-3">
                 <span className="text-xs uppercase tracking-widest text-zinc-400 block font-mono-tech">
@@ -283,7 +238,6 @@ const ContactFooterSection = memo(function ContactFooterSection({
             ].map((item) => (
               <button
                 key={item.id}
-                type="button"
                 onClick={() => jumpTo(item.id)}
                 className="hover:text-[#D9FF3F] transition-colors"
               >
@@ -333,21 +287,18 @@ const ContactFooterSection = memo(function ContactFooterSection({
 
           <div className="flex items-center gap-6">
             <button
-              type="button"
               onClick={() => setActiveLegalModal('terms')}
               className="hover:text-white transition-colors"
             >
               Terms of Service
             </button>
             <button
-              type="button"
               onClick={() => setActiveLegalModal('privacy')}
               className="hover:text-white transition-colors"
             >
               Privacy Policy
             </button>
             <button
-              type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="text-zinc-300 hover:text-[#D9FF3F] transition-colors font-medium"
             >
@@ -412,6 +363,4 @@ const ContactFooterSection = memo(function ContactFooterSection({
       </div>
     </footer>
   );
-});
-
-export default ContactFooterSection;
+}

@@ -310,14 +310,3 @@ export const FLOATING_3D_ICONS = [
     )
   }
 ];
-
-export const CRAFT_TICKER = [
-  "Web Development & Web Applications",
-  "Visual Identity & Brand Assets",
-  "Commercial Poster Design",
-  "College & Academic Project Mentorship",
-  "Video Editing & Multimedia Storytelling",
-  "Purposeful Content & Copywriting",
-  "Responsive UI/UX Engineering",
-  "DevOps & Smooth Deployment"
-];

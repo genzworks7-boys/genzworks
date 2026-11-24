@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Globe, ArrowUpRight } from 'lucide-react';
-import { FEATURED_PRODUCTS_STACK } from '../data/products.js';
+import { FEATURED_PRODUCTS_STACK } from '../data/products';
 
-const WorksSection = memo(function WorksSection({ stackProgress = [0, 0] }) {
+export default function WorksSection({ stackProgress = [] }) {
   return (
     <section id="works" className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-current/10 gap-6 reveal-on-scroll">
@@ -23,7 +23,7 @@ const WorksSection = memo(function WorksSection({ stackProgress = [0, 0] }) {
         </div>
       </div>
 
-      {/* Exact Scroll-Stack Card Animation with Direct GPU Optimization */}
+      {/* Exact Scroll-Stack Card Animation from Video */}
       <div className="mt-14 relative max-w-[1120px] mx-auto pb-16">
         {FEATURED_PRODUCTS_STACK.map((slide, index) => {
           const depth = stackProgress[index] || 0;
@@ -38,7 +38,7 @@ const WorksSection = memo(function WorksSection({ stackProgress = [0, 0] }) {
                 top: `${stickyTop}px`,
                 zIndex: index + 10
               }}
-              className="product-stack-card sticky mb-10 sm:mb-14 will-change-transform"
+              className="product-stack-card sticky mb-10 sm:mb-14"
             >
               <div
                 id={`stack-card-inner-${index}`}
@@ -61,9 +61,7 @@ const WorksSection = memo(function WorksSection({ stackProgress = [0, 0] }) {
                       <Globe className="w-3 h-3" />
                       <span>{slide.urlClean || slide.url}</span>
                     </div>
-                    <span className="text-[10px] text-emerald-400 font-bold hidden sm:inline">
-                      LIVE CLIENT PROJECT
-                    </span>
+                    <span className="text-[10px] text-emerald-400 font-bold hidden sm:inline">LIVE CLIENT PROJECT</span>
                   </div>
                 )}
 
@@ -132,6 +130,4 @@ const WorksSection = memo(function WorksSection({ stackProgress = [0, 0] }) {
       </div>
     </section>
   );
-});
-
-export default WorksSection;
+}

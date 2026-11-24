@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { ArrowRight, Globe } from 'lucide-react';
-import { BRAND_CONFIG, Instagram, Linkedin, Github } from '../data/brand.jsx';
+import { BRAND_CONFIG, Instagram, Linkedin, Github } from '../data/brand';
 
-const AboutSection = memo(function AboutSection({
+export default function AboutSection({
   team,
   activeTeamIndex,
   setActiveTeamIndex,
@@ -13,9 +13,7 @@ const AboutSection = memo(function AboutSection({
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-20 reveal-on-scroll">
           <div className="lg:col-span-7 space-y-6">
-            <div className="font-mono-tech text-xs uppercase tracking-widest opacity-60">
-              [04] / ABOUT GENZWORKS
-            </div>
+            <div className="font-mono-tech text-xs uppercase tracking-widest opacity-60">[04] / ABOUT GENZWORKS</div>
             <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
               A New Generation of <span className="font-editorial italic font-normal underline decoration-[#FF4F18]">Digital Thinking.</span>
             </h2>
@@ -26,18 +24,14 @@ const AboutSection = memo(function AboutSection({
 
           <div className="lg:col-span-5 space-y-6">
             <div className="p-6 rounded-2xl liquid-glass shadow-md">
-              <h4 className="font-mono-tech text-xs uppercase font-bold text-[#FF4F18] mb-1">
-                OUR MISSION
-              </h4>
+              <h4 className="font-mono-tech text-xs uppercase font-bold text-[#FF4F18] mb-1">OUR MISSION</h4>
               <p className="text-xs sm:text-sm opacity-85 leading-relaxed">
                 To bring technology and creativity together to create useful, engaging, and accessible digital solutions.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl liquid-glass shadow-md">
-              <h4 className="font-mono-tech text-xs uppercase font-bold text-amber-500 mb-1">
-                OUR VISION
-              </h4>
+              <h4 className="font-mono-tech text-xs uppercase font-bold text-amber-500 mb-1">OUR VISION</h4>
               <p className="text-xs sm:text-sm opacity-85 leading-relaxed">
                 To become a trusted digital and creative studio recognized for innovative thinking and quality.
               </p>
@@ -203,6 +197,4 @@ const AboutSection = memo(function AboutSection({
       </div>
     </section>
   );
-});
-
-export default AboutSection;
+}

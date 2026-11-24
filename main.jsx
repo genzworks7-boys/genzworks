@@ -1,32 +1,25 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { BRAND_CONFIG } from './src/data/brand.jsx';
-import { INITIAL_TEAM } from './src/data/team.js';
+import React, { useState, useEffect, useRef } from 'react';
 import { resolveMemberPhoto } from './src/teamImages.js';
+import { BRAND_CONFIG } from './src/data/brand';
+import { INITIAL_TEAM } from './src/data/team';
+import { STUDIO_TOOLS } from './src/data/tools';
 
-// Modular Page Sections
-import HeroSection from './src/components/HeroSection.jsx';
-import ToolsSection from './src/components/ToolsSection.jsx';
-import WorksSection from './src/components/WorksSection.jsx';
-import WhyUsSection from './src/components/WhyUsSection.jsx';
-import ProcessSection from './src/components/ProcessSection.jsx';
-import AboutSection from './src/components/AboutSection.jsx';
-import ServicesSection from './src/components/ServicesSection.jsx';
-import ContactFooterSection from './src/components/ContactFooterSection.jsx';
-import FloatingDock from './src/components/FloatingDock.jsx';
-import {
-  CurtainLoader,
-  LegalModal,
-  JoinTeamModal,
-  ToastNotification
-} from './src/components/Modals.jsx';
+import Modals from './src/components/Modals';
+import HeroSection from './src/components/HeroSection';
+import ToolsSection from './src/components/ToolsSection';
+import WorksSection from './src/components/WorksSection';
+import WhyUsSection from './src/components/WhyUsSection';
+import ProcessSection from './src/components/ProcessSection';
+import AboutSection from './src/components/AboutSection';
+import ServicesSection from './src/components/ServicesSection';
+import ContactFooterSection from './src/components/ContactFooterSection';
+import FloatingDock from './src/components/FloatingDock';
 
 export default function App() {
-  // Theme & Layout State
   const [themeChoice, setThemeChoice] = useState('light');
   const [resolvedTheme, setResolvedTheme] = useState('light');
   const [activeNav, setActiveNav] = useState('home');
 
-  // Copy & Toast State
   const [copied, setCopied] = useState(false);
   const [phoneCopied, setPhoneCopied] = useState(false);
   const [toast, setToast] = useState(null);
@@ -35,16 +28,15 @@ export default function App() {
   const cursorDotRef = useRef(null);
   const activeNavRef = useRef('home');
   const processFillRef = useRef(0.2);
-  const activeWhyIndexRef = useRef(0);
+  const footerBrandVisibleRef = useRef(false);
   const isScrolledRef = useRef(false);
   const heroVisibleRef = useRef(true);
   const canvasRectRef = useRef(null);
 
-  // Section Specific States
   const processRef = useRef(null);
   const [processFill, setProcessFill] = useState(0.2);
 
-  const [team] = useState(() => {
+  const [team, setTeam] = useState(() => {
     return INITIAL_TEAM.map((m) => {
       const resolved = resolveMemberPhoto(m.id, m.photo);
       return {
@@ -55,19 +47,30 @@ export default function App() {
   });
   const [activeTeamIndex, setActiveTeamIndex] = useState(0);
 
+  const [activeTooltip, setActiveTooltip] = useState(null);
+  const [stackProgress, setStackProgress] = useState([0, 0]);
   const [activeWhyIndex, setActiveWhyIndex] = useState(0);
   const [expandedWhyIndex, setExpandedWhyIndex] = useState(null);
   const [hoveredServiceIdx, setHoveredServiceIdx] = useState(null);
+
+  // Dynamic morphing floating dock states
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [dockHovered, setDockHovered] = useState(false);
+  const [dockManuallyOpen, setDockManuallyOpen] = useState(false);
+  const dockHoverTimeoutRef = useRef(null);
+  const dockRef = useRef(null);
+
+  const isDockCollapsed = isScrolled && !dockHovered && !dockManuallyOpen;
+
+  // Enhanced Tools & Ecosystem interactive states
   const [activeToolCategory, setActiveToolCategory] = useState('All');
 
-  // Dynamic Morphing Floating Dock State
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  // Contact Form State
+  // Senior UI/UX Editorial Contact & Footer States
   const [selectedServices, setSelectedServices] = useState(['Web Development']);
   const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+  const [coimbatoreTime, setCoimbatoreTime] = useState('');
 
   // Legal Modal State ('terms' | 'privacy' | null)
   const [activeLegalModal, setActiveLegalModal] = useState(null);
@@ -94,21 +97,15 @@ export default function App() {
   const [joinSubmitted, setJoinSubmitted] = useState(false);
   const [joinError, setJoinError] = useState(null);
 
-  // Full-Screen "Are you ready?" Intro Loader State
-  const [loaderPhase, setLoaderPhase] = useState('start');
-  const heroRevealed = loaderPhase === 'done' || loaderPhase === 'curtain';
+  const isFresher = joinForm.experience === 'Fresher / Student';
 
-  // Hero Canvas Particle State
-  const canvasRef = useRef(null);
-  const particlesRef = useRef([]);
-  const mouseRef = useRef({
-    x: -9999,
-    y: -9999,
-    radius: 110,
-    strength: 3.5
-  });
+  // Footer giant text scroll-reveal state
+  const footerBrandRef = useRef(null);
+  const [footerBrandVisible, setFooterBrandVisible] = useState(false);
 
-  // Loader Phase Progression
+  // Full-Screen "Are you ready?" Intro Loader State (Matches video reference)
+  const [loaderPhase, setLoaderPhase] = useState('start'); // 'start' -> 'are-you' -> 'ready' -> 'curtain' -> 'done'
+
   useEffect(() => {
     const t1 = setTimeout(() => setLoaderPhase('are-you'), 120);
     const t2 = setTimeout(() => setLoaderPhase('ready'), 780);
@@ -122,7 +119,36 @@ export default function App() {
     };
   }, []);
 
-  // Theme Sync
+  // Live Coimbatore IST Clock for authentic studio footer
+  useEffect(() => {
+    const updateClock = () => {
+      try {
+        const formatted = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        }).format(new Date());
+        setCoimbatoreTime(`${formatted} IST`);
+      } catch (err) {
+        setCoimbatoreTime('IST (UTC+5:30)');
+      }
+    };
+    updateClock();
+    const interval = setInterval(updateClock, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Particle background state for Hero (React Bits ParticleText exact physics)
+  const canvasRef = useRef(null);
+  const particlesRef = useRef([]);
+  const mouseRef = useRef({
+    x: -9999,
+    y: -9999,
+    radius: 110,
+    strength: 3.5
+  });
+
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)');
     const apply = () => {
@@ -150,6 +176,7 @@ export default function App() {
 
     const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2.5);
 
+    // Deep high-contrast palette so text is crisp and solid in both dark and light modes
     const palette = resolvedTheme === 'dark'
       ? ['#FFFFFF', '#FFFFFF', '#FAFAFA', '#F4F4F5', '#E4E4E7']
       : ['#09090B', '#09090B', '#18181B', '#18181B', '#27272A'];
@@ -162,16 +189,19 @@ export default function App() {
       const height = container.clientHeight;
       if (!width || !height) return;
 
+      // Set physical canvas pixel buffer to DPR for 100% razor-sharp Retina clarity
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
       const isMobile = width < 640;
+      // Responsive font sizing: bold, prominent, and perfectly proportioned on mobile
       const fontSize = isMobile
         ? Math.min(Math.max(width * 0.15, 48), 64)
         : Math.min(Math.max(width * 0.125, 56), 140);
 
+      // Offscreen rasterization at logical coordinates
       const offscreen = document.createElement('canvas');
       offscreen.width = width;
       offscreen.height = height;
@@ -186,6 +216,7 @@ export default function App() {
 
       const imageData = offCtx.getImageData(0, 0, width, height).data;
 
+      // Ultra-efficient particle sampling: razor-sharp typography with ~1,500 particles for instant responsiveness
       const step = isMobile ? 3.6 : 3.4;
       const particleRadius = isMobile ? 1.6 : 1.5;
       const nextParticles = [];
@@ -235,6 +266,7 @@ export default function App() {
         const p = list[i];
         const dx = m.x - p.x;
 
+        // Ultra-fast bounding box rejection to skip 98% of distance math
         if (dx > -m.radius && dx < m.radius) {
           const dy = m.y - p.y;
           if (dy > -m.radius && dy < m.radius) {
@@ -250,6 +282,7 @@ export default function App() {
           }
         }
 
+        // Ambient fluid breathing wave
         const ambientX = Math.sin(waveFrame + p.originY * 0.04) * 0.7;
         const ambientY = Math.cos(waveFrame + p.originX * 0.04) * 0.7;
 
@@ -321,14 +354,13 @@ export default function App() {
     };
   }, [resolvedTheme]);
 
-  // Throttled 60/120fps Scroll Handler
   useEffect(() => {
     let ticking = false;
 
     const handleScroll = () => {
-      canvasRectRef.current = null;
+      canvasRectRef.current = null; // Invalidate cached rect on scroll
 
-      // 1. Process Timeline Fill (direct DOM update)
+      // 1. Process Timeline Fill (direct DOM updates for 60/120fps bar + quantized state for steps)
       if (processRef.current) {
         const rect = processRef.current.getBoundingClientRect();
         const vh = window.innerHeight;
@@ -341,6 +373,7 @@ export default function App() {
           const txt = document.getElementById('process-timeline-text');
           if (txt) txt.textContent = `${pct}%`;
 
+          // Quantize state update to 4 step thresholds only (0, 1, 2, 3)
           const stepIdx = Math.floor(clamped * 4);
           if (stepIdx !== processFillRef.current) {
             processFillRef.current = stepIdx;
@@ -349,7 +382,7 @@ export default function App() {
         }
       }
 
-      // 2. Active Navigation Spy
+      // 2. Active Nav Link (check current section)
       const ids = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
       for (const id of ids) {
         const el = document.getElementById(id);
@@ -365,7 +398,7 @@ export default function App() {
         }
       }
 
-      // 3. 3D Scroll Stack Card Depth (direct GPU style updates)
+      // 3. 3D Scroll Stack Card Depth (direct GPU style updates, 0 React re-renders)
       const worksEl = document.getElementById('works');
       if (worksEl) {
         const wRect = worksEl.getBoundingClientRect();
@@ -420,7 +453,20 @@ export default function App() {
         }
       }
 
-      // 5. Dock Collapse Trigger
+      // 5. Giant Footer Brand Reveal
+      if (footerBrandRef.current) {
+        const fRect = footerBrandRef.current.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (fRect.top <= vh * 1.05 && !footerBrandVisibleRef.current) {
+          footerBrandVisibleRef.current = true;
+          setFooterBrandVisible(true);
+        } else if (fRect.top > vh * 1.15 && footerBrandVisibleRef.current) {
+          footerBrandVisibleRef.current = false;
+          setFooterBrandVisible(false);
+        }
+      }
+
+      // 6. Dock Collapse
       const shouldCollapse = window.scrollY > 80;
       if (isScrolledRef.current !== shouldCollapse) {
         isScrolledRef.current = shouldCollapse;
@@ -440,10 +486,22 @@ export default function App() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (dockHoverTimeoutRef.current) clearTimeout(dockHoverTimeoutRef.current);
+    };
   }, []);
 
-  // Direct GPU Cursor Transform
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dockRef.current && !dockRef.current.contains(e.target)) {
+        setDockManuallyOpen(false);
+      }
+    };
+    document.addEventListener('pointerdown', handleOutsideClick);
+    return () => document.removeEventListener('pointerdown', handleOutsideClick);
+  }, []);
+
   useEffect(() => {
     const onMove = (e) => {
       if (cursorDotRef.current) {
@@ -474,7 +532,7 @@ export default function App() {
     };
   }, []);
 
-  // Smooth Scroll Reveal Intersection Observer
+  // Smooth Scroll Reveal Intersection Observer (instant unobserve for zero scroll overhead)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -494,12 +552,12 @@ export default function App() {
     return () => observer.disconnect();
   }, [loaderPhase, activeToolCategory]);
 
-  const triggerToast = useCallback((msg) => {
+  const triggerToast = (msg) => {
     setToast(msg);
     setTimeout(() => setToast(null), 3200);
-  }, []);
+  };
 
-  const copyStudioEmail = useCallback(() => {
+  const copyStudioEmail = () => {
     const input = document.createElement('textarea');
     input.value = BRAND_CONFIG.email;
     document.body.appendChild(input);
@@ -513,9 +571,9 @@ export default function App() {
       triggerToast(BRAND_CONFIG.email);
     }
     document.body.removeChild(input);
-  }, [triggerToast]);
+  };
 
-  const copyStudioPhone = useCallback((numberToCopy = BRAND_CONFIG.phone) => {
+  const copyStudioPhone = (numberToCopy = BRAND_CONFIG.phone) => {
     const input = document.createElement('textarea');
     input.value = numberToCopy;
     document.body.appendChild(input);
@@ -529,15 +587,15 @@ export default function App() {
       triggerToast(numberToCopy);
     }
     document.body.removeChild(input);
-  }, [triggerToast]);
+  };
 
-  const jumpTo = useCallback((id) => {
+  const jumpTo = (id) => {
     setActiveNav(id);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
+  };
 
-  const toggleServiceChip = useCallback((serviceName) => {
+  const toggleServiceChip = (serviceName) => {
     setSelectedServices((prev) =>
       prev.includes(serviceName)
         ? prev.length > 1
@@ -545,9 +603,9 @@ export default function App() {
           : prev
         : [...prev, serviceName]
     );
-  }, []);
+  };
 
-  const handleSelectServiceFromCard = useCallback((serviceTitle) => {
+  const handleSelectServiceFromCard = (serviceTitle) => {
     let chipName = serviceTitle;
     if (serviceTitle.includes('Commercial Poster')) chipName = 'Commercial Posters';
     else if (serviceTitle.includes('Academic')) chipName = 'Academic Mentorship';
@@ -559,7 +617,7 @@ export default function App() {
     setSelectedServices((prev) => (prev.includes(chipName) ? prev : [...prev, chipName]));
     jumpTo('contact');
     triggerToast(`Selected "${chipName}" for your project inquiry!`);
-  }, [jumpTo, triggerToast]);
+  };
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
@@ -636,7 +694,6 @@ export default function App() {
       return;
     }
 
-    const isFresher = joinForm.experience === 'Fresher / Student';
     if (!isFresher) {
       if (!joinForm.portfolio.trim()) {
         setJoinError("Portfolio or GitHub link is mandatory for experienced applicants.");
@@ -677,7 +734,7 @@ export default function App() {
     };
 
     try {
-      const scriptUrl = BRAND_CONFIG.googleSheetScriptUrl;
+      const scriptUrl = BRAND_CONFIG.joinTeamScriptUrl || BRAND_CONFIG.googleSheetScriptUrl;
 
       if (scriptUrl && scriptUrl.trim() !== '') {
         const formParams = new URLSearchParams();
@@ -700,49 +757,313 @@ export default function App() {
     } catch (err) {
       console.error('Join team submission error:', err);
       setJoinSubmitted(true);
-      triggerToast("Application submitted successfully!");
+      triggerToast("Thank you! Your application has been recorded.");
     } finally {
       setIsSubmittingJoin(false);
     }
   };
 
-  return (
-    <div className={`relative min-h-screen ${resolvedTheme === 'dark' ? 'bg-[#060608] text-[#F3F3F1]' : 'bg-[#F9F9F8] text-[#111113]'} font-sans selection:bg-[#D9FF3F] selection:text-black overflow-x-hidden antialiased transition-colors duration-500`}>
-      {/* Custom Ultra-Fluid Precision Cursor Dot */}
-      <div
-        ref={cursorDotRef}
-        className="fixed top-0 left-0 w-3.5 h-3.5 rounded-full bg-[#D9FF3F] pointer-events-none z-[9999] mix-blend-difference hidden md:block"
-        style={{
-          willChange: 'transform',
-          transform: 'translate3d(-100px, -100px, 0)'
-        }}
-      />
+  const isDark = resolvedTheme === 'dark';
 
-      {/* Interactive Modals & Toast */}
-      <CurtainLoader loaderPhase={loaderPhase} />
-      <LegalModal
+  const filteredStudioTools =
+    activeToolCategory === 'All'
+      ? STUDIO_TOOLS
+      : STUDIO_TOOLS.filter((t) => t.group === activeToolCategory);
+
+  const heroRevealed = loaderPhase === 'curtain' || loaderPhase === 'done';
+
+  return (
+    <div
+      className={`min-h-screen transition-colors duration-700 selection:bg-[#0E0E10] selection:text-[#D9FF3F] ${
+        isDark ? 'dark bg-[#060608] text-[#F5F5F3]' : 'bg-[#FFFFFF] text-[#0E0E10]'
+      } antialiased overflow-x-clip relative has-custom-cursor`}
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Syne:wght@800&display=swap');
+
+        .font-editorial { font-family: 'Instrument Serif', Georgia, serif; }
+        .font-mono-tech { font-family: 'Space Mono', monospace; }
+        .font-funky { font-family: 'Syne', sans-serif; }
+
+        @keyframes blobFloat {
+          0%, 100% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(40px, -60px) scale(1.12); }
+          66% { transform: translate(-30px, 30px) scale(0.92); }
+        }
+
+        .liquid-blob-1 {
+          position: absolute;
+          width: 550px;
+          height: 550px;
+          background: radial-gradient(circle, rgba(217, 255, 63, 0.35) 0%, rgba(255, 79, 24, 0.18) 60%, transparent 100%);
+          filter: blur(100px);
+          border-radius: 50%;
+          top: -120px;
+          left: 10%;
+          animation: blobFloat 14s ease-in-out infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .liquid-blob-2 {
+          position: absolute;
+          width: 600px;
+          height: 600px;
+          background: radial-gradient(circle, rgba(79, 70, 229, 0.28) 0%, rgba(217, 255, 63, 0.22) 60%, transparent 100%);
+          filter: blur(110px);
+          border-radius: 50%;
+          top: 25%;
+          right: 5%;
+          animation: blobFloat 18s ease-in-out infinite reverse;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        /* Ultra-Luxe Liquid Glass Theme */
+        .liquid-glass {
+          background: ${isDark
+            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.05) 100%)'
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.45) 100%)'};
+          backdrop-filter: blur(32px) saturate(210%) contrast(102%);
+          -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(102%);
+          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.85)'};
+          box-shadow: ${isDark
+            ? '0 25px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1.5px 1px rgba(255, 255, 255, 0.22), inset 0 -1.5px 2px rgba(0, 0, 0, 0.35)'
+            : '0 20px 45px -10px rgba(15, 23, 42, 0.06), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.95), inset 0 -1.5px 2px rgba(0, 0, 0, 0.03)'};
+          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease;
+        }
+
+        .liquid-glass:hover {
+          transform: translateY(-4px);
+          box-shadow: ${isDark
+            ? '0 30px 60px -10px rgba(0, 0, 0, 0.75), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.35)'
+            : '0 28px 55px -10px rgba(15, 23, 42, 0.1), inset 0 1.5px 1.5px rgba(255, 255, 255, 1)'};
+          border-color: ${isDark ? 'rgba(217, 255, 63, 0.4)' : 'rgba(255, 255, 255, 0.95)'};
+        }
+
+        /* Authentic Liquid Glass Navbar (Ultra-Visible & Glossy) */
+        .liquid-glass-nav {
+          position: relative;
+          background: ${isDark
+            ? 'linear-gradient(135deg, rgba(28, 28, 36, 0.88) 0%, rgba(16, 16, 22, 0.82) 50%, rgba(22, 22, 30, 0.88) 100%)'
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.78) 50%, rgba(246, 248, 252, 0.88) 100%)'};
+          backdrop-filter: blur(28px) saturate(190%) contrast(104%);
+          -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(104%);
+          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.16)' : 'rgba(255, 255, 255, 0.95)'};
+          box-shadow: ${isDark
+            ? '0 24px 50px -12px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.32), inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.5), inset 1.5px 0 1.5px 0 rgba(255, 255, 255, 0.12)'
+            : '0 20px 40px -10px rgba(15, 23, 42, 0.12), 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.06), inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1), inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.04), inset 1.5px 0 1.5px 0 rgba(255, 255, 255, 0.8)'};
+          overflow: hidden;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .liquid-glass-nav::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: radial-gradient(110% 60% at 50% 0%, ${isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(255, 255, 255, 0.85)'} 0%, transparent 70%);
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .liquid-glass-nav::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 8%;
+          right: 8%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, ${isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 1)'}, transparent);
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        /* Action Buttons with Liquid Lens Glass */
+        .liquid-glass-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: ${isDark
+            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 100%)'
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 242, 248, 0.75) 100%)'};
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.08)'};
+          box-shadow: ${isDark
+            ? '0 3px 10px rgba(0, 0, 0, 0.4), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.28)'
+            : '0 2px 8px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.04), inset 0 1.5px 1px 0 rgba(255, 255, 255, 1)'};
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          overflow: hidden;
+        }
+
+        .liquid-glass-btn::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: radial-gradient(circle at 50% 15%, ${isDark ? 'rgba(255, 255, 255, 0.22)' : 'rgba(255, 255, 255, 0.9)'}, transparent 65%);
+          pointer-events: none;
+        }
+
+        .liquid-glass-btn:hover {
+          transform: translateY(-2px) scale(1.08);
+          background: ${isDark
+            ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.1) 100%)'
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(245, 247, 252, 0.9) 100%)'};
+          border-color: ${isDark ? 'rgba(217, 255, 63, 0.6)' : 'rgba(0, 0, 0, 0.18)'};
+          box-shadow: ${isDark
+            ? '0 6px 20px rgba(0, 0, 0, 0.5), inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.4), 0 0 12px rgba(217, 255, 63, 0.25)'
+            : '0 6px 16px rgba(15, 23, 42, 0.12), inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1), 0 0 12px rgba(255, 255, 255, 0.8)'};
+        }
+
+        .liquid-glass-btn:active {
+          transform: translateY(0px) scale(0.95);
+        }
+
+        .liquid-glass-dock {
+          background: ${isDark
+            ? 'linear-gradient(135deg, rgba(20, 20, 26, 0.88) 0%, rgba(12, 12, 16, 0.82) 100%)'
+            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.72) 100%)'};
+          backdrop-filter: blur(36px) saturate(220%);
+          -webkit-backdrop-filter: blur(36px) saturate(220%);
+          border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(255, 255, 255, 0.9)'};
+          box-shadow: ${isDark
+            ? '0 30px 70px rgba(0, 0, 0, 0.55), inset 0 1.5px 1px rgba(255, 255, 255, 0.25), inset 0 -1px 2px rgba(0, 0, 0, 0.4)'
+            : '0 25px 60px rgba(0, 0, 0, 0.1), inset 0 1.5px 1px rgba(255, 255, 255, 0.95), inset 0 -1px 2px rgba(0, 0, 0, 0.04)'};
+          transition: width 0.48s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.4s ease,
+                      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 0.35s ease;
+          will-change: width, transform;
+        }
+
+        @keyframes framerCardExpand {
+          0% { opacity: 0; transform: scale(0.7) translateY(45px); filter: blur(12px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+        }
+
+        @keyframes framerFadeRise {
+          0% { opacity: 0; transform: translateY(28px) scale(0.97); filter: blur(6px); }
+          100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+        }
+
+        @keyframes framerDockRise {
+          0% { opacity: 0; transform: translate(-50%, 50px) scale(0.92); }
+          100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+        }
+
+        @keyframes tickerScroll {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        .animate-ticker { display: flex; width: max-content; animation: tickerScroll 30s linear infinite; }
+        .animate-ticker:hover { animation-play-state: paused; }
+
+        .hero-visible .framer-hero-card { animation: framerCardExpand 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+        .hero-visible .framer-hero-title { animation: framerFadeRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+        .hero-visible .framer-hero-subtitle { animation: framerFadeRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both; }
+        .hero-visible .framer-hero-cta { animation: framerFadeRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both; }
+        .hero-visible.framer-floating-dock, .framer-floating-dock { animation: framerDockRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both; }
+
+        .reveal-on-scroll {
+          opacity: 0;
+          transform: translateY(28px);
+          transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: opacity, transform;
+        }
+        .reveal-on-scroll.reveal-active {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Mobile and Tablet: Alternating slide-in animation for Craft Tools cards */
+        @media (max-width: 1023px) {
+          .tool-card-reveal.tool-reveal-left {
+            opacity: 0;
+            transform: translateX(-48px);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+          }
+          .tool-card-reveal.tool-reveal-right {
+            opacity: 0;
+            transform: translateX(48px);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+          }
+          .tool-card-reveal.reveal-active {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @media (min-width: 1024px) {
+          .tool-card-reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+          }
+          .tool-card-reveal.reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .has-custom-cursor, .has-custom-cursor button, .has-custom-cursor a, .has-custom-cursor input {
+            cursor: none !important;
+          }
+        }
+
+        .framer-spring { transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .work-card { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .footer-gradient-text {
+          background: linear-gradient(
+            180deg,
+            #FFFFFF 0%,
+            #F5F5F7 25%,
+            #E4E4E7 50%,
+            #A1A1AA 75%,
+            #71717A 100%
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          display: inline-block;
+          padding-bottom: 0.08em;
+          will-change: transform, opacity;
+        }
+        .footer-gradient-text:hover {
+          filter: brightness(1.15);
+        }
+      `}</style>
+
+      {/* Interactive Modals, Cursor, Loader & Toast */}
+      <Modals
+        cursorDotRef={cursorDotRef}
+        loaderPhase={loaderPhase}
+        toast={toast}
         activeLegalModal={activeLegalModal}
         setActiveLegalModal={setActiveLegalModal}
-        jumpTo={jumpTo}
-      />
-      <JoinTeamModal
         isJoinTeamModalOpen={isJoinTeamModalOpen}
         setIsJoinTeamModalOpen={setIsJoinTeamModalOpen}
-        isSubmittingJoin={isSubmittingJoin}
-        joinSubmitted={joinSubmitted}
-        setJoinSubmitted={setJoinSubmitted}
         joinForm={joinForm}
         setJoinForm={setJoinForm}
-        handleJoinSubmit={handleJoinSubmit}
+        isFresher={isFresher}
+        isSubmittingJoin={isSubmittingJoin}
+        joinSubmitted={joinSubmitted}
         joinError={joinError}
+        handleJoinTeamSubmit={handleJoinSubmit}
       />
-      <ToastNotification toast={toast} />
 
-      {/* Ambient Liquid Blobs */}
       <div className="liquid-blob-1" />
       <div className="liquid-blob-2" />
 
-      {/* Sections */}
+      {/* Hero Section */}
       <HeroSection
         heroRevealed={heroRevealed}
         resolvedTheme={resolvedTheme}
@@ -753,13 +1074,17 @@ export default function App() {
         jumpTo={jumpTo}
       />
 
+      {/* Tools & Ecosystem Section */}
       <ToolsSection
         activeToolCategory={activeToolCategory}
         setActiveToolCategory={setActiveToolCategory}
+        filteredStudioTools={filteredStudioTools}
       />
 
-      <WorksSection />
+      {/* Featured Works Section */}
+      <WorksSection stackProgress={stackProgress} />
 
+      {/* Why Us Section */}
       <WhyUsSection
         activeWhyIndex={activeWhyIndex}
         setActiveWhyIndex={setActiveWhyIndex}
@@ -767,11 +1092,13 @@ export default function App() {
         setExpandedWhyIndex={setExpandedWhyIndex}
       />
 
+      {/* Process Section */}
       <ProcessSection
         processRef={processRef}
         processFill={processFill}
       />
 
+      {/* About Section */}
       <AboutSection
         team={team}
         activeTeamIndex={activeTeamIndex}
@@ -779,33 +1106,45 @@ export default function App() {
         setIsJoinTeamModalOpen={setIsJoinTeamModalOpen}
       />
 
+      {/* Services Section */}
       <ServicesSection
         hoveredServiceIdx={hoveredServiceIdx}
         setHoveredServiceIdx={setHoveredServiceIdx}
         handleSelectServiceFromCard={handleSelectServiceFromCard}
       />
 
+      {/* Contact & Footer Section */}
       <ContactFooterSection
-        selectedServices={selectedServices}
-        toggleServiceChip={toggleServiceChip}
+        copyStudioEmail={copyStudioEmail}
+        copied={copied}
+        copyStudioPhone={copyStudioPhone}
+        phoneCopied={phoneCopied}
+        coimbatoreTime={coimbatoreTime}
         contactForm={contactForm}
         setContactForm={setContactForm}
+        selectedServices={selectedServices}
+        toggleServiceChip={toggleServiceChip}
         handleContactSubmit={handleContactSubmit}
         isSubmittingForm={isSubmittingForm}
         formSubmitted={formSubmitted}
-        copied={copied}
-        phoneCopied={phoneCopied}
-        copyStudioEmail={copyStudioEmail}
-        copyStudioPhone={copyStudioPhone}
         jumpTo={jumpTo}
         setActiveLegalModal={setActiveLegalModal}
+        footerBrandRef={footerBrandRef}
+        footerBrandVisible={footerBrandVisible}
       />
 
+      {/* Dynamic Morphing Floating Dock */}
       <FloatingDock
         heroRevealed={heroRevealed}
+        dockRef={dockRef}
+        dockHoverTimeoutRef={dockHoverTimeoutRef}
+        setDockHovered={setDockHovered}
+        setDockManuallyOpen={setDockManuallyOpen}
+        isDockCollapsed={isDockCollapsed}
         activeNav={activeNav}
+        activeTooltip={activeTooltip}
+        setActiveTooltip={setActiveTooltip}
         jumpTo={jumpTo}
-        isScrolled={isScrolled}
       />
     </div>
   );
