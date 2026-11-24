@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import { DETAILED_SERVICES } from '../data/services';
 
-export default function ServicesSection({
-  hoveredServiceIdx,
-  setHoveredServiceIdx,
+const ServicesSection = React.memo(function ServicesSection({
   handleSelectServiceFromCard
 }) {
+  const [hoveredServiceIdx, setHoveredServiceIdx] = useState(null);
+
   return (
     <section id="services" className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-current/10 gap-6">
@@ -32,21 +32,22 @@ export default function ServicesSection({
               onMouseLeave={() => setHoveredServiceIdx(null)}
               onClick={() => setHoveredServiceIdx(isCardHovered ? null : i)}
               style={{
+                contain: 'layout style paint',
                 boxShadow: isCardHovered
                   ? `0 32px 75px -10px ${s.glow}`
                   : '0 16px 40px -10px rgba(0,0,0,0.3)',
                 transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease'
               }}
-              className={`group/folder relative h-[520px] sm:h-[560px] rounded-[34px] p-2.5 ${s.outerBg} ${s.outerBorder} border overflow-hidden cursor-pointer select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2`}
+              className={`group/folder relative h-[520px] sm:h-[560px] rounded-[34px] p-2.5 ${s.outerBg} ${s.outerBorder} border overflow-hidden cursor-pointer select-none hover:-translate-y-2`}
             >
               <div className="relative w-full h-[320px] sm:h-[360px] rounded-[26px] overflow-hidden bg-black/40">
                 <img
                   src={s.image}
-                  loading="lazy"
                   decoding="async"
+                  fetchPriority="low"
                   alt={s.title}
                   style={{
-                    transform: isCardHovered ? 'scale(1.08) translateY(-4px)' : 'scale(1) translateY(0px)',
+                    transform: isCardHovered ? 'scale(1.08) translate3d(0, -4px, 0)' : 'scale(1) translate3d(0, 0, 0)',
                     transition: 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                   className="w-full h-full object-cover"
@@ -56,12 +57,12 @@ export default function ServicesSection({
 
               <div
                 style={{
-                  transform: isCardHovered ? 'translateY(48px)' : 'translateY(0px)',
+                  transform: isCardHovered ? 'translate3d(0, 48px, 0)' : 'translate3d(0, 0, 0)',
                   transition: 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)'
                 }}
                 className="absolute inset-x-2.5 bottom-2.5 top-[150px] sm:top-[165px] z-20 flex flex-col pointer-events-none"
               >
-                {/* Single Unified macOS Folder Background (Balanced Proportions, Zero Line) */}
+                {/* Single Unified macOS Folder Background */}
                 <div className="absolute inset-0 z-0 pointer-events-none">
                   <svg
                     viewBox="0 0 400 390"
@@ -83,7 +84,7 @@ export default function ServicesSection({
                   </svg>
                 </div>
 
-                {/* Folder Tab Header Bar (Pure Bold Number without folder icon) */}
+                {/* Folder Tab Header Bar */}
                 <div className="relative z-10 w-full h-[50px] px-5 sm:px-6 flex items-center justify-between shrink-0">
                   <span className={`text-3xl sm:text-4xl font-black font-mono-tech tracking-tighter leading-none ${s.textColor} drop-shadow-sm`}>
                     {s.num}
@@ -97,21 +98,19 @@ export default function ServicesSection({
                       handleSelectServiceFromCard(s.title);
                     }}
                     title={`Book ${s.title}`}
-                    className="w-9 h-9 rounded-full bg-white text-zinc-950 hover:bg-[#D9FF3F] hover:text-black hover:scale-110 active:scale-95 transition-all duration-300 shadow-xl border border-white/40 flex items-center justify-center pointer-events-auto cursor-pointer group/arrow translate-y-1"
+                    className="w-9 h-9 rounded-full bg-white text-zinc-950 hover:bg-[#D9FF3F] hover:text-black hover:scale-110 active:scale-95 transition-[transform,background-color] duration-300 shadow-xl border border-white/40 flex items-center justify-center pointer-events-auto cursor-pointer group/arrow translate-y-1"
                   >
                     <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover/arrow:translate-x-0.5 group-hover/arrow:-translate-y-0.5" />
                   </button>
                 </div>
 
-                {/* Folder Body Content (Compact, Balanced & Zero Wasted Space, No Scrollbars) */}
+                {/* Folder Body Content */}
                 <div className={`relative z-10 flex-1 px-5 sm:px-6 pt-2 pb-4 sm:pb-5 flex flex-col justify-between ${s.textColor} pointer-events-auto overflow-hidden`}>
                   <div className="space-y-1.5">
-                    {/* Main Title */}
                     <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight drop-shadow-sm">
                       {s.title}
                     </h3>
 
-                    {/* Subtitle */}
                     <p
                       style={{ color: s.accentColor }}
                       className="text-xs sm:text-[13px] font-semibold tracking-wide leading-snug opacity-95"
@@ -119,14 +118,12 @@ export default function ServicesSection({
                       {s.subtitle}
                     </p>
 
-                    {/* Description */}
                     <p className={`text-xs leading-relaxed line-clamp-2 sm:line-clamp-3 ${s.subTextColor}`}>
                       {s.desc}
                     </p>
                   </div>
 
                   <div className="space-y-2.5 pt-2">
-                    {/* Interactive Capabilities Chips */}
                     <div className="flex flex-wrap gap-1.5">
                       {s.bullets.map((b, idx) => (
                         <button
@@ -137,7 +134,7 @@ export default function ServicesSection({
                             handleSelectServiceFromCard(s.title);
                           }}
                           title={`Inquire about ${b}`}
-                          className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition-all duration-200 pointer-events-auto cursor-pointer hover:scale-[1.03] active:scale-95 flex items-center gap-1.5 ${s.tagBg}`}
+                          className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition-[transform,background-color] duration-200 pointer-events-auto cursor-pointer hover:scale-[1.03] active:scale-95 flex items-center gap-1.5 ${s.tagBg}`}
                         >
                           <span className="w-1 h-1 rounded-full bg-white/80 shrink-0" />
                           <span>{b}</span>
@@ -145,7 +142,6 @@ export default function ServicesSection({
                       ))}
                     </div>
 
-                    {/* Compact, Sleek Action Button */}
                     <div className="pt-1 flex items-center">
                       <button
                         type="button"
@@ -153,7 +149,7 @@ export default function ServicesSection({
                           e.stopPropagation();
                           handleSelectServiceFromCard(s.title);
                         }}
-                        className="group/btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-zinc-950 font-bold text-[10px] tracking-wide uppercase shadow-sm hover:shadow hover:bg-[#D9FF3F] hover:text-black active:scale-95 transition-all duration-200 pointer-events-auto cursor-pointer"
+                        className="group/btn inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-zinc-950 font-bold text-[10px] tracking-wide uppercase shadow-sm hover:shadow hover:bg-[#D9FF3F] hover:text-black active:scale-95 transition-[transform,background-color] duration-200 pointer-events-auto cursor-pointer"
                       >
                         <span>Start Project</span>
                         <ArrowRight className="w-3 h-3 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
@@ -168,4 +164,6 @@ export default function ServicesSection({
       </div>
     </section>
   );
-}
+});
+
+export default ServicesSection;

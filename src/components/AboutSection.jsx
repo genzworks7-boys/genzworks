@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight, Globe } from 'lucide-react';
 import { BRAND_CONFIG, Instagram, Linkedin, Github } from '../data/brand';
 
-export default function AboutSection({
+const AboutSection = React.memo(function AboutSection({
   team,
-  activeTeamIndex,
-  setActiveTeamIndex,
   setIsJoinTeamModalOpen
 }) {
+  const [activeTeamIndex, setActiveTeamIndex] = useState(0);
+
   return (
-    <section id="about" className="py-24 border-t border-current/10 relative z-10">
+    <section id="about" style={{ contain: 'layout style' }} className="py-24 border-t border-current/10 relative z-10">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-20 reveal-on-scroll">
           <div className="lg:col-span-7 space-y-6">
@@ -57,7 +57,7 @@ export default function AboutSection({
 
             <button
               onClick={() => setIsJoinTeamModalOpen(true)}
-              className="group relative inline-flex items-center h-14 rounded-full bg-[#1C1C1F] dark:bg-white text-white dark:text-[#0E0E10] pr-7 pl-[3.5rem] overflow-hidden shadow-xl transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-[1.03] hover:shadow-2xl cursor-pointer"
+              className="group relative inline-flex items-center h-14 rounded-full bg-[#1C1C1F] dark:bg-white text-white dark:text-[#0E0E10] pr-7 pl-[3.5rem] overflow-hidden shadow-xl transition-[transform,box-shadow] duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-[1.03] hover:shadow-2xl cursor-pointer"
             >
               <span className="absolute left-1.5 w-11 h-11 rounded-full bg-white dark:bg-[#0E0E10] text-[#0E0E10] dark:text-white flex items-center justify-center shadow-sm transition-transform duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105">
                 <ArrowRight className="w-4 h-4 transition-transform duration-400 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:translate-x-0.5" />
@@ -70,7 +70,10 @@ export default function AboutSection({
           </div>
 
           <div className="lg:col-span-8 w-full overflow-x-auto lg:overflow-visible pb-2">
-            <div className="flex flex-row items-stretch gap-2.5 sm:gap-3.5 h-[430px] sm:h-[490px] min-w-[640px] sm:min-w-0 w-full select-none">
+            <div
+              style={{ contain: 'layout style' }}
+              className="flex flex-row items-stretch gap-2.5 sm:gap-3.5 h-[430px] sm:h-[490px] min-w-[640px] sm:min-w-0 w-full select-none"
+            >
               {team.map((member, idx) => {
                 const isOpen = activeTeamIndex === idx;
 
@@ -87,11 +90,11 @@ export default function AboutSection({
                   >
                     <img
                       src={member.photo}
-                      loading="lazy"
                       decoding="async"
+                      fetchPriority="low"
                       alt={member.name}
                       style={{
-                        transform: isOpen ? 'scale(1)' : 'scale(1.08)',
+                        transform: isOpen ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 0, 0) scale(1.08)',
                         transition:
                           'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
                       }}
@@ -111,7 +114,7 @@ export default function AboutSection({
                     />
 
                     <div
-                      className={`absolute inset-0 flex items-end justify-center pb-6 pointer-events-none z-20 transition-all duration-300 ${
+                      className={`absolute inset-0 flex items-end justify-center pb-6 pointer-events-none z-20 transition-[transform,opacity] duration-300 ${
                         isOpen ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
                       }`}
                     >
@@ -124,14 +127,14 @@ export default function AboutSection({
                     </div>
 
                     <div
-                      className={`absolute inset-0 z-20 p-5 sm:p-7 flex flex-col justify-between transition-all duration-500 ${
+                      className={`absolute inset-0 z-20 p-5 sm:p-7 flex flex-col justify-between transition-[transform,opacity] duration-500 ${
                         isOpen
                           ? 'opacity-100 translate-y-0 pointer-events-auto delay-75'
                           : 'opacity-0 translate-y-4 pointer-events-none'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2" onClick={(e) => e.stopPropagation()}>
-                        <span className="px-3.5 py-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-tight shadow-sm">
+                        <span className={`px-3.5 py-1.5 rounded-full bg-black/45 ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white text-xs font-semibold tracking-tight shadow-sm`}>
                           {member.funkyBgRole.charAt(0) + member.funkyBgRole.slice(1).toLowerCase()}
                         </span>
                       </div>
@@ -155,7 +158,7 @@ export default function AboutSection({
                             href={member.socials.linkedin}
                             target="_blank"
                             rel="noreferrer"
-                            className="w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-300"
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="LinkedIn"
                           >
                             <Linkedin className="w-3.5 h-3.5" />
@@ -164,7 +167,7 @@ export default function AboutSection({
                             href={member.socials.instagram}
                             target="_blank"
                             rel="noreferrer"
-                            className="w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-300"
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="Instagram"
                           >
                             <Instagram className="w-3.5 h-3.5" />
@@ -173,14 +176,14 @@ export default function AboutSection({
                             href={member.socials.github}
                             target="_blank"
                             rel="noreferrer"
-                            className="w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-300"
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="GitHub"
                           >
                             <Github className="w-3.5 h-3.5" />
                           </a>
                           <a
                             href={`mailto:${BRAND_CONFIG.email}`}
-                            className="w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-300"
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="Email"
                           >
                             <Globe className="w-3.5 h-3.5" />
@@ -197,4 +200,6 @@ export default function AboutSection({
       </div>
     </section>
   );
-}
+});
+
+export default AboutSection;

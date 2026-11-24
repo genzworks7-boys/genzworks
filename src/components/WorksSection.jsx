@@ -1,10 +1,88 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Globe, ArrowUpRight } from 'lucide-react';
 import { FEATURED_PRODUCTS_STACK } from '../data/products';
 
-export default function WorksSection({ stackProgress = [] }) {
+const WorksSection = React.memo(function WorksSection() {
+  const sectionRef = useRef(null);
+  const outerRefs = useRef([]);
+  const innerRefs = useRef([]);
+  const shadeRefs = useRef([]);
+
+  // Self-contained GPU scroll depth listener: only active when #works is near viewport, read-then-write batched, zero React re-renders
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let inViewport = false;
+    let ticking = false;
+
+    const updateCards = () => {
+      ticking = false;
+      if (!inViewport) return;
+
+      const cards = outerRefs.current;
+      const count = cards.length;
+      if (count === 0) return;
+
+      // Phase 1: Batch ALL geometric reads first (zero layout thrashing)
+      const tops = new Array(count);
+      for (let i = 0; i < count; i++) {
+        tops[i] = cards[i] ? cards[i].getBoundingClientRect().top : 0;
+      }
+
+      // Phase 2: Batch ALL GPU compositor-only writes (transform & opacity — zero CSS filter surface passes)
+      for (let idx = 0; idx < count; idx++) {
+        let coveredDepth = 0;
+        for (let j = idx + 1; j < count; j++) {
+          const nextStickyTop = 104 + j * 22;
+          const distance = tops[j] - nextStickyTop;
+          const ratio = Math.max(0, Math.min(1, 1 - distance / 420));
+          coveredDepth += ratio;
+        }
+
+        const scaleVal = Math.max(0.84, 1 - coveredDepth * 0.042);
+        const brightnessVal = Math.max(0.45, 1 - coveredDepth * 0.16);
+
+        const innerCard = innerRefs.current[idx];
+        if (innerCard) {
+          innerCard.style.transform = `translate3d(0, 0, 0) scale(${scaleVal})`;
+        }
+        const shadeLayer = shadeRefs.current[idx];
+        if (shadeLayer) {
+          shadeLayer.style.opacity = (1 - brightnessVal).toFixed(3);
+        }
+      }
+    };
+
+    const onScroll = () => {
+      if (!inViewport || ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateCards);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inViewport = entry.isIntersecting;
+        if (inViewport) {
+          requestAnimationFrame(updateCards);
+        }
+      },
+      { rootMargin: '250px 0px 250px 0px' }
+    );
+
+    io.observe(section);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
   return (
-    <section id="works" className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
+    <section id="works" ref={sectionRef} className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-current/10 gap-6 reveal-on-scroll">
         <div>
           <div className="inline-flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">
@@ -23,17 +101,15 @@ export default function WorksSection({ stackProgress = [] }) {
         </div>
       </div>
 
-      {/* Exact Scroll-Stack Card Animation from Video */}
+      {/* Exact Scroll-Stack Card Animation */}
       <div className="mt-14 relative max-w-[1120px] mx-auto pb-16">
         {FEATURED_PRODUCTS_STACK.map((slide, index) => {
-          const depth = stackProgress[index] || 0;
-          const scaleVal = Math.max(0.84, 1 - depth * 0.042);
-          const brightnessVal = Math.max(0.45, 1 - depth * 0.16);
           const stickyTop = 104 + index * 22;
 
           return (
             <div
               key={slide.id}
+              ref={(el) => (outerRefs.current[index] = el)}
               style={{
                 top: `${stickyTop}px`,
                 zIndex: index + 10
@@ -42,11 +118,11 @@ export default function WorksSection({ stackProgress = [] }) {
             >
               <div
                 id={`stack-card-inner-${index}`}
+                ref={(el) => (innerRefs.current[index] = el)}
                 style={{
-                  transform: `scale(${scaleVal})`,
-                  filter: `brightness(${brightnessVal})`,
+                  transform: 'translate3d(0, 0, 0) scale(1)',
                   transformOrigin: 'top center',
-                  willChange: 'transform, filter'
+                  willChange: 'transform'
                 }}
                 className="relative w-full h-[360px] sm:h-[490px] rounded-[28px] sm:rounded-[36px] overflow-hidden border border-white/15 bg-[#0B0B10] shadow-[0_-18px_50px_rgba(0,0,0,0.45),0_30px_70px_rgba(0,0,0,0.4)] group"
               >
@@ -123,6 +199,13 @@ export default function WorksSection({ stackProgress = [] }) {
                     </div>
                   </div>
                 </div>
+
+                {/* Pure GPU alpha-composited depth dimming shade (replaces expensive CSS filter brightness repaints) */}
+                <div
+                  ref={(el) => (shadeRefs.current[index] = el)}
+                  style={{ opacity: 0, willChange: 'opacity' }}
+                  className="absolute inset-0 bg-black pointer-events-none z-40"
+                />
               </div>
             </div>
           );
@@ -130,4 +213,6 @@ export default function WorksSection({ stackProgress = [] }) {
       </div>
     </section>
   );
-}
+});
+
+export default WorksSection;
