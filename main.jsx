@@ -1192,9 +1192,9 @@ export default function App() {
 
       if (footerBrandRef.current) {
         const fRect = footerBrandRef.current.getBoundingClientRect();
-        if (fRect.top <= window.innerHeight * 0.96) {
+        if (fRect.top <= window.innerHeight * 1.05) {
           setFooterBrandVisible(true);
-        } else if (fRect.top > window.innerHeight * 1.12) {
+        } else if (fRect.top > window.innerHeight * 1.15) {
           setFooterBrandVisible(false);
         }
       }
@@ -1733,18 +1733,16 @@ export default function App() {
           background: linear-gradient(
             180deg,
             #FFFFFF 0%,
-            #F5F5F7 20%,
-            #D1D1D6 42%,
-            #8E8E93 68%,
-            #48484A 88%,
-            #2C2C2E 100%
+            #F5F5F7 25%,
+            #E4E4E7 50%,
+            #A1A1AA 75%,
+            #71717A 100%
           );
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
           display: inline-block;
-          padding-bottom: 0.12em;
-          margin-bottom: -0.12em;
+          padding-bottom: 0.08em;
           will-change: transform, opacity;
         }
         .footer-gradient-text:hover {
@@ -3124,7 +3122,7 @@ export default function App() {
       </section>
 
       {/* SIMPLE, ULTRA-PREMIUM STUDIO CONTACT & FOOTER */}
-      <footer id="contact" className="relative z-10 bg-[#08080A] text-[#F5F5F3] pt-24 sm:pt-32 pb-28 sm:pb-32 rounded-t-[40px] sm:rounded-t-[64px] mt-12 overflow-hidden">
+      <footer id="contact" className="relative z-10 bg-[#08080A] text-[#F5F5F3] pt-24 sm:pt-32 pb-14 sm:pb-20 rounded-t-[40px] sm:rounded-t-[64px] mt-12 overflow-hidden">
         <div className="max-w-[1280px] mx-auto px-6 sm:px-12">
           
           {/* Main Contact Split — Clean, Spacious & Refined */}
@@ -3387,7 +3385,7 @@ export default function App() {
           </div>
 
           {/* Clean Legal & Copyright Bar */}
-          <div className="pt-8 pb-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+          <div className="pt-8 pb-6 sm:pb-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400 border-b border-white/5">
             <div className="flex items-center gap-2.5">
               <img src="/logo.png" alt="GENZWORKS Studio Logo" className="w-5 h-5 object-contain" />
               <span>© {BRAND_CONFIG.year.replace('®', '')} {BRAND_CONFIG.brandName} Studio. All rights reserved.</span>
@@ -3419,7 +3417,7 @@ export default function App() {
         {/* Giant Edge-to-Edge Scroll-Triggered Gradient "GenzWorks®" Wordmark Reveal */}
         <div
           ref={footerBrandRef}
-          className="relative z-10 w-full pt-6 sm:pt-8 pb-20 sm:pb-28 px-1 sm:px-4 select-none flex items-center justify-center"
+          className="relative z-10 w-full pt-10 sm:pt-14 md:pt-16 pb-16 sm:pb-20 md:pb-24 px-4 sm:px-6 md:px-8 select-none flex items-center justify-center overflow-visible"
         >
           {/* Apple Monochromatic Soft White Spotlight Glow behind Wordmark */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-0">
@@ -3432,17 +3430,17 @@ export default function App() {
             />
           </div>
 
-          <div className="relative z-10 inline-flex items-start justify-center leading-[1.08] sm:leading-[1.05] tracking-[-0.052em] font-extrabold text-[11.8vw] sm:text-[12.4vw] lg:text-[12.8vw]">
+          <div className="relative z-10 inline-flex items-start justify-center leading-[1.12] sm:leading-[1.1] tracking-[-0.045em] font-extrabold text-[11vw] sm:text-[11.8vw] lg:text-[12.2vw]">
             {"GenzWorks".split("").map((char, index) => {
               const isLast = index === "GenzWorks".length - 1;
               return (
                 <span
                   key={index}
-                  className={`inline-block py-1 sm:py-2 ${isLast ? 'relative' : ''}`}
+                  className={`inline-block py-1 sm:py-2 ${isLast ? 'relative pr-3 sm:pr-4 md:pr-5' : ''}`}
                 >
                   <span
                     style={{
-                      transform: footerBrandVisible ? 'translateY(0px) scale(1)' : 'translateY(52px) scale(0.96)',
+                      transform: footerBrandVisible ? 'translateY(0px) scale(1)' : 'translateY(40px) scale(0.96)',
                       opacity: footerBrandVisible ? 1 : 0,
                       transition: `transform 1.15s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.045}s, opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.045}s`
                     }}
@@ -3454,11 +3452,11 @@ export default function App() {
                   {isLast && (
                     <span
                       style={{
-                        transform: footerBrandVisible ? 'translateY(0px) scale(1)' : 'translateY(24px) scale(0.6)',
+                        transform: footerBrandVisible ? 'translateY(0px) scale(1)' : 'translateY(16px) scale(0.7)',
                         opacity: footerBrandVisible ? 1 : 0,
                         transition: 'transform 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.42s, opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.42s'
                       }}
-                      className="absolute -top-2 sm:-top-3.5 md:-top-5 -right-1.5 sm:-right-3 text-[2.8vw] sm:text-[2.2vw] lg:text-[1.9vw] font-bold footer-gradient-text hover:scale-125 transition-transform duration-300 cursor-default select-none pointer-events-auto leading-none"
+                      className="absolute top-1 sm:top-2 md:top-3 right-0 text-[2.2vw] sm:text-[1.8vw] lg:text-[1.4vw] font-bold text-zinc-300/90 hover:text-white hover:scale-125 transition-all duration-300 cursor-default select-none pointer-events-auto leading-none"
                       title="Copyright © GENZWORKS Studio"
                     >
                       ©
