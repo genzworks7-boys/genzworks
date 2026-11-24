@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Globe } from 'lucide-react';
 import { BRAND_CONFIG, Instagram, Linkedin, Github } from '../data/brand';
 
@@ -8,6 +8,7 @@ const AboutSection = React.memo(function AboutSection({
   setIsJoinTeamModalOpen
 }) {
   const [activeTeamIndex, setActiveTeamIndex] = useState(0);
+  const pointerStartRef = useRef({ x: 0, y: 0 });
 
   // Gently pre-decode team portraits in browser idle time after Hero reveals so scrolling to #about has 0ms decode lag
   useEffect(() => {
@@ -126,13 +127,24 @@ const AboutSection = React.memo(function AboutSection({
                 return (
                   <div
                     key={member.id}
-                    onClick={() => setActiveTeamIndex(idx)}
-                    onMouseEnter={() => setActiveTeamIndex(idx)}
-                    style={{
-                      flex: isOpen ? '4.6 1 0%' : '1 1 0%',
-                      transition: 'flex 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
+                    onPointerDown={(e) => {
+                      pointerStartRef.current = { x: e.clientX, y: e.clientY };
                     }}
-                    className="group/card relative h-full rounded-[24px] sm:rounded-[28px] overflow-hidden cursor-pointer bg-[#141417] shadow-lg"
+                    onPointerUp={(e) => {
+                      if (e.pointerType === 'touch') {
+                        const dx = Math.abs(e.clientX - pointerStartRef.current.x);
+                        const dy = Math.abs(e.clientY - pointerStartRef.current.y);
+                        if (dx < 10 && dy < 10) setActiveTeamIndex(idx);
+                      }
+                    }}
+                    onClick={() => setActiveTeamIndex(idx)}
+                    onPointerEnter={(e) => {
+                      if (e.pointerType !== 'touch') setActiveTeamIndex(idx);
+                    }}
+                    style={{
+                      flex: isOpen ? '4.6 1 0%' : '1 1 0%'
+                    }}
+                    className="team-card-accordion group/card relative h-full rounded-[24px] sm:rounded-[28px] overflow-hidden cursor-pointer bg-[#141417] shadow-lg"
                   >
                     {/* Base color portrait */}
                     <img
@@ -140,12 +152,9 @@ const AboutSection = React.memo(function AboutSection({
                       decoding="async"
                       alt={member.name}
                       style={{
-                        transform: isOpen ? 'scale(1)' : 'scale(1.08)',
-                        transition: hasBakedGray
-                          ? 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)'
-                          : 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
+                        transform: isOpen ? 'scale(1)' : 'scale(1.08)'
                       }}
-                      className={`absolute inset-0 w-full h-full object-cover object-top pointer-events-none ${
+                      className={`team-card-img absolute inset-0 w-full h-full object-cover object-top pointer-events-none ${
                         hasBakedGray
                           ? ''
                           : isOpen
@@ -154,7 +163,7 @@ const AboutSection = React.memo(function AboutSection({
                       }`}
                     />
 
-                    {/* Pre-baked monochrome overlay: pure GPU opacity fade replaces expensive live CSS grayscale RenderPass */}
+                    {/* Pre-baked monochrome overlay */}
                     {hasBakedGray && (
                       <img
                         src={member.grayPhoto}
@@ -163,16 +172,14 @@ const AboutSection = React.memo(function AboutSection({
                         aria-hidden="true"
                         style={{
                           opacity: isOpen ? 0 : 1,
-                          transform: isOpen ? 'scale(1)' : 'scale(1.08)',
-                          transition:
-                            'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)'
+                          transform: isOpen ? 'scale(1)' : 'scale(1.08)'
                         }}
-                        className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
+                        className="team-card-img absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
                       />
                     )}
 
                     <div
-                      className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${
+                      className={`absolute inset-0 pointer-events-none transition-opacity duration-300 lg:duration-500 ${
                         isOpen
                           ? 'bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-100'
                           : 'bg-gradient-to-t from-black/80 via-black/15 to-transparent opacity-90'
@@ -180,7 +187,7 @@ const AboutSection = React.memo(function AboutSection({
                     />
 
                     <div
-                      className={`absolute inset-0 flex items-end justify-center pb-6 pointer-events-none z-20 transition-[transform,opacity] duration-300 ${
+                      className={`absolute inset-0 flex items-end justify-center pb-6 pointer-events-none z-20 transition-[transform,opacity] duration-200 lg:duration-300 ${
                         isOpen ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
                       }`}
                     >
@@ -193,14 +200,14 @@ const AboutSection = React.memo(function AboutSection({
                     </div>
 
                     <div
-                      className={`absolute inset-0 z-20 p-5 sm:p-7 flex flex-col justify-between transition-[transform,opacity] duration-500 ${
+                      className={`team-card-overlay absolute inset-0 z-20 p-5 sm:p-7 flex flex-col justify-between ${
                         isOpen
-                          ? 'opacity-100 translate-y-0 pointer-events-auto delay-75'
+                          ? 'opacity-100 translate-y-0 pointer-events-auto lg:delay-75'
                           : 'opacity-0 translate-y-4 pointer-events-none'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2" onClick={(e) => e.stopPropagation()}>
-                        <span className={`px-3.5 py-1.5 rounded-full bg-black/45 ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white text-xs font-semibold tracking-tight shadow-sm`}>
+                        <span className={`px-3.5 py-1.5 rounded-full bg-black/50 ${isOpen ? 'lg:backdrop-blur-md' : ''} border border-white/20 text-white text-xs font-semibold tracking-tight shadow-sm`}>
                           {member.funkyBgRole.charAt(0) + member.funkyBgRole.slice(1).toLowerCase()}
                         </span>
                       </div>
@@ -224,7 +231,7 @@ const AboutSection = React.memo(function AboutSection({
                             href={member.socials.linkedin}
                             target="_blank"
                             rel="noreferrer"
-                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'lg:backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="LinkedIn"
                           >
                             <Linkedin className="w-3.5 h-3.5" />
@@ -233,7 +240,7 @@ const AboutSection = React.memo(function AboutSection({
                             href={member.socials.instagram}
                             target="_blank"
                             rel="noreferrer"
-                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'lg:backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="Instagram"
                           >
                             <Instagram className="w-3.5 h-3.5" />
@@ -242,14 +249,14 @@ const AboutSection = React.memo(function AboutSection({
                             href={member.socials.github}
                             target="_blank"
                             rel="noreferrer"
-                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'lg:backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="GitHub"
                           >
                             <Github className="w-3.5 h-3.5" />
                           </a>
                           <a
                             href={`mailto:${BRAND_CONFIG.email}`}
-                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
+                            className={`w-9 h-9 rounded-full bg-white/15 hover:bg-white hover:text-black ${isOpen ? 'lg:backdrop-blur-md' : ''} border border-white/20 text-white flex items-center justify-center transition-colors duration-300`}
                             title="Email"
                           >
                             <Globe className="w-3.5 h-3.5" />
