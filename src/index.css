@@ -8,7 +8,22 @@
     padding: 0;
     overflow-x: clip;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+}
+
+/* GPU layer acceleration & smooth compositing */
+.gpu-layer {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize heavy offscreen sections to eliminate scroll stutter (Framer 60fps standard) */
+#why-us, #process, #about, #services {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 850px;
 }
 
 /* Scroll reveal helper classes */

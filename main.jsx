@@ -822,7 +822,16 @@ export default function App() {
   const [phoneCopied, setPhoneCopied] = useState(false);
   const [toast, setToast] = useState(null);
 
-  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
+  // Performance Optimization Refs for 60/120fps Framer-like Smoothness
+  const cursorDotRef = useRef(null);
+  const activeNavRef = useRef('home');
+  const processFillRef = useRef(0.2);
+  const stackProgressRef = useRef([0, 0]);
+  const activeWhyIndexRef = useRef(0);
+  const footerBrandVisibleRef = useRef(false);
+  const isScrolledRef = useRef(false);
+  const heroVisibleRef = useRef(true);
+  const canvasRectRef = useRef(null);
 
   const processRef = useRef(null);
   const [processFill, setProcessFill] = useState(0.2);
@@ -966,13 +975,14 @@ export default function App() {
     return () => media.removeEventListener('change', apply);
   }, [themeChoice]);
 
-  // High-DPI Retina Particle Text ("GenzWorks")
+  // High-DPI Retina Particle Text ("GenzWorks") with Smart Offscreen Pause
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return;
-    let animationFrameId;
+    let animationFrameId = null;
+    let isRunning = false;
 
     const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2.5);
 
@@ -982,6 +992,7 @@ export default function App() {
       : ['#09090B', '#09090B', '#18181B', '#18181B', '#27272A'];
 
     const buildParticles = () => {
+      canvasRectRef.current = null;
       const container = canvas.parentElement;
       if (!container) return;
       const width = container.clientWidth;
@@ -1015,9 +1026,9 @@ export default function App() {
 
       const imageData = offCtx.getImageData(0, 0, width, height).data;
 
-      // Ultra-fine sampling: on mobile step = 2 (high density, smooth letterforms!), desktop step = 2.6
-      const step = isMobile ? 2 : 2.6;
-      const particleRadius = isMobile ? 0.95 : 1.15;
+      // High-performance particle sampling: smooth 60fps on mobile with 2.8 step, 2.5 on desktop
+      const step = isMobile ? 2.8 : 2.5;
+      const particleRadius = isMobile ? 1.3 : 1.15;
       const nextParticles = [];
 
       for (let y = 0; y < height; y += step) {
@@ -1047,6 +1058,11 @@ export default function App() {
     let waveFrame = 0;
 
     const renderLoop = () => {
+      if (!heroVisibleRef.current) {
+        isRunning = false;
+        animationFrameId = null;
+        return;
+      }
       waveFrame += 0.024;
       
       ctx.save();
@@ -1094,6 +1110,37 @@ export default function App() {
       animationFrameId = requestAnimationFrame(renderLoop);
     };
 
+    const startLoop = () => {
+      if (!isRunning && heroVisibleRef.current) {
+        isRunning = true;
+        renderLoop();
+      }
+    };
+
+    const stopLoop = () => {
+      isRunning = false;
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => {
+        heroVisibleRef.current = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      },
+      { threshold: 0.01 }
+    );
+
+    if (canvas.parentElement) {
+      heroObserver.observe(canvas.parentElement);
+    }
+
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
         buildParticles();
@@ -1102,90 +1149,146 @@ export default function App() {
       buildParticles();
     }
 
-    renderLoop();
+    startLoop();
     window.addEventListener('resize', buildParticles);
 
     return () => {
+      heroObserver.disconnect();
       window.removeEventListener('resize', buildParticles);
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
     };
   }, [resolvedTheme]);
 
   useEffect(() => {
-    const onScroll = () => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      canvasRectRef.current = null; // Invalidate cached rect on scroll
+
+      // 1. Process Timeline Fill (only compute if process section is within viewport)
       if (processRef.current) {
         const rect = processRef.current.getBoundingClientRect();
         const vh = window.innerHeight;
-        const progress = (vh * 0.65 - rect.top) / (rect.height * 0.85);
-        setProcessFill(Math.max(0.05, Math.min(1, progress)));
+        if (rect.bottom >= -100 && rect.top <= vh + 100) {
+          const rawProgress = (vh * 0.65 - rect.top) / (rect.height * 0.85);
+          const clamped = Math.max(0.05, Math.min(1, rawProgress));
+          const quantized = Math.round(clamped * 100) / 100;
+          if (Math.abs(quantized - processFillRef.current) >= 0.01) {
+            processFillRef.current = quantized;
+            setProcessFill(quantized);
+          }
+        }
       }
 
+      // 2. Active Nav Link (check current section)
       const ids = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
       for (const id of ids) {
         const el = document.getElementById(id);
         if (el) {
           const r = el.getBoundingClientRect();
           if (r.top <= 240 && r.bottom >= 240) {
-            setActiveNav(id);
+            if (activeNavRef.current !== id) {
+              activeNavRef.current = id;
+              setActiveNav(id);
+            }
             break;
           }
         }
       }
 
-      // Compute smooth 0..1 overlap progress for each card in the 3D Scroll Stack
-      const stackCards = document.querySelectorAll('.product-stack-card');
-      if (stackCards.length > 0) {
-        const nextProgress = Array.from(stackCards).map((card, idx) => {
-          let coveredDepth = 0;
-          for (let j = idx + 1; j < stackCards.length; j++) {
-            const nextRect = stackCards[j].getBoundingClientRect();
-            const nextStickyTop = 104 + j * 22;
-            const distance = nextRect.top - nextStickyTop;
-            const ratio = Math.max(0, Math.min(1, 1 - distance / 420));
-            coveredDepth += ratio;
+      // 3. 3D Scroll Stack Card Depth (only calculate when #works is near viewport)
+      const worksEl = document.getElementById('works');
+      if (worksEl) {
+        const wRect = worksEl.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (wRect.bottom >= -200 && wRect.top <= vh + 200) {
+          const stackCards = document.querySelectorAll('.product-stack-card');
+          if (stackCards.length > 0) {
+            let changed = false;
+            const nextProgress = Array.from(stackCards).map((card, idx) => {
+              let coveredDepth = 0;
+              for (let j = idx + 1; j < stackCards.length; j++) {
+                const nextRect = stackCards[j].getBoundingClientRect();
+                const nextStickyTop = 104 + j * 22;
+                const distance = nextRect.top - nextStickyTop;
+                const ratio = Math.max(0, Math.min(1, 1 - distance / 420));
+                coveredDepth += ratio;
+              }
+              const oldDepth = stackProgressRef.current[idx] || 0;
+              if (Math.abs(coveredDepth - oldDepth) >= 0.01) {
+                changed = true;
+              }
+              return coveredDepth;
+            });
+            if (changed) {
+              stackProgressRef.current = nextProgress;
+              setStackProgress(nextProgress);
+            }
           }
-          return coveredDepth;
-        });
-        setStackProgress(nextProgress);
+        }
       }
 
+      // 4. Why Us Pillar Card Navigation
       const whyCards = document.querySelectorAll('.why-pillar-card');
-      const stickyNav = document.getElementById('why-sticky-nav');
-      const triggerY = stickyNav
-        ? stickyNav.getBoundingClientRect().top + 90
-        : window.innerHeight * 0.34;
+      if (whyCards.length > 0) {
+        const stickyNav = document.getElementById('why-sticky-nav');
+        const triggerY = stickyNav
+          ? stickyNav.getBoundingClientRect().top + 90
+          : window.innerHeight * 0.34;
 
-      let currentWhy = 0;
-      let smallestDist = Infinity;
-      whyCards.forEach((card, idx) => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top <= triggerY + 80) {
-          currentWhy = idx;
-        } else if (idx === 0 && rect.top > triggerY + 80) {
-          currentWhy = 0;
+        let currentWhy = 0;
+        let smallestDist = Infinity;
+        whyCards.forEach((card, idx) => {
+          const rect = card.getBoundingClientRect();
+          if (rect.top <= triggerY + 80) {
+            currentWhy = idx;
+          } else if (idx === 0 && rect.top > triggerY + 80) {
+            currentWhy = 0;
+          }
+          const dist = Math.abs(rect.top - triggerY);
+          if (dist < smallestDist && rect.bottom > triggerY) {
+            smallestDist = dist;
+          }
+        });
+        if (activeWhyIndexRef.current !== currentWhy) {
+          activeWhyIndexRef.current = currentWhy;
+          setActiveWhyIndex(currentWhy);
         }
-        const dist = Math.abs(rect.top - triggerY);
-        if (dist < smallestDist && rect.bottom > triggerY) {
-          smallestDist = dist;
-        }
-      });
-      setActiveWhyIndex(currentWhy);
+      }
 
+      // 5. Giant Footer Brand Reveal
       if (footerBrandRef.current) {
         const fRect = footerBrandRef.current.getBoundingClientRect();
-        if (fRect.top <= window.innerHeight * 1.05) {
+        const vh = window.innerHeight;
+        if (fRect.top <= vh * 1.05 && !footerBrandVisibleRef.current) {
+          footerBrandVisibleRef.current = true;
           setFooterBrandVisible(true);
-        } else if (fRect.top > window.innerHeight * 1.15) {
+        } else if (fRect.top > vh * 1.15 && footerBrandVisibleRef.current) {
+          footerBrandVisibleRef.current = false;
           setFooterBrandVisible(false);
         }
       }
 
-      // Track scroll state for dynamic floating dock collapse smoothly
-      const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 80);
+      // 6. Dock Collapse
+      const shouldCollapse = window.scrollY > 80;
+      if (isScrolledRef.current !== shouldCollapse) {
+        isScrolledRef.current = shouldCollapse;
+        setIsScrolled(shouldCollapse);
+      }
     };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    handleScroll();
     return () => {
       window.removeEventListener('scroll', onScroll);
       if (dockHoverTimeoutRef.current) clearTimeout(dockHoverTimeoutRef.current);
@@ -1204,15 +1307,32 @@ export default function App() {
 
   useEffect(() => {
     const onMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-      if (canvasRef.current) {
-        const rect = canvasRef.current.getBoundingClientRect();
+      if (cursorDotRef.current) {
+        cursorDotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+        cursorDotRef.current.style.opacity = '1';
+      }
+      if (heroVisibleRef.current && canvasRef.current) {
+        if (!canvasRectRef.current) {
+          canvasRectRef.current = canvasRef.current.getBoundingClientRect();
+        }
+        const rect = canvasRectRef.current;
         mouseRef.current.x = e.clientX - rect.left;
         mouseRef.current.y = e.clientY - rect.top;
       }
     };
+
+    const onLeave = () => {
+      if (cursorDotRef.current) {
+        cursorDotRef.current.style.opacity = '0';
+      }
+    };
+
     window.addEventListener('mousemove', onMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMove);
+    document.addEventListener('mouseleave', onLeave, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseleave', onLeave);
+    };
   }, []);
 
   // Smooth Scroll Reveal Intersection Observer
@@ -1765,11 +1885,11 @@ export default function App() {
 
       {/* Custom Red Point Cursor */}
       <div
-        className="fixed pointer-events-none z-[9999] w-4 h-4 rounded-full bg-[#FF4F18] shadow-[0_0_16px_rgba(255,79,24,0.95)] -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 ease-out hidden lg:block"
+        ref={cursorDotRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9999] w-4 h-4 rounded-full bg-[#FF4F18] shadow-[0_0_16px_rgba(255,79,24,0.95)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-150 ease-out hidden lg:block opacity-0"
         style={{
-          left: `${mousePos.x}px`,
-          top: `${mousePos.y}px`,
-          opacity: mousePos.x > 0 ? 1 : 0
+          willChange: 'transform',
+          transform: 'translate3d(-100px, -100px, 0)'
         }}
       />
 
@@ -2479,7 +2599,8 @@ export default function App() {
                     transform: `scale(${scaleVal})`,
                     filter: `brightness(${brightnessVal})`,
                     transformOrigin: 'top center',
-                    transition: 'transform 0.18s ease-out, filter 0.18s ease-out'
+                    transition: 'transform 0.18s ease-out, filter 0.18s ease-out',
+                    willChange: 'transform, filter'
                   }}
                   className="relative w-full h-[360px] sm:h-[490px] rounded-[28px] sm:rounded-[36px] overflow-hidden border border-white/15 bg-[#0B0B10] shadow-[0_-18px_50px_rgba(0,0,0,0.45),0_30px_70px_rgba(0,0,0,0.4)] group"
                 >
@@ -2500,6 +2621,8 @@ export default function App() {
 
                   <img
                     src={slide.image}
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       if (slide.fallbackImage) {
                         e.currentTarget.onerror = null;
@@ -2863,6 +2986,8 @@ export default function App() {
                     >
                       <img
                         src={member.photo}
+                        loading="lazy"
+                        decoding="async"
                         alt={member.name}
                         style={{
                           transform: isOpen ? 'scale(1)' : 'scale(1.08)',
@@ -3005,6 +3130,8 @@ export default function App() {
                 <div className="relative w-full h-[320px] sm:h-[360px] rounded-[26px] overflow-hidden bg-black/40">
                   <img
                     src={s.image}
+                    loading="lazy"
+                    decoding="async"
                     alt={s.title}
                     style={{
                       transform: isCardHovered ? 'scale(1.08) translateY(-4px)' : 'scale(1) translateY(0px)',
