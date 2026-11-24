@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Copy, ArrowUpRight } from 'lucide-react';
+import { Check, Copy, ArrowUpRight, Mail } from 'lucide-react';
 import { BRAND_CONFIG, WhatsApp } from '../data/brand';
 
 export default function ContactFooterSection({
@@ -50,15 +50,25 @@ export default function ContactFooterSection({
                 <span className="text-xs uppercase tracking-widest text-zinc-500 block mb-2 font-mono-tech">
                   Direct Email
                 </span>
-                <button
-                  onClick={copyStudioEmail}
-                  className="group inline-flex items-center gap-3 text-2xl sm:text-3xl font-bold tracking-tight text-white hover:text-[#D9FF3F] transition-colors"
-                >
-                  <span>{BRAND_CONFIG.email}</span>
-                  <span className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-[#D9FF3F] group-hover:text-black flex items-center justify-center transition-all">
-                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  </span>
-                </button>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={copyStudioEmail}
+                    className="group inline-flex items-center gap-3 text-2xl sm:text-3xl font-bold tracking-tight text-white hover:text-[#D9FF3F] transition-colors"
+                  >
+                    <span>{BRAND_CONFIG.email}</span>
+                    <span className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-[#D9FF3F] group-hover:text-black flex items-center justify-center transition-all" title="Copy Email">
+                      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    </span>
+                  </button>
+                  <a
+                    href={`mailto:${BRAND_CONFIG.email}`}
+                    title={`Send email directly to ${BRAND_CONFIG.email}`}
+                    aria-label={`Send email directly to ${BRAND_CONFIG.email}`}
+                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D9FF3F] hover:text-black text-white flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-md shrink-0"
+                  >
+                    <Mail className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
 
               <div>

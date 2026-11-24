@@ -19,12 +19,6 @@
   perspective: 1000px;
 }
 
-/* Optimize heavy offscreen sections to eliminate scroll stutter (Framer 60fps standard) */
-#why-us, #process, #about, #services {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 850px;
-}
-
 /* Scroll reveal helper classes */
 .reveal-init {
   opacity: 0;
