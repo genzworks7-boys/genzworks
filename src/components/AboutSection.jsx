@@ -1,15 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Globe } from 'lucide-react';
 import { BRAND_CONFIG, Instagram, Linkedin, Github } from '../data/brand';
 
 const AboutSection = React.memo(function AboutSection({
   team,
+  heroRevealed,
   setIsJoinTeamModalOpen
 }) {
   const [activeTeamIndex, setActiveTeamIndex] = useState(0);
 
+  // Gently pre-decode team portraits in browser idle time after Hero reveals so scrolling to #about has 0ms decode lag
+  useEffect(() => {
+    if (!heroRevealed || typeof window === 'undefined') return;
+    let cancelled = false;
+
+    const scheduleIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 250));
+    const cancelIdle = window.cancelIdleCallback || clearTimeout;
+
+    const urls = [];
+    team.forEach((m) => {
+      if (m.photo) urls.push(m.photo);
+      if (m.grayPhoto) urls.push(m.grayPhoto);
+    });
+
+    let idx = 0;
+    let handle = null;
+
+    const decodeNext = () => {
+      if (cancelled || idx >= urls.length) return;
+      const src = urls[idx++];
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+      const onSettled = () => {
+        if (!cancelled && idx < urls.length) {
+          handle = scheduleIdle(decodeNext, { timeout: 1000 });
+        }
+      };
+      if (typeof img.decode === 'function') {
+        img.decode().then(onSettled, onSettled);
+      } else {
+        img.onload = onSettled;
+        img.onerror = onSettled;
+      }
+    };
+
+    handle = scheduleIdle(decodeNext, { timeout: 1000 });
+
+    return () => {
+      cancelled = true;
+      if (handle) cancelIdle(handle);
+    };
+  }, [heroRevealed, team]);
+
   return (
-    <section id="about" style={{ contain: 'layout style' }} className="py-24 border-t border-current/10 relative z-10">
+    <section id="about" className="py-24 border-t border-current/10 relative z-10">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-20 reveal-on-scroll">
           <div className="lg:col-span-7 space-y-6">
@@ -76,6 +121,7 @@ const AboutSection = React.memo(function AboutSection({
             >
               {team.map((member, idx) => {
                 const isOpen = activeTeamIndex === idx;
+                const hasBakedGray = Boolean(member.grayPhoto);
 
                 return (
                   <div
@@ -88,22 +134,42 @@ const AboutSection = React.memo(function AboutSection({
                     }}
                     className="group/card relative h-full rounded-[24px] sm:rounded-[28px] overflow-hidden cursor-pointer bg-[#141417] shadow-lg"
                   >
+                    {/* Base color portrait */}
                     <img
                       src={member.photo}
                       decoding="async"
-                      fetchPriority="low"
                       alt={member.name}
                       style={{
-                        transform: isOpen ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 0, 0) scale(1.08)',
-                        transition:
-                          'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
+                        transform: isOpen ? 'scale(1)' : 'scale(1.08)',
+                        transition: hasBakedGray
+                          ? 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)'
+                          : 'transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
                       }}
                       className={`absolute inset-0 w-full h-full object-cover object-top pointer-events-none ${
-                        isOpen
+                        hasBakedGray
+                          ? ''
+                          : isOpen
                           ? 'grayscale-0 brightness-100 contrast-100'
                           : 'grayscale brightness-90 contrast-110 group-hover/card:brightness-100'
                       }`}
                     />
+
+                    {/* Pre-baked monochrome overlay: pure GPU opacity fade replaces expensive live CSS grayscale RenderPass */}
+                    {hasBakedGray && (
+                      <img
+                        src={member.grayPhoto}
+                        decoding="async"
+                        alt=""
+                        aria-hidden="true"
+                        style={{
+                          opacity: isOpen ? 0 : 1,
+                          transform: isOpen ? 'scale(1)' : 'scale(1.08)',
+                          transition:
+                            'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)'
+                        }}
+                        className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
+                      />
+                    )}
 
                     <div
                       className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${

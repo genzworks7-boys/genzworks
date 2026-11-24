@@ -80,22 +80,27 @@ export function resetPhoto(id) {
   }
 }
 
-// Resolve final photo for a member
+// Resolve final photo (plus pre-baked grayscale variant for 0-filter GPU scroll) for a member
 export function resolveMemberPhoto(memberId, defaultFallbackUrl) {
   // 1. Check if user locked a photo in localStorage (via UI upload or URL)
   const saved = getSavedPhotos();
   if (saved && saved[memberId]) {
-    return { photo: saved[memberId], isLocked: true, source: 'localStorage' };
+    return { photo: saved[memberId], grayPhoto: null, isLocked: true, source: 'localStorage' };
   }
 
   // 2. Check if an image was placed in src/assets/team/ (checking aliases)
   const aliases = MEMBER_ALIASES[memberId] || [memberId.toLowerCase()];
   for (const alias of aliases) {
     if (assetMap[alias]) {
-      return { photo: assetMap[alias], isLocked: false, source: 'src/assets' };
+      return {
+        photo: assetMap[alias],
+        grayPhoto: assetMap[`${alias}-gray`] || null,
+        isLocked: false,
+        source: 'src/assets'
+      };
     }
   }
 
   // 3. Fallback to default URL
-  return { photo: defaultFallbackUrl, isLocked: false, source: 'default' };
+  return { photo: defaultFallbackUrl, grayPhoto: null, isLocked: false, source: 'default' };
 }

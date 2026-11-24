@@ -16,7 +16,7 @@ import FloatingDock from './src/components/FloatingDock';
 
 const RESOLVED_TEAM = INITIAL_TEAM.map((m) => {
   const resolved = resolveMemberPhoto(m.id, m.photo);
-  return { ...m, photo: resolved.photo };
+  return { ...m, photo: resolved.photo, grayPhoto: resolved.grayPhoto };
 });
 
 const NAV_SECTION_IDS = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
@@ -206,6 +206,7 @@ export default function App() {
 
           <AboutSection
             team={RESOLVED_TEAM}
+            heroRevealed={heroRevealed}
             setIsJoinTeamModalOpen={setIsJoinTeamModalOpen}
           />
 
