@@ -217,10 +217,10 @@ export default function App() {
 
       const imageData = offCtx.getImageData(0, 0, width, height).data;
 
-      // Ultra-efficient particle sampling: razor-sharp typography with ~1,200 particles for instant 120fps responsiveness
-      const step = isMobile ? 4.2 : 3.8;
-      const particleRadius = isMobile ? 1.7 : 1.5;
-      const nextBins = [[], [], [], []];
+      // Ultra-efficient particle sampling: razor-sharp typography with ~1,500 particles for instant responsiveness
+      const step = isMobile ? 3.6 : 3.4;
+      const particleRadius = isMobile ? 1.6 : 1.5;
+      const nextBins = Array.from({ length: palette.length }, () => []);
 
       for (let y = 0; y < height; y += step) {
         for (let x = 0; x < width; x += step) {
@@ -261,10 +261,15 @@ export default function App() {
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
       const bins = particlesRef.current;
+      if (!bins || !Array.isArray(bins)) {
+        ctx.restore();
+        animationFrameId = requestAnimationFrame(renderLoop);
+        return;
+      }
       const m = mouseRef.current;
       const radiusSq = m.radius * m.radius;
 
-      // Batch drawing by color: reduces fill() and beginPath() calls from ~1,500 to 4 per frame!
+      // Batch drawing by color: reduces fill() and beginPath() calls from ~1,500 to 5 per frame!
       for (let c = 0; c < bins.length; c++) {
         const bin = bins[c];
         if (!bin || bin.length === 0) continue;
@@ -367,21 +372,34 @@ export default function App() {
   useEffect(() => {
     let ticking = false;
 
+    // Cache elements once to prevent repeated DOM queries and layout thrashing
+    const sectionEls = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact']
+      .map((id) => ({ id, el: document.getElementById(id) }))
+      .filter((item) => item.el !== null);
+
+    const processEl = document.getElementById('process');
+    const processBar = document.getElementById('process-timeline-bar');
+    const processTxt = document.getElementById('process-timeline-text');
+    const worksEl = document.getElementById('works');
+    const stackCards = Array.from(document.querySelectorAll('.product-stack-card'));
+    const stackInners = stackCards.map((_, idx) => document.getElementById(`stack-card-inner-${idx}`));
+    const whySectionEl = document.getElementById('why-us');
+    const whyCards = Array.from(document.querySelectorAll('.why-pillar-card'));
+    const stickyWhyNav = document.getElementById('why-sticky-nav');
+
     const handleScroll = () => {
       canvasRectRef.current = null; // Invalidate cached rect on scroll
+      const vh = window.innerHeight;
 
       // 1. Process Timeline Fill (direct DOM updates for 60/120fps bar + quantized state for steps)
-      if (processRef.current) {
-        const rect = processRef.current.getBoundingClientRect();
-        const vh = window.innerHeight;
+      if (processEl) {
+        const rect = processEl.getBoundingClientRect();
         if (rect.bottom >= -100 && rect.top <= vh + 100) {
           const rawProgress = (vh * 0.65 - rect.top) / (rect.height * 0.85);
           const clamped = Math.max(0.05, Math.min(1, rawProgress));
           const pct = Math.round(clamped * 100);
-          const bar = document.getElementById('process-timeline-bar');
-          if (bar) bar.style.width = `${pct}%`;
-          const txt = document.getElementById('process-timeline-text');
-          if (txt) txt.textContent = `${pct}%`;
+          if (processBar) processBar.style.width = `${pct}%`;
+          if (processTxt) processTxt.textContent = `${pct}%`;
 
           // Quantize state update to 4 step thresholds only (0, 1, 2, 3)
           const stepIdx = Math.floor(clamped * 4);
@@ -393,28 +411,22 @@ export default function App() {
       }
 
       // 2. Active Nav Link (check current section)
-      const ids = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el) {
-          const r = el.getBoundingClientRect();
-          if (r.top <= 240 && r.bottom >= 240) {
-            if (activeNavRef.current !== id) {
-              activeNavRef.current = id;
-              setActiveNav(id);
-            }
-            break;
+      for (let i = 0; i < sectionEls.length; i++) {
+        const { id, el } = sectionEls[i];
+        const r = el.getBoundingClientRect();
+        if (r.top <= 240 && r.bottom >= 240) {
+          if (activeNavRef.current !== id) {
+            activeNavRef.current = id;
+            setActiveNav(id);
           }
+          break;
         }
       }
 
       // 3. 3D Scroll Stack Card Depth (direct GPU style updates, 0 React re-renders)
-      const worksEl = document.getElementById('works');
-      if (worksEl) {
+      if (worksEl && stackCards.length > 0) {
         const wRect = worksEl.getBoundingClientRect();
-        const vh = window.innerHeight;
         if (wRect.bottom >= -200 && wRect.top <= vh + 200) {
-          const stackCards = document.querySelectorAll('.product-stack-card');
           for (let idx = 0; idx < stackCards.length; idx++) {
             let coveredDepth = 0;
             for (let j = idx + 1; j < stackCards.length; j++) {
@@ -424,48 +436,43 @@ export default function App() {
               const ratio = Math.max(0, Math.min(1, 1 - distance / 420));
               coveredDepth += ratio;
             }
-            const innerCard = document.getElementById(`stack-card-inner-${idx}`);
+            const innerCard = stackInners[idx];
             if (innerCard) {
               const scaleVal = Math.max(0.84, 1 - coveredDepth * 0.042);
               const brightnessVal = Math.max(0.45, 1 - coveredDepth * 0.16);
-              innerCard.style.transform = `scale(${scaleVal})`;
+              innerCard.style.transform = `scale3d(${scaleVal}, ${scaleVal}, 1)`;
               innerCard.style.filter = `brightness(${brightnessVal})`;
             }
           }
         }
       }
 
-      // 4. Why Us Pillar Card Navigation (scoped check to eliminate layout recalculation when outside view)
-      const whyEl = document.getElementById('why-us');
-      if (whyEl) {
-        const wWhyRect = whyEl.getBoundingClientRect();
-        const vh = window.innerHeight;
-        if (wWhyRect.bottom >= -100 && wWhyRect.top <= vh + 100) {
-          const whyCards = document.querySelectorAll('.why-pillar-card');
-          if (whyCards.length > 0) {
-            const stickyNav = document.getElementById('why-sticky-nav');
-            const triggerY = stickyNav
-              ? stickyNav.getBoundingClientRect().top + 90
-              : vh * 0.34;
+      // 4. Why Us Pillar Card Navigation
+      if (whySectionEl && whyCards.length > 0) {
+        const wRect = whySectionEl.getBoundingClientRect();
+        if (wRect.bottom >= -100 && wRect.top <= vh + 100) {
+          const triggerY = stickyWhyNav
+            ? stickyWhyNav.getBoundingClientRect().top + 90
+            : vh * 0.34;
 
-            let currentWhy = 0;
-            let smallestDist = Infinity;
-            whyCards.forEach((card, idx) => {
-              const rect = card.getBoundingClientRect();
-              if (rect.top <= triggerY + 80) {
-                currentWhy = idx;
-              } else if (idx === 0 && rect.top > triggerY + 80) {
-                currentWhy = 0;
-              }
-              const dist = Math.abs(rect.top - triggerY);
-              if (dist < smallestDist && rect.bottom > triggerY) {
-                smallestDist = dist;
-              }
-            });
-            if (activeWhyIndexRef.current !== currentWhy) {
-              activeWhyIndexRef.current = currentWhy;
-              setActiveWhyIndex(currentWhy);
+          let currentWhy = 0;
+          let smallestDist = Infinity;
+          for (let idx = 0; idx < whyCards.length; idx++) {
+            const card = whyCards[idx];
+            const rect = card.getBoundingClientRect();
+            if (rect.top <= triggerY + 80) {
+              currentWhy = idx;
+            } else if (idx === 0 && rect.top > triggerY + 80) {
+              currentWhy = 0;
             }
+            const dist = Math.abs(rect.top - triggerY);
+            if (dist < smallestDist && rect.bottom > triggerY) {
+              smallestDist = dist;
+            }
+          }
+          if (activeWhyIndexRef.current !== currentWhy) {
+            activeWhyIndexRef.current = currentWhy;
+            setActiveWhyIndex(currentWhy);
           }
         }
       }
@@ -559,7 +566,7 @@ export default function App() {
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
-    document.addEventListener('mouseleave', onLeave, { passive: true });
+    document.addEventListener('mouseleave', onLeave);
     return () => {
       window.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseleave', onLeave);

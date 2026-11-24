@@ -63,10 +63,10 @@ export default function ContactFooterSection({
                   <a
                     href={`mailto:${BRAND_CONFIG.email}`}
                     title={`Send email directly to ${BRAND_CONFIG.email}`}
-                    aria-label={`Send email directly to ${BRAND_CONFIG.email}`}
-                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D9FF3F] hover:text-black text-white flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-md shrink-0"
+                    aria-label={`Send email to ${BRAND_CONFIG.email}`}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#D9FF3F] hover:bg-lime-300 text-[#08080A] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-[0_2px_12px_rgba(217,255,63,0.35)] shrink-0"
                   >
-                    <Mail className="w-4 h-4" />
+                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-black stroke-[2.2]" />
                   </a>
                 </div>
               </div>

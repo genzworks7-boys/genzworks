@@ -19,6 +19,13 @@
   perspective: 1000px;
 }
 
+/* Isolate animated liquid blobs to dedicated GPU compositor layers */
+.liquid-blob-1, .liquid-blob-2 {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  contain: layout paint;
+}
+
 /* Scroll reveal helper classes */
 .reveal-init {
   opacity: 0;
