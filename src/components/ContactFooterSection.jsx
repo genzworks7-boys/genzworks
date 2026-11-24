@@ -50,23 +50,25 @@ export default function ContactFooterSection({
                 <span className="text-xs uppercase tracking-widest text-zinc-500 block mb-2 font-mono-tech">
                   Direct Email
                 </span>
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                   <button
+                    type="button"
                     onClick={copyStudioEmail}
-                    className="group inline-flex items-center gap-3 text-2xl sm:text-3xl font-bold tracking-tight text-white hover:text-[#D9FF3F] transition-colors"
+                    className="group inline-flex items-center gap-2.5 sm:gap-3 text-xl sm:text-3xl font-bold tracking-tight text-white hover:text-[#D9FF3F] transition-colors cursor-pointer text-left"
+                    title={`Copy ${BRAND_CONFIG.email}`}
                   >
-                    <span>{BRAND_CONFIG.email}</span>
-                    <span className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-[#D9FF3F] group-hover:text-black flex items-center justify-center transition-all" title="Copy Email">
-                      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    <span className="break-all sm:break-normal">{BRAND_CONFIG.email}</span>
+                    <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 group-hover:bg-[#D9FF3F] group-hover:text-black flex items-center justify-center transition-all shrink-0">
+                      {copied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9FF3F] group-hover:text-black" /> : <Copy className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </span>
                   </button>
                   <a
-                    href={`mailto:${BRAND_CONFIG.email}`}
+                    href={`mailto:${BRAND_CONFIG.email}?subject=Project%20Inquiry%20-%20GENZWORKS`}
                     title={`Send email directly to ${BRAND_CONFIG.email}`}
-                    aria-label={`Send email to ${BRAND_CONFIG.email}`}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#D9FF3F] hover:bg-lime-300 text-[#08080A] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-[0_2px_12px_rgba(217,255,63,0.35)] shrink-0"
+                    aria-label={`Send email directly to ${BRAND_CONFIG.email}`}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#D9FF3F] hover:bg-white text-[#08080A] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-[0_2px_10px_rgba(217,255,63,0.35)] shrink-0"
                   >
-                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-black stroke-[2.2]" />
+                    <Mail className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-black" />
                   </a>
                 </div>
               </div>

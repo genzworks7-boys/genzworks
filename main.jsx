@@ -33,6 +33,13 @@ export default function App() {
   const isScrolledRef = useRef(false);
   const heroVisibleRef = useRef(true);
   const canvasRectRef = useRef(null);
+  const colorBucketsRef = useRef([]);
+  const cachedStackCardsRef = useRef([]);
+  const cachedWhyCardsRef = useRef([]);
+  const cachedSectionsRef = useRef({});
+  const cachedProcessBarRef = useRef(null);
+  const cachedProcessTextRef = useRef(null);
+  const cachedWhyStickyNavRef = useRef(null);
 
   const processRef = useRef(null);
   const [processFill, setProcessFill] = useState(0.2);
@@ -220,7 +227,8 @@ export default function App() {
       // Ultra-efficient particle sampling: razor-sharp typography with ~1,500 particles for instant responsiveness
       const step = isMobile ? 3.6 : 3.4;
       const particleRadius = isMobile ? 1.6 : 1.5;
-      const nextBins = Array.from({ length: palette.length }, () => []);
+      const nextParticles = [];
+      const buckets = palette.map(() => []);
 
       for (let y = 0; y < height; y += step) {
         for (let x = 0; x < width; x += step) {
@@ -228,20 +236,24 @@ export default function App() {
           const alpha = imageData[index];
           if (alpha > 70) {
             const colorIdx = Math.floor(Math.random() * palette.length);
-            nextBins[colorIdx].push({
+            const p = {
               x: x,
               y: y,
               originX: x,
               originY: y,
               vx: 0,
               vy: 0,
-              radius: particleRadius
-            });
+              radius: particleRadius,
+              color: palette[colorIdx]
+            };
+            nextParticles.push(p);
+            buckets[colorIdx].push(p);
           }
         }
       }
 
-      particlesRef.current = nextBins;
+      particlesRef.current = nextParticles;
+      colorBucketsRef.current = buckets;
     };
 
     const friction = 0.76;
@@ -260,59 +272,55 @@ export default function App() {
       ctx.scale(dpr, dpr);
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
-      const bins = particlesRef.current;
-      if (!bins || !Array.isArray(bins)) {
-        ctx.restore();
-        animationFrameId = requestAnimationFrame(renderLoop);
-        return;
-      }
+      const list = particlesRef.current;
       const m = mouseRef.current;
-      const radiusSq = m.radius * m.radius;
+      const mRadius = m.radius;
+      const mStrength = m.strength * 7;
+      const mRadiusSq = mRadius * mRadius;
 
-      // Batch drawing by color: reduces fill() and beginPath() calls from ~1,500 to 5 per frame!
-      for (let c = 0; c < bins.length; c++) {
-        const bin = bins[c];
-        if (!bin || bin.length === 0) continue;
+      // 1. High-speed numeric physics simulation loop
+      for (let i = 0; i < list.length; i++) {
+        const p = list[i];
+        const dx = m.x - p.x;
 
-        ctx.fillStyle = palette[c];
-        ctx.beginPath();
-
-        for (let i = 0; i < bin.length; i++) {
-          const p = bin[i];
-          const dx = m.x - p.x;
-
-          // Ultra-fast bounding box rejection to skip 98% of distance math
-          if (dx > -m.radius && dx < m.radius) {
-            const dy = m.y - p.y;
-            if (dy > -m.radius && dy < m.radius) {
-              const distSq = dx * dx + dy * dy;
-              if (distSq < radiusSq && distSq > 0.001) {
-                const dist = Math.sqrt(distSq);
-                const force = (m.radius - dist) / m.radius;
-                const angle = Math.atan2(dy, dx);
-                p.vx -= Math.cos(angle) * force * m.strength * 7;
-                p.vy -= Math.sin(angle) * force * m.strength * 7;
-              }
+        // Ultra-fast bounding box rejection to skip 98% of distance math
+        if (dx > -mRadius && dx < mRadius) {
+          const dy = m.y - p.y;
+          if (dy > -mRadius && dy < mRadius) {
+            const distSq = dx * dx + dy * dy;
+            if (distSq < mRadiusSq && distSq > 0.001) {
+              const dist = Math.sqrt(distSq);
+              const force = (mRadius - dist) / mRadius;
+              const angle = Math.atan2(dy, dx);
+              p.vx -= Math.cos(angle) * force * mStrength;
+              p.vy -= Math.sin(angle) * force * mStrength;
             }
           }
-
-          // Ambient fluid breathing wave
-          const ambientX = Math.sin(waveFrame + p.originY * 0.04) * 0.7;
-          const ambientY = Math.cos(waveFrame + p.originX * 0.04) * 0.7;
-
-          p.vx += (p.originX + ambientX - p.x) * ease;
-          p.vy += (p.originY + ambientY - p.y) * ease;
-
-          p.vx *= friction;
-          p.vy *= friction;
-
-          p.x += p.vx;
-          p.y += p.vy;
-
-          ctx.moveTo(p.x + p.radius, p.y);
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         }
 
+        // Ambient fluid breathing wave
+        const ambientX = Math.sin(waveFrame + p.originY * 0.04) * 0.7;
+        const ambientY = Math.cos(waveFrame + p.originX * 0.04) * 0.7;
+
+        p.vx = (p.vx + (p.originX + ambientX - p.x) * ease) * friction;
+        p.vy = (p.vy + (p.originY + ambientY - p.y) * ease) * friction;
+
+        p.x += p.vx;
+        p.y += p.vy;
+      }
+
+      // 2. Batched draw calls (Only 5 ctx.fill calls per frame instead of 1,500+)
+      const buckets = colorBucketsRef.current;
+      for (let c = 0; c < buckets.length; c++) {
+        const bucket = buckets[c];
+        if (!bucket || bucket.length === 0) continue;
+        ctx.fillStyle = palette[c];
+        ctx.beginPath();
+        for (let i = 0; i < bucket.length; i++) {
+          const p = bucket[i];
+          ctx.moveTo(p.x + p.radius, p.y);
+          ctx.arc(p.x, p.y, p.radius, 0, 6.2831853);
+        }
         ctx.fill();
       }
 
@@ -372,34 +380,37 @@ export default function App() {
   useEffect(() => {
     let ticking = false;
 
-    // Cache elements once to prevent repeated DOM queries and layout thrashing
-    const sectionEls = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact']
-      .map((id) => ({ id, el: document.getElementById(id) }))
-      .filter((item) => item.el !== null);
+    const refreshElementCaches = () => {
+      canvasRectRef.current = null;
+      cachedStackCardsRef.current = Array.from(document.querySelectorAll('.product-stack-card'));
+      cachedWhyCardsRef.current = Array.from(document.querySelectorAll('.why-pillar-card'));
+      cachedProcessBarRef.current = document.getElementById('process-timeline-bar');
+      cachedProcessTextRef.current = document.getElementById('process-timeline-text');
+      cachedWhyStickyNavRef.current = document.getElementById('why-sticky-nav');
 
-    const processEl = document.getElementById('process');
-    const processBar = document.getElementById('process-timeline-bar');
-    const processTxt = document.getElementById('process-timeline-text');
-    const worksEl = document.getElementById('works');
-    const stackCards = Array.from(document.querySelectorAll('.product-stack-card'));
-    const stackInners = stackCards.map((_, idx) => document.getElementById(`stack-card-inner-${idx}`));
-    const whySectionEl = document.getElementById('why-us');
-    const whyCards = Array.from(document.querySelectorAll('.why-pillar-card'));
-    const stickyWhyNav = document.getElementById('why-sticky-nav');
+      const ids = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
+      cachedSectionsRef.current = {};
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) cachedSectionsRef.current[id] = el;
+      });
+    };
 
     const handleScroll = () => {
       canvasRectRef.current = null; // Invalidate cached rect on scroll
-      const vh = window.innerHeight;
 
       // 1. Process Timeline Fill (direct DOM updates for 60/120fps bar + quantized state for steps)
-      if (processEl) {
-        const rect = processEl.getBoundingClientRect();
+      if (processRef.current) {
+        const rect = processRef.current.getBoundingClientRect();
+        const vh = window.innerHeight;
         if (rect.bottom >= -100 && rect.top <= vh + 100) {
           const rawProgress = (vh * 0.65 - rect.top) / (rect.height * 0.85);
           const clamped = Math.max(0.05, Math.min(1, rawProgress));
           const pct = Math.round(clamped * 100);
-          if (processBar) processBar.style.width = `${pct}%`;
-          if (processTxt) processTxt.textContent = `${pct}%`;
+          const bar = cachedProcessBarRef.current || document.getElementById('process-timeline-bar');
+          if (bar) bar.style.width = `${pct}%`;
+          const txt = cachedProcessTextRef.current || document.getElementById('process-timeline-text');
+          if (txt) txt.textContent = `${pct}%`;
 
           // Quantize state update to 4 step thresholds only (0, 1, 2, 3)
           const stepIdx = Math.floor(clamped * 4);
@@ -411,22 +422,30 @@ export default function App() {
       }
 
       // 2. Active Nav Link (check current section)
-      for (let i = 0; i < sectionEls.length; i++) {
-        const { id, el } = sectionEls[i];
-        const r = el.getBoundingClientRect();
-        if (r.top <= 240 && r.bottom >= 240) {
-          if (activeNavRef.current !== id) {
-            activeNavRef.current = id;
-            setActiveNav(id);
+      const ids = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
+      for (const id of ids) {
+        const el = cachedSectionsRef.current[id] || document.getElementById(id);
+        if (el) {
+          const r = el.getBoundingClientRect();
+          if (r.top <= 240 && r.bottom >= 240) {
+            if (activeNavRef.current !== id) {
+              activeNavRef.current = id;
+              setActiveNav(id);
+            }
+            break;
           }
-          break;
         }
       }
 
       // 3. 3D Scroll Stack Card Depth (direct GPU style updates, 0 React re-renders)
-      if (worksEl && stackCards.length > 0) {
+      const worksEl = cachedSectionsRef.current['works'] || document.getElementById('works');
+      if (worksEl) {
         const wRect = worksEl.getBoundingClientRect();
+        const vh = window.innerHeight;
         if (wRect.bottom >= -200 && wRect.top <= vh + 200) {
+          const stackCards = cachedStackCardsRef.current.length > 0
+            ? cachedStackCardsRef.current
+            : Array.from(document.querySelectorAll('.product-stack-card'));
           for (let idx = 0; idx < stackCards.length; idx++) {
             let coveredDepth = 0;
             for (let j = idx + 1; j < stackCards.length; j++) {
@@ -436,11 +455,11 @@ export default function App() {
               const ratio = Math.max(0, Math.min(1, 1 - distance / 420));
               coveredDepth += ratio;
             }
-            const innerCard = stackInners[idx];
+            const innerCard = document.getElementById(`stack-card-inner-${idx}`);
             if (innerCard) {
               const scaleVal = Math.max(0.84, 1 - coveredDepth * 0.042);
               const brightnessVal = Math.max(0.45, 1 - coveredDepth * 0.16);
-              innerCard.style.transform = `scale3d(${scaleVal}, ${scaleVal}, 1)`;
+              innerCard.style.transform = `scale(${scaleVal})`;
               innerCard.style.filter = `brightness(${brightnessVal})`;
             }
           }
@@ -448,32 +467,32 @@ export default function App() {
       }
 
       // 4. Why Us Pillar Card Navigation
-      if (whySectionEl && whyCards.length > 0) {
-        const wRect = whySectionEl.getBoundingClientRect();
-        if (wRect.bottom >= -100 && wRect.top <= vh + 100) {
-          const triggerY = stickyWhyNav
-            ? stickyWhyNav.getBoundingClientRect().top + 90
-            : vh * 0.34;
+      const whyCards = cachedWhyCardsRef.current.length > 0
+        ? cachedWhyCardsRef.current
+        : Array.from(document.querySelectorAll('.why-pillar-card'));
+      if (whyCards.length > 0) {
+        const stickyNav = cachedWhyStickyNavRef.current || document.getElementById('why-sticky-nav');
+        const triggerY = stickyNav
+          ? stickyNav.getBoundingClientRect().top + 90
+          : window.innerHeight * 0.34;
 
-          let currentWhy = 0;
-          let smallestDist = Infinity;
-          for (let idx = 0; idx < whyCards.length; idx++) {
-            const card = whyCards[idx];
-            const rect = card.getBoundingClientRect();
-            if (rect.top <= triggerY + 80) {
-              currentWhy = idx;
-            } else if (idx === 0 && rect.top > triggerY + 80) {
-              currentWhy = 0;
-            }
-            const dist = Math.abs(rect.top - triggerY);
-            if (dist < smallestDist && rect.bottom > triggerY) {
-              smallestDist = dist;
-            }
+        let currentWhy = 0;
+        let smallestDist = Infinity;
+        whyCards.forEach((card, idx) => {
+          const rect = card.getBoundingClientRect();
+          if (rect.top <= triggerY + 80) {
+            currentWhy = idx;
+          } else if (idx === 0 && rect.top > triggerY + 80) {
+            currentWhy = 0;
           }
-          if (activeWhyIndexRef.current !== currentWhy) {
-            activeWhyIndexRef.current = currentWhy;
-            setActiveWhyIndex(currentWhy);
+          const dist = Math.abs(rect.top - triggerY);
+          if (dist < smallestDist && rect.bottom > triggerY) {
+            smallestDist = dist;
           }
+        });
+        if (activeWhyIndexRef.current !== currentWhy) {
+          activeWhyIndexRef.current = currentWhy;
+          setActiveWhyIndex(currentWhy);
         }
       }
 
@@ -508,10 +527,13 @@ export default function App() {
       }
     };
 
+    refreshElementCaches();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', refreshElementCaches, { passive: true });
     handleScroll();
     return () => {
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', refreshElementCaches);
       if (dockHoverTimeoutRef.current) clearTimeout(dockHoverTimeoutRef.current);
     };
   }, []);
@@ -527,14 +549,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    let mouseRaf = null;
-    let lastClientX = 0;
-    let lastClientY = 0;
+    let mouseRafId = null;
+    let latestMouseX = -9999;
+    let latestMouseY = -9999;
 
     const updateMouse = () => {
-      mouseRaf = null;
+      mouseRafId = null;
       if (cursorDotRef.current) {
-        cursorDotRef.current.style.transform = `translate3d(${lastClientX}px, ${lastClientY}px, 0)`;
+        cursorDotRef.current.style.transform = `translate3d(${latestMouseX}px, ${latestMouseY}px, 0)`;
         cursorDotRef.current.style.opacity = '1';
       }
       if (heroVisibleRef.current && canvasRef.current) {
@@ -542,35 +564,37 @@ export default function App() {
           canvasRectRef.current = canvasRef.current.getBoundingClientRect();
         }
         const rect = canvasRectRef.current;
-        mouseRef.current.x = lastClientX - rect.left;
-        mouseRef.current.y = lastClientY - rect.top;
+        mouseRef.current.x = latestMouseX - rect.left;
+        mouseRef.current.y = latestMouseY - rect.top;
       }
     };
 
     const onMove = (e) => {
-      lastClientX = e.clientX;
-      lastClientY = e.clientY;
-      if (!mouseRaf) {
-        mouseRaf = window.requestAnimationFrame(updateMouse);
+      latestMouseX = e.clientX;
+      latestMouseY = e.clientY;
+      if (!mouseRafId) {
+        mouseRafId = requestAnimationFrame(updateMouse);
       }
     };
 
     const onLeave = () => {
+      if (mouseRafId) {
+        cancelAnimationFrame(mouseRafId);
+        mouseRafId = null;
+      }
       if (cursorDotRef.current) {
         cursorDotRef.current.style.opacity = '0';
       }
-      if (mouseRaf) {
-        cancelAnimationFrame(mouseRaf);
-        mouseRaf = null;
-      }
+      mouseRef.current.x = -9999;
+      mouseRef.current.y = -9999;
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
-    document.addEventListener('mouseleave', onLeave);
+    document.addEventListener('mouseleave', onLeave, { passive: true });
     return () => {
+      if (mouseRafId) cancelAnimationFrame(mouseRafId);
       window.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseleave', onLeave);
-      if (mouseRaf) cancelAnimationFrame(mouseRaf);
     };
   }, []);
 
@@ -842,12 +866,13 @@ export default function App() {
           border-radius: 50%;
           top: -120px;
           left: 10%;
-          transform: translate3d(0, 0, 0);
-          will-change: transform;
-          contain: layout paint;
           animation: blobFloat 14s ease-in-out infinite;
           pointer-events: none;
           z-index: 0;
+          will-change: transform;
+          transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
+          contain: layout paint;
         }
 
         .liquid-blob-2 {
@@ -859,12 +884,13 @@ export default function App() {
           border-radius: 50%;
           top: 25%;
           right: 5%;
-          transform: translate3d(0, 0, 0);
-          will-change: transform;
-          contain: layout paint;
           animation: blobFloat 18s ease-in-out infinite reverse;
           pointer-events: none;
           z-index: 0;
+          will-change: transform;
+          transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
+          contain: layout paint;
         }
 
         /* Ultra-Luxe Liquid Glass Theme */
@@ -879,6 +905,8 @@ export default function App() {
           ? '0 25px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1.5px 1px rgba(255, 255, 255, 0.22), inset 0 -1.5px 2px rgba(0, 0, 0, 0.35)'
           : '0 20px 45px -10px rgba(15, 23, 42, 0.06), inset 0 1.5px 1.5px rgba(255, 255, 255, 0.95), inset 0 -1.5px 2px rgba(0, 0, 0, 0.03)'};
           transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease;
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .liquid-glass:hover {
@@ -1018,47 +1046,44 @@ export default function App() {
 
         .reveal-on-scroll {
           opacity: 0;
-          transform: translate3d(0, 28px, 0);
+          transform: translateY(28px);
           transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
           will-change: opacity, transform;
         }
         .reveal-on-scroll.reveal-active {
           opacity: 1;
-          transform: translate3d(0, 0, 0);
-          will-change: auto;
+          transform: translateY(0);
         }
 
         /* Mobile and Tablet: Alternating slide-in animation for Craft Tools cards */
         @media (max-width: 1023px) {
           .tool-card-reveal.tool-reveal-left {
             opacity: 0;
-            transform: translate3d(-48px, 0, 0);
+            transform: translateX(-48px);
             transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
           }
           .tool-card-reveal.tool-reveal-right {
             opacity: 0;
-            transform: translate3d(48px, 0, 0);
+            transform: translateX(48px);
             transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
           }
           .tool-card-reveal.reveal-active {
             opacity: 1;
-            transform: translate3d(0, 0, 0);
-            will-change: auto;
+            transform: translateX(0);
           }
         }
         @media (min-width: 1024px) {
           .tool-card-reveal {
             opacity: 0;
-            transform: translate3d(0, 28px, 0);
+            transform: translateY(28px);
             transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
           }
           .tool-card-reveal.reveal-active {
             opacity: 1;
-            transform: translate3d(0, 0, 0);
-            will-change: auto;
+            transform: translateY(0);
           }
         }
 
