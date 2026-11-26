@@ -44,7 +44,7 @@ const ToolsSection = React.memo(function ToolsSection() {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#FF4F18]/30 bg-[#FF4F18]/10 text-[#FF4F18] font-mono-tech text-[11px] uppercase tracking-widest font-bold mb-3">
               <Layers className="w-3.5 h-3.5" />
-              <span>/ TOOLS &amp; ECOSYSTEM • FRAMER PHYSICS</span>
+              <span>/ TOOLS &amp; ECOSYSTEM</span>
             </div>
             <h3 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
               Powered by <span className="font-editorial italic font-normal text-[#FF4F18]">Industry-Standard</span> Craft Tools.
@@ -52,14 +52,14 @@ const ToolsSection = React.memo(function ToolsSection() {
           </div>
 
           {/* Interactive Category Filter Pills with Framer Spring Physics */}
-          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl liquid-glass self-start lg:self-end">
+          <div className="flex flex-wrap lg:flex-nowrap items-center gap-1.5 xl:gap-2 p-1.5 rounded-2xl liquid-glass self-start lg:self-end lg:shrink-0">
             {TOOL_CATEGORIES.map((cat) => {
               const active = activeToolCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => setActiveToolCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-extrabold tracking-tight transition-[transform,background-color,color,box-shadow,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  className={`px-3 py-1.5 xl:px-4 xl:py-2 rounded-xl text-xs font-extrabold tracking-tight whitespace-nowrap transition-[transform,background-color,color,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 ${
                     active
                       ? 'bg-[#0E0E10] text-[#D9FF3F] dark:bg-white dark:text-[#0E0E10] shadow-lg scale-[1.03]'
                       : 'opacity-65 hover:opacity-100 hover:bg-current/5'
@@ -80,11 +80,12 @@ const ToolsSection = React.memo(function ToolsSection() {
               <div
                 key={tool.name}
                 style={{
-                  transitionDelay: `${(index % 3) * 60}ms`
+                  contain: 'layout style paint',
+                  transitionDelay: `${(index % 3) * 45}ms`
                 }}
-                className={`reveal-on-scroll tool-card-reveal ${
+                className={`reveal-on-scroll ${activeToolCategory !== 'All' ? 'reveal-active' : ''} tool-card-reveal ${
                   isEven ? 'tool-reveal-left' : 'tool-reveal-right'
-                } group relative p-6 sm:p-7 rounded-[28px] bg-white/90 dark:bg-[#111116]/90 border border-black/[0.08] dark:border-white/10 hover:border-[#FF4F18]/40 dark:hover:border-[#FF4F18]/40 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 overflow-hidden flex flex-col justify-between`}
+                } group relative p-6 sm:p-7 rounded-[28px] bg-white/95 dark:bg-[#111116]/95 border border-black/[0.08] dark:border-white/10 hover:border-[#FF4F18]/40 dark:hover:border-[#FF4F18]/40 shadow-[0_4px_24px_rgba(0,0,0,0.04)] transition-[transform,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 overflow-hidden flex flex-col justify-between`}
               >
                 {/* Subtle Radial Glow on Hover (pre-faded gradient avoids GPU blur shader pass) */}
                 <div
@@ -112,7 +113,7 @@ const ToolsSection = React.memo(function ToolsSection() {
                       <h4 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug group-hover:text-[#FF4F18] transition-colors duration-300">
                         {tool.name}
                       </h4>
-                      <ArrowUpRight className="w-5 h-5 text-[#FF4F18] opacity-0 -translate-x-1.5 translate-y-1.5 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[transform,opacity] duration-300" />
+                      <ArrowUpRight className="w-5 h-5 text-[#FF4F18] shrink-0 opacity-0 -translate-x-1.5 translate-y-1.5 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[transform,opacity] duration-300" />
                     </div>
                     <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium mt-1">
                       {tool.category}

@@ -80,7 +80,7 @@ export const STUDIO_TOOLS = [
     category: "Backend Runtime",
     group: "Backend & Cloud",
     accent: "#5FA04E",
-    proficiency: "REST & Realtime APIs",
+    proficiency: "Backend & APIs",
     svg: (
       <svg viewBox="0 0 24 24" className="w-5 h-5" fill="#5FA04E">
         <path d="M12 1.85c-.27 0-.55.07-.78.2l-7.44 4.3c-.48.28-.78.8-.78 1.36v8.58c0 .56.3 1.08.78 1.36l7.44 4.3c.46.26 1.04.26 1.5 0l7.44-4.3c.48-.28.78-.8.78-1.36V7.71c0-.56-.3-1.08-.78-1.36l-7.44-4.3c-.23-.13-.51-.2-.78-.2z" />

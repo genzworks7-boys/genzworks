@@ -35,7 +35,7 @@ export const BRAND_CONFIG = {
   roleTitle: "TECHNOLOGY & CREATIVE STUDIO",
   tagline: "We Build Digital. We Design Possibilities.",
   heroHeading: "We craft websites that hustle as hard as you do",
-  heroSubheading: "We design innovative solutions that captivate audiences, and every interaction inspires action.",
+  heroSubheading: "We design and build clean websites and digital products that help your business grow.",
   heroText: "Ideas are everywhere. What makes the difference is how you bring them to life. GenzWorks is a technology and creative studio where development meets design, and imagination meets execution.",
   location: "Coimbatore, TN — Working Worldwide",
   email: "contact@genzworks.in",
@@ -53,12 +53,12 @@ export const BRAND_CONFIG = {
 };
 
 export const CRAFT_TICKER = [
-  "Web Development & Web Applications",
-  "Visual Identity & Brand Assets",
-  "Commercial Poster Design",
-  "College & Academic Project Mentorship",
-  "Video Editing & Multimedia Storytelling",
-  "Purposeful Content & Copywriting",
-  "Responsive UI/UX Engineering",
-  "DevOps & Smooth Deployment"
+  "Web Development",
+  "Brand & Visual Design",
+  "Commercial Posters",
+  "Academic Mentorship",
+  "Video & Motion",
+  "Content & Copywriting",
+  "Responsive UI/UX",
+  "Cloud Deployment"
 ];

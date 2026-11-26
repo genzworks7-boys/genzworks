@@ -183,11 +183,11 @@ const Modals = React.memo(function Modals({
         }
 
         setJoinSubmitted(true);
-        triggerToast('Application submitted successfully! Stored to Google Sheets.');
+        triggerToast('Application sent! Our team will review it soon.');
       } catch (err) {
         console.error('Join team submission error:', err);
         setJoinSubmitted(true);
-        triggerToast('Thank you! Your application has been recorded.');
+        triggerToast('Application sent! Our team will review it soon.');
       } finally {
         setIsSubmittingJoin(false);
       }
@@ -303,52 +303,38 @@ const Modals = React.memo(function Modals({
               className="relative w-full max-w-3xl max-h-[85vh] rounded-[32px] bg-[#0E0E12] border border-white/15 text-white p-6 sm:p-10 shadow-2xl overflow-hidden flex flex-col"
             >
               {/* Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 shrink-0">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveLegalModal('terms')}
-                    className={`px-4 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                      activeLegalModal === 'terms'
-                        ? 'bg-[#D9FF3F] text-black shadow'
-                        : 'text-zinc-400 hover:text-white'
-                    }`}
-                  >
-                    <FileText className="w-3.5 h-3.5" />
-                    <span>Terms &amp; Conditions</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveLegalModal('privacy')}
-                    className={`px-4 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider flex items-center gap-2 transition-colors ${
-                      activeLegalModal === 'privacy'
-                        ? 'bg-[#D9FF3F] text-black shadow'
-                        : 'text-zinc-400 hover:text-white'
-                    }`}
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Privacy Policy</span>
-                  </button>
+              <div className="flex items-center justify-between gap-2 pb-3 sm:pb-4 border-b border-white/10 shrink-0">
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-[#D9FF3F] text-black shadow text-[11px] sm:text-xs font-extrabold uppercase tracking-wider whitespace-nowrap">
+                  {activeLegalModal === 'terms' ? (
+                    <>
+                      <FileText className="w-3.5 h-3.5 shrink-0" />
+                      <span>Terms &amp; Conditions</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                      <span>Privacy Policy</span>
+                    </>
+                  )}
                 </div>
 
                 <button
                   onClick={() => setActiveLegalModal(null)}
-                  className="px-4 py-2 rounded-full bg-white/10 hover:bg-[#FF4F18] text-white text-xs font-mono-tech font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/10 hover:bg-[#FF4F18] text-white text-[11px] sm:text-xs font-mono-tech font-bold uppercase tracking-wider flex items-center gap-1.5 shrink-0 whitespace-nowrap transition-colors"
                 >
                   <span>Close</span>
-                  <X className="w-3.5 h-3.5" />
+                  <X className="w-3.5 h-3.5 shrink-0" />
                 </button>
               </div>
 
               {/* Scrollable Document Content */}
-              <div className="overflow-y-auto pr-2 py-6 space-y-6 text-left">
+              <div key={activeLegalModal} className="overflow-y-auto pr-2 pt-5 pb-2 space-y-5 text-left">
                 <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4F18]/15 border border-[#FF4F18]/30 text-[#FF4F18] font-mono-tech text-[11px] font-bold">
-                    <span>{LEGAL_DOCS[activeLegalModal].badge}</span>
-                  </div>
                   <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
                     {LEGAL_DOCS[activeLegalModal].title}
                   </h2>
                   <div className="text-xs font-mono-tech text-zinc-400">
-                    {LEGAL_DOCS[activeLegalModal].updated} • GENZWORKS Studio (Coimbatore, TN)
+                    {LEGAL_DOCS[activeLegalModal].updated}
                   </div>
                   <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-2 border-t border-white/10">
                     {LEGAL_DOCS[activeLegalModal].summary}
@@ -371,17 +357,6 @@ const Modals = React.memo(function Modals({
                   ))}
                 </div>
               </div>
-
-              {/* Modal Footer */}
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-zinc-400 shrink-0">
-                <span>GENZWORKS Studio • Coimbatore, Tamil Nadu</span>
-                <button
-                  onClick={() => setActiveLegalModal(null)}
-                  className="text-[#D9FF3F] hover:underline font-bold"
-                >
-                  I Understand
-                </button>
-              </div>
             </m.div>
           </m.div>
         )}
@@ -395,7 +370,11 @@ const Modals = React.memo(function Modals({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22 }}
-            onClick={() => setIsJoinTeamModalOpen(false)}
+            onClick={() => {
+              setIsJoinTeamModalOpen(false);
+              if (joinSubmitted) setJoinSubmitted(false);
+              setJoinError(null);
+            }}
             className="fixed inset-0 z-[9100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
           >
             <m.div
@@ -407,20 +386,24 @@ const Modals = React.memo(function Modals({
               className="relative w-full max-w-2xl max-h-[90vh] rounded-[32px] bg-[#0E0E12] border border-white/15 text-white p-6 sm:p-9 shadow-2xl overflow-y-auto flex flex-col"
             >
               {/* Header */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 shrink-0">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#FF4F18]/15 border border-[#FF4F18]/30 text-[#FF4F18] flex items-center justify-center">
+              <div className="flex items-center justify-between gap-3 pb-4 border-b border-white/10 shrink-0">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-9 h-9 shrink-0 rounded-full bg-[#FF4F18]/15 border border-[#FF4F18]/30 text-[#FF4F18] flex items-center justify-center">
                     <User className="w-4 h-4" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="text-lg sm:text-xl font-extrabold tracking-tight">Join The GENZWORKS Squad</h3>
                     <p className="text-[11px] text-zinc-400">Coimbatore, TN • In-Person / Remote Hybrid</p>
                   </div>
                 </div>
 
                 <button
-                  onClick={() => setIsJoinTeamModalOpen(false)}
-                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-[#FF4F18] text-white flex items-center justify-center transition-colors cursor-pointer"
+                  onClick={() => {
+                    setIsJoinTeamModalOpen(false);
+                    if (joinSubmitted) setJoinSubmitted(false);
+                    setJoinError(null);
+                  }}
+                  className="w-8 h-8 shrink-0 rounded-full bg-white/10 hover:bg-[#FF4F18] text-white flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -438,6 +421,8 @@ const Modals = React.memo(function Modals({
                   <button
                     onClick={() => {
                       setIsJoinTeamModalOpen(false);
+                      setJoinSubmitted(false);
+                      setJoinForm(INITIAL_JOIN_FORM);
                     }}
                     className="px-6 py-2.5 rounded-full bg-[#D9FF3F] text-black font-extrabold text-xs uppercase tracking-wider hover:scale-105 transition-transform mt-4"
                   >
@@ -477,6 +462,17 @@ const Modals = React.memo(function Modals({
                         );
                       })}
                     </div>
+                    {joinForm.role === 'Other Creative' && (
+                      <div className="mt-3">
+                        <input
+                          type="text"
+                          value={joinForm.customRole}
+                          onChange={(e) => setJoinForm((f) => ({ ...f, customRole: e.target.value }))}
+                          placeholder="Specify your creative or technical role *"
+                          className="w-full bg-transparent border-b border-white/20 focus:border-[#D9FF3F] py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none transition-colors"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* Experience Tier Selector */}
@@ -587,7 +583,7 @@ const Modals = React.memo(function Modals({
                     <button
                       type="submit"
                       disabled={isSubmittingJoin}
-                      className="w-full sm:w-auto px-8 py-3 rounded-full bg-[#D9FF3F] hover:bg-lime-300 text-[#08080A] font-extrabold uppercase tracking-wider text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl hover:shadow-[0_0_25px_rgba(217,255,63,0.35)] transition-[background-color,box-shadow] cursor-pointer disabled:opacity-50"
+                      className="w-full sm:w-auto px-8 py-3 rounded-full bg-[#D9FF3F] hover:bg-lime-300 active:scale-95 text-[#08080A] font-extrabold uppercase tracking-wider text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-[background-color,transform] duration-200 cursor-pointer disabled:opacity-50"
                     >
                       {isSubmittingJoin ? (
                         <>
@@ -617,7 +613,7 @@ const Modals = React.memo(function Modals({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.94 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#0E0E10] text-white text-xs font-bold tracking-wide shadow-2xl border border-white/15"
+            className="fixed top-4 right-4 sm:top-6 sm:right-6 z-[9600] max-w-[calc(100vw-2rem)] flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#0E0E10] text-white text-xs font-bold tracking-wide shadow-2xl border border-white/15"
           >
             <span className="w-2 h-2 rounded-full bg-[#D9FF3F] animate-pulse" />
             <span>{toast}</span>

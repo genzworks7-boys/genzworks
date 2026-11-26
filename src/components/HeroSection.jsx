@@ -34,7 +34,7 @@ const HeroSection = React.memo(function HeroSection({
     let pendingClientX = 0;
     let pendingClientY = 0;
 
-    const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2);
+    const dpr = Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.5);
 
     const palette = resolvedTheme === 'dark'
       ? ['#FFFFFF', '#FFFFFF', '#FAFAFA', '#F4F4F5', '#E4E4E7']
@@ -55,8 +55,8 @@ const HeroSection = React.memo(function HeroSection({
 
       const isMobile = width < 640;
       const fontSize = isMobile
-        ? Math.min(Math.max(width * 0.15, 48), 64)
-        : Math.min(Math.max(width * 0.125, 56), 140);
+        ? Math.min(Math.max(width * 0.15, 44), height * 0.68, 64)
+        : Math.min(Math.max(width * 0.125, 56), height * 0.68, 140);
 
       const offscreen = document.createElement('canvas');
       offscreen.width = width;
@@ -71,8 +71,8 @@ const HeroSection = React.memo(function HeroSection({
       offCtx.fillText('GenzWorks', width / 2, height * 0.5);
 
       const imageData = offCtx.getImageData(0, 0, width, height).data;
-      const step = isMobile ? 3.6 : 3.4;
-      const particleRadius = isMobile ? 1.6 : 1.5;
+      const step = isMobile ? 4.0 : 3.9;
+      const particleRadius = isMobile ? 1.65 : 1.55;
       const nextParticles = [];
       const buckets = palette.map(() => []);
 
@@ -103,14 +103,24 @@ const HeroSection = React.memo(function HeroSection({
     const friction = 0.76;
     const ease = 0.055;
     let waveFrame = 0;
+    let lastDrawTime = 0;
+    let activeUntil = 0;
 
-    const renderLoop = () => {
+    const renderLoop = (now = 0) => {
       if (!heroVisibleRef.current || document.hidden || !heroRevealed) {
         isRunning = false;
         animationFrameId = null;
         return;
       }
-      waveFrame += 0.024;
+
+      // Run full native 60/120fps physics while pointer/touch interacts, or low-CPU 30fps ambient wave when idle
+      const isInteractive = mouseRef.current.x > -500 || now < activeUntil;
+      if (!isInteractive && now - lastDrawTime < 31) {
+        animationFrameId = requestAnimationFrame(renderLoop);
+        return;
+      }
+      lastDrawTime = now;
+      waveFrame += isInteractive ? 0.024 : 0.044;
 
       ctx.save();
       ctx.scale(dpr, dpr);
@@ -188,6 +198,7 @@ const HeroSection = React.memo(function HeroSection({
 
     const onMouseMove = (e) => {
       if (!heroVisibleRef.current || !heroRevealed) return;
+      activeUntil = performance.now() + 1800;
       pendingClientX = e.clientX;
       pendingClientY = e.clientY;
       if (!pointerRafId) {
@@ -272,9 +283,9 @@ const HeroSection = React.memo(function HeroSection({
   }, []);
 
   return (
-    <section id="home" className={`relative pt-12 sm:pt-16 pb-20 z-10 px-4 sm:px-10 max-w-[1280px] mx-auto transition-opacity duration-500 ${heroRevealed ? 'hero-visible opacity-100' : 'opacity-0'}`}>
+    <section id="home" className={`hero-section relative pt-5 sm:pt-8 pb-20 z-10 px-4 sm:px-10 max-w-[1280px] mx-auto transition-opacity duration-500 ${heroRevealed ? 'hero-visible opacity-100' : 'opacity-0'}`}>
       <div className="flex flex-col items-center text-center relative z-10">
-        <div className="framer-hero-card w-full max-w-[820px] px-3.5 py-2.5 sm:px-5 sm:py-3.5 rounded-2xl sm:rounded-[28px] liquid-glass-nav mb-3 sm:mb-5">
+        <div className="framer-hero-card hero-nav-pill w-full max-w-[820px] px-3.5 py-2 sm:px-5 sm:py-3 rounded-2xl sm:rounded-[28px] liquid-glass-nav mb-2 sm:mb-3">
           <div className="relative z-10 flex items-center justify-between gap-2 sm:gap-4">
             <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
               <div className="relative w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-1 sm:p-1.5 liquid-glass-btn shadow-sm shrink-0 flex items-center justify-center">
@@ -287,7 +298,7 @@ const HeroSection = React.memo(function HeroSection({
                     }}
                     alt="GENZWORKS Studio Logo"
                     decoding="async"
-                    className="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,240,255,0.35)]"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
@@ -297,7 +308,7 @@ const HeroSection = React.memo(function HeroSection({
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               <div className="flex items-center gap-1 sm:gap-1.5">
                 <a
                   href={BRAND_CONFIG.instagramUrl}
@@ -330,7 +341,7 @@ const HeroSection = React.memo(function HeroSection({
         </div>
 
         {/* Interactive React Bits Particle Text — High-DPI Retina Sharp with Mobile Touch */}
-        <div className="w-full max-w-[1080px] h-[110px] sm:h-[180px] md:h-[230px] my-1 sm:my-3 flex items-center justify-center relative select-none">
+        <div className="hero-canvas-wrap w-full max-w-[1080px] h-[86px] sm:h-[155px] md:h-[175px] my-0.5 sm:my-1.5 flex items-center justify-center relative select-none">
           <canvas
             ref={canvasRef}
             onTouchStart={handleTouchUpdate}
@@ -340,31 +351,31 @@ const HeroSection = React.memo(function HeroSection({
           />
         </div>
 
-        <h1 className="framer-hero-title max-w-[940px] text-[2.75rem] sm:text-[4.8rem] lg:text-[5.8rem] font-extrabold tracking-[-0.04em] leading-[0.98] mb-6">
+        <h1 className="framer-hero-title max-w-[940px] text-[2.75rem] sm:text-[4.8rem] lg:text-[5.8rem] font-extrabold tracking-[-0.04em] leading-[0.98] mb-4 sm:mb-5">
           We craft websites <br className="hidden sm:inline" />
           that hustle as hard <br className="hidden sm:inline" />
           as you do
         </h1>
 
-        <p className="framer-hero-subtitle max-w-[580px] text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium mb-8">
+        <p className="framer-hero-subtitle max-w-[580px] text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium mb-5 sm:mb-6">
           {BRAND_CONFIG.heroSubheading}
         </p>
 
-        <div className="framer-hero-cta flex items-center gap-4">
+        <div className="framer-hero-cta flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full">
           <button
             onClick={() => jumpTo('contact')}
-            className="px-8 py-4 rounded-2xl text-xs font-extrabold uppercase tracking-wider bg-[#0E0E10] text-white dark:bg-white dark:text-[#0E0E10] shadow-2xl hover:scale-105 active:scale-95 transition-transform duration-300 flex items-center gap-3"
+            className="px-5 py-3.5 sm:px-8 sm:py-4 rounded-2xl text-xs font-extrabold uppercase tracking-wider whitespace-nowrap bg-[#0E0E10] text-white dark:bg-white dark:text-[#0E0E10] shadow-xl hover:scale-105 active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center gap-2.5 sm:gap-3"
           >
             <span>Contact Us</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 shrink-0" />
           </button>
 
           <button
             onClick={() => jumpTo('works')}
-            className="px-8 py-4 rounded-2xl text-xs font-extrabold uppercase tracking-wider liquid-glass hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center gap-3"
+            className="px-5 py-3.5 sm:px-8 sm:py-4 rounded-2xl text-xs font-extrabold uppercase tracking-wider whitespace-nowrap liquid-glass active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center gap-2.5 sm:gap-3"
           >
             <span>Our Products</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 shrink-0" />
           </button>
         </div>
       </div>

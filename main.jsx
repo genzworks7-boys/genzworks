@@ -78,19 +78,20 @@ export default function App() {
 
     const handleScroll = () => {
       ticking = false;
-      const shouldCollapse = window.scrollY > 80;
+      const scrollY = window.scrollY;
+      const shouldCollapse = scrollY > 80;
       if (isScrolledRef.current !== shouldCollapse) {
         isScrolledRef.current = shouldCollapse;
         setIsScrolled(shouldCollapse);
       }
 
-      for (let i = 0; i < NAV_SECTION_IDS.length; i++) {
+      const probeY = scrollY + 240;
+      for (let i = NAV_SECTION_IDS.length - 1; i >= 0; i--) {
         const id = NAV_SECTION_IDS[i];
         const el = cachedSections[id] || document.getElementById(id);
         if (el) {
           cachedSections[id] = el;
-          const r = el.getBoundingClientRect();
-          if (r.top <= 240 && r.bottom >= 240) {
+          if (probeY >= el.offsetTop) {
             if (activeNavRef.current !== id) {
               activeNavRef.current = id;
               setActiveNav(id);

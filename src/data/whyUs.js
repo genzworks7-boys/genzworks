@@ -1,38 +1,38 @@
 export const WHY_GENZWORKS_PILLARS = [
   {
-    title: "Creativity with Direction",
-    desc: "We combine fresh ideas with thoughtful execution to create work that is visually distinctive and aligned with your goals.",
+    title: "Design With Purpose",
+    desc: "We pair fresh visuals with clear structure so your brand looks sharp and earns trust.",
     tags: ["Visual Strategy", "Art Direction", "Brand Systems", "UI/UX Polish", "Typography"],
-    details: "Every creative decision is anchored in purpose—ensuring your digital presence doesn't just look modern, but communicates clearly and converts visitors into long-term clients."
+    details: "Every design choice serves a clear goal — making your website easy to read, pleasant to explore, and effective at converting visitors."
   },
   {
-    title: "Technology That Makes Sense",
-    desc: "We focus on practical digital solutions that prioritize functionality, usability, and the needs of real people.",
-    tags: ["Modern Web Stack", "Responsive Architecture", "Clean Code", "Fast Load Times", "Scalable Logic"],
-    details: "We select reliable, modern frameworks and build clean architectures so your product stays fast, maintainable, and effortless for real users across all devices."
+    title: "Practical Technology",
+    desc: "We build fast, reliable websites focused on usability and real business needs.",
+    tags: ["Modern Web Stack", "Responsive Design", "Clean Code", "Fast Loading", "Scalable Setup"],
+    details: "We use modern web tools and clean code practices so your site loads quickly and works smoothly across phones, tablets, and desktops."
   },
   {
-    title: "Multiple Skills. One Team.",
-    desc: "From development and design to multimedia, research, and deployment, we deliver complete solutions under one roof.",
+    title: "Complete Team Under One Roof",
+    desc: "Web, design, video, research, and deployment handled together by one coordinated studio.",
     tags: ["Full-Stack Dev", "Graphic Design", "Video Editing", "Copywriting", "Cloud Deployment"],
-    details: "Instead of juggling disconnected freelancers, you get a unified studio squad where designers, developers, editors, and researchers collaborate seamlessly from day one."
+    details: "Instead of managing separate freelancers, you work with one aligned team where designers, developers, and editors collaborate smoothly."
   },
   {
-    title: "Collaboration at Every Step",
-    desc: "We value open communication, regular progress feedback, and shared decision-making throughout the project life.",
-    tags: ["Transparent Sprints", "Live Previews", "Direct Communication", "Iterative Feedback"],
-    details: "You are never left guessing about project status. We share interactive staging links, welcome your feedback early, and refine every milestone together."
+    title: "Clear Communication",
+    desc: "Open updates, live previews, and direct feedback at every step of your project.",
+    tags: ["Open Updates", "Live Previews", "Direct Chat", "Step-by-Step Review"],
+    details: "You always know what is happening next. We share live staging links early, take your feedback, and refine each stage together."
   },
   {
-    title: "Quality in Every Detail",
-    desc: "We pay close attention to functionality, visual consistency, content clarity, and testing to hit every requirement.",
-    tags: ["Cross-Browser QA", "Edge-Case Testing", "Pixel Consistency", "Performance Audits"],
-    details: "Before any project goes live, our dedicated QA and research team reviews responsiveness, micro-interactions, and system stability across devices."
+    title: "Tested Before Launch",
+    desc: "Every layout, feature, and interaction is tested across screen sizes before going live.",
+    tags: ["Cross-Browser QA", "Mobile Checks", "Layout Accuracy", "Speed Checks"],
+    details: "Before handoff, our QA team checks responsiveness, forms, links, and speed across real mobile, tablet, and desktop screens."
   },
   {
-    title: "Always Learning & Evolving",
-    desc: "We continuously explore new tools and techniques to constantly refine our creative and technical capabilities.",
-    tags: ["Framer Motion", "Modern UI Trends", "Workflow Automation", "Next-Gen Tooling"],
-    details: "Digital standards move fast. We stay ahead of emerging design systems, animation physics, and engineering practices so your brand always feels ahead of the curve."
+    title: "Modern Standards",
+    desc: "We keep our tools, design patterns, and code practices current as the web evolves.",
+    tags: ["Clean UI", "Smooth Motion", "Smart Workflows", "Modern Tooling"],
+    details: "Web standards move quickly — we stay up to date with clean interface patterns and performance practices so your site stays ahead."
   }
 ];

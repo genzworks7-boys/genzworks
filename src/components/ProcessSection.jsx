@@ -71,15 +71,15 @@ const ProcessSection = React.memo(function ProcessSection() {
     <section id="process" ref={processRef} className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-14 border-b border-current/10 gap-6 reveal-on-scroll">
         <div>
-          <div className="font-mono-tech text-xs uppercase tracking-widest opacity-60 mb-3">[03] / OUR WORK PROCESS</div>
+          <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3">[03] / OUR WORK PROCESS</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             A Clear Direction. A <span className="font-editorial italic font-normal">Collaborative</span> Journey.
           </h2>
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-2.5 rounded-full liquid-glass font-mono-tech text-xs shadow-sm">
-          <span>TIMELINE PROGRESS</span>
-          <div className="w-24 h-2 rounded-full bg-current/10 overflow-hidden">
+        <div className="flex items-center justify-between sm:justify-start gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2.5 rounded-full liquid-glass font-mono-tech text-[11px] sm:text-xs shadow-sm w-full sm:w-auto">
+          <span className="whitespace-nowrap">TIMELINE PROGRESS</span>
+          <div className="flex-1 sm:flex-initial min-w-[64px] sm:w-24 h-2 rounded-full bg-current/10 overflow-hidden">
             <div
               id="process-timeline-bar"
               ref={barRef}
@@ -87,7 +87,7 @@ const ProcessSection = React.memo(function ProcessSection() {
               style={{ transform: `scaleX(${processFill})`, willChange: 'transform' }}
             />
           </div>
-          <span id="process-timeline-text" ref={textRef} className="font-bold">{Math.round(processFill * 100)}%</span>
+          <span id="process-timeline-text" ref={textRef} className="font-bold shrink-0">{Math.round(processFill * 100)}%</span>
         </div>
       </div>
 
@@ -103,9 +103,12 @@ const ProcessSection = React.memo(function ProcessSection() {
                 {/* Left Column: Number + Vertical Stem */}
                 <div className="flex flex-col items-center relative self-stretch md:self-auto md:col-span-3">
                   <div
-                    className={`text-3xl sm:text-5xl md:text-7xl font-extrabold font-mono-tech tracking-tighter select-none transition-[transform,opacity,color] duration-700 ${
+                    style={{
+                      textShadow: active ? '0 0 22px rgba(255, 79, 24, 0.35)' : 'none'
+                    }}
+                    className={`text-3xl sm:text-5xl md:text-7xl font-extrabold font-mono-tech tracking-tighter select-none transition-[transform,opacity,color] duration-500 ${
                       active
-                        ? 'text-[#FF4F18] drop-shadow-[0_0_25px_rgba(255,79,24,0.45)] scale-105'
+                        ? 'text-[#FF4F18] scale-105'
                         : 'opacity-20 scale-95'
                     }`}
                   >
@@ -116,7 +119,7 @@ const ProcessSection = React.memo(function ProcessSection() {
                   {idx < PROCESS_STEPS.length - 1 && (
                     <div className="w-[2px] flex-1 min-h-[90px] md:h-36 md:flex-initial bg-current/10 relative mt-3 md:mt-4 overflow-hidden rounded-full">
                       <div
-                        className="w-full h-full origin-top bg-gradient-to-b from-[#FF4F18] via-[#D9FF3F] to-transparent transition-transform duration-500 ease-out"
+                        className="w-full h-full origin-top bg-gradient-to-b from-[#FF4F18] via-[#D9FF3F] to-transparent transition-transform duration-400 ease-out"
                         style={{
                           transform: active ? 'scaleY(1)' : 'scaleY(0)'
                         }}
@@ -127,14 +130,15 @@ const ProcessSection = React.memo(function ProcessSection() {
 
                 {/* Right Column: Step Content Card */}
                 <div
-                  className={`md:col-span-9 rounded-[24px] sm:rounded-[28px] p-5 sm:p-7 md:p-10 liquid-glass transition-[transform,opacity,border-color,box-shadow] duration-700 ${
+                  style={{ contain: 'layout style' }}
+                  className={`md:col-span-9 rounded-[24px] sm:rounded-[28px] p-5 sm:p-7 md:p-10 liquid-glass transition-[transform,opacity,border-color] duration-500 ${
                     active
-                      ? 'border-[#FF4F18]/50 shadow-[0_25px_60px_rgba(255,79,24,0.1)] translate-y-0 opacity-100'
+                      ? 'border-[#FF4F18]/50 translate-y-0 opacity-100'
                       : 'opacity-55 translate-y-3'
                   }`}
                 >
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4F18]/15 border border-[#FF4F18]/30 text-[#FF4F18] font-mono-tech text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-3.5 sm:mb-4">
-                    <span>STEP {cleanNum}</span>
+                  <div className="inline-flex flex-wrap items-center gap-x-2 gap-y-0.5 px-3 py-1 rounded-full bg-[#FF4F18]/15 border border-[#FF4F18]/30 text-[#FF4F18] font-mono-tech text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-3.5 sm:mb-4 leading-tight">
+                    <span className="whitespace-nowrap">STEP {cleanNum}</span>
                     <span>•</span>
                     <span>{step.tag}</span>
                   </div>

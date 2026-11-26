@@ -2,43 +2,43 @@ export const PROCESS_STEPS = [
   {
     num: ".01",
     tag: "DISCOVER & DEFINE",
-    title: "Understand the vision before building",
-    desc: "We begin by understanding your goals, target audience, requirements, priorities, and expectations to establish a clear shared direction.",
-    deliverables: ["Goal Alignment", "Requirement Mapping", "Target Audience Focus", "Scope Baseline"]
+    title: "Understand your goals first",
+    desc: "We start by learning what your business needs, who your customers are, and what success looks like.",
+    deliverables: ["Goal Alignment", "Scope Outline", "Audience Focus", "Clear Plan"]
   },
   {
     num: ".02",
     tag: "PLAN & PRIORITIZE",
-    title: "Turn ideas into achievable steps",
-    desc: "We break the project into manageable tasks, prioritize essential features, and establish clear short-term milestones.",
-    deliverables: ["Task Breakdown", "Feature Priority", "Milestone Mapping", "Flexible Roadmap"]
+    title: "Turn ideas into clear steps",
+    desc: "We break the work into simple tasks, prioritize core features, and set realistic milestones.",
+    deliverables: ["Task List", "Core Features", "Milestones", "Timeline"]
   },
   {
     num: ".03",
     tag: "DESIGN & BUILD",
-    title: "Create, develop, and bring to life",
-    desc: "Our team translates concepts into functional web features, visual designs, video edits, or content deliverables with steady momentum.",
-    deliverables: ["UI/UX Prototyping", "Clean Code Development", "Visual Asset Crafting", "Content Drafts"]
+    title: "Design and build cleanly",
+    desc: "Our team crafts the interface, writes clean code, and prepares visual and written content together.",
+    deliverables: ["UI/UX Design", "Clean Code", "Brand Assets", "Clear Copy"]
   },
   {
     num: ".04",
     tag: "REVIEW & REFINE",
-    title: "Feedback makes the work better",
-    desc: "We share progress regularly, gather your input, refine visual designs, tune backend functionality, and polish every detail.",
-    deliverables: ["Progress Demos", "Feedback Integration", "Design Refinements", "Feature Iterations"]
+    title: "Refine through your feedback",
+    desc: "We share live previews early so you can review the look, flow, and features before anything is locked in.",
+    deliverables: ["Live Demos", "Quick Edits", "Design Polish", "Feature Tuning"]
   },
   {
     num: ".05",
     tag: "TEST & VALIDATE",
-    title: "Check the details before launch",
-    desc: "We evaluate the work against requirements including functional testing, responsive layout checks, content reviews, and performance validation.",
-    deliverables: ["Responsive Testing", "Cross-Browser QA", "Content Consistency", "Technical Audit"]
+    title: "Check every detail before launch",
+    desc: "We test forms, links, layout responsiveness, and speed across phones, tablets, and desktops.",
+    deliverables: ["Mobile Testing", "Browser Checks", "Copy Proofing", "Speed Check"]
   },
   {
     num: ".06",
     tag: "DELIVER & EVOLVE",
-    title: "Launch with confidence. Improve with purpose.",
-    desc: "We prepare final deliverables and handle deployment. Post-launch maintenance and continuous enhancements are planned as needed.",
-    deliverables: ["Final Handoff", "Live Deployment", "System Documentation", "Post-Launch Plan"]
+    title: "Launch smoothly and support growth",
+    desc: "We deploy your finished product cleanly, hand over access, and support updates as your business grows.",
+    deliverables: ["Final Handoff", "Live Launch", "Setup Guide", "Ongoing Support"]
   }
 ];
