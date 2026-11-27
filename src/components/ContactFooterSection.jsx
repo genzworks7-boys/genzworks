@@ -232,7 +232,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
             {/* Clean Direct Contact Info */}
             <div className="space-y-6">
               <div>
-                <span className="text-xs uppercase tracking-widest text-zinc-500 block mb-2 font-mono-tech">
+                <span className="text-xs uppercase tracking-widest text-zinc-400 block mb-2 font-mono-tech">
                   Direct Email
                 </span>
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -260,7 +260,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
               </div>
 
               <div>
-                <span className="text-xs uppercase tracking-widest text-zinc-500 block mb-2 font-mono-tech">
+                <span className="text-xs uppercase tracking-widest text-zinc-400 block mb-2 font-mono-tech">
                   Studio Phone &amp; WhatsApp
                 </span>
                 <div className="space-y-3">
@@ -314,7 +314,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
 
               <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-sm text-zinc-400 pt-2">
                 <span>Coimbatore, Tamil Nadu</span>
-                <span className="text-white/20">•</span>
+                <span className="text-zinc-500" aria-hidden="true">•</span>
                 <span className="font-mono-tech text-xs text-zinc-300">{coimbatoreTime}</span>
               </div>
             </div>
@@ -381,6 +381,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
                   <input
                     required
                     type="text"
+                    aria-label="Your name"
                     value={contactForm.name}
                     onChange={(e) => setContactForm((f) => ({ ...f, name: e.target.value }))}
                     placeholder="Your name"
@@ -391,6 +392,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
                   <input
                     required
                     type="email"
+                    aria-label="Your email"
                     value={contactForm.email}
                     onChange={(e) => setContactForm((f) => ({ ...f, email: e.target.value }))}
                     placeholder="Your email"
@@ -401,6 +403,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
                   <input
                     required
                     type="tel"
+                    aria-label="Phone or WhatsApp number"
                     value={contactForm.phone}
                     onChange={(e) => setContactForm((f) => ({ ...f, phone: e.target.value }))}
                     placeholder="Phone / WhatsApp"
@@ -413,6 +416,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
                 <textarea
                   required
                   rows={3}
+                  aria-label="Tell us about your project"
                   value={contactForm.message}
                   onChange={(e) => setContactForm((f) => ({ ...f, message: e.target.value }))}
                   placeholder="Tell us about your project..."
@@ -494,6 +498,9 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
             <img
               src="/logo.webp"
               alt="GENZWORKS Studio Logo"
+              width="128"
+              height="128"
+              loading="lazy"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = '/logo.png';

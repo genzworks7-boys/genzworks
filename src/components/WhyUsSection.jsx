@@ -269,11 +269,11 @@ const WhyUsSection = React.memo(function WhyUsSection() {
     <section id="why-us" ref={sectionRef} className="py-24 border-y border-black/10 dark:border-white/10 relative z-10">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="max-w-3xl mb-16">
-          <div className="font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">[02] / WHY GENZWORKS?</div>
+          <div className="font-mono-tech text-xs uppercase tracking-widest text-[#C83200] dark:text-[#FF6B3D] font-bold mb-3">[02] / WHY GENZWORKS?</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             Different Minds. One <span className="font-editorial italic font-normal underline decoration-[#FF4F18]">Forward Vision.</span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base opacity-80 leading-relaxed">
+          <p className="mt-4 text-sm sm:text-base opacity-85 leading-relaxed">
             Great digital products come from clear design, clean technology, and close teamwork.
           </p>
         </div>
@@ -303,17 +303,18 @@ const WhyUsSection = React.memo(function WhyUsSection() {
                     className={`group relative w-full text-left py-2.5 px-3 rounded-xl transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.99] flex items-center overflow-hidden ${
                       isCurrent
                         ? 'opacity-100 translate-x-2'
-                        : 'opacity-70 hover:opacity-100 translate-x-0'
+                        : 'opacity-85 hover:opacity-100 translate-x-0'
                     }`}
                   >
                     {/* Pure GPU transform arrow (avoids w-0 -> w-5 width layout reflow during scroll) */}
                     <span
+                      aria-hidden="true"
                       style={{
                         transform: isCurrent
                           ? 'translate3d(0px, 0, 0) scale(1.1)'
                           : 'translate3d(-12px, 0, 0) scale(0.75)'
                       }}
-                      className={`absolute left-3 text-[#FF4F18] font-extrabold text-lg leading-none transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none ${
+                      className={`absolute left-3 text-[#C83200] dark:text-[#FF6B3D] font-extrabold text-lg leading-none transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none ${
                         isCurrent ? 'opacity-100' : 'opacity-0'
                       }`}
                     >
@@ -326,7 +327,7 @@ const WhyUsSection = React.memo(function WhyUsSection() {
                           : 'translate3d(0px, 0, 0) scale(1)'
                       }}
                       className={`text-base sm:text-[17px] tracking-tight origin-left transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        isCurrent ? 'font-extrabold' : 'font-medium opacity-80'
+                        isCurrent ? 'font-extrabold' : 'font-medium text-zinc-700 dark:text-zinc-300'
                       }`}
                     >
                       {p.title}

@@ -109,12 +109,12 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
     <section id="works" ref={sectionRef} className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-black/10 dark:border-white/10 gap-6 reveal-on-scroll">
         <div>
-          <div className="inline-flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">
+          <div className="inline-flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#C83200] dark:text-[#FF6B3D] font-bold mb-3">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             <span>[01] / OUR PRODUCTS</span>
           </div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-[-0.04em] leading-none">
-            FEATURED <span className="font-editorial italic font-normal text-[#FF4F18]">PROJECTS.</span>
+            FEATURED <span className="font-editorial italic font-normal text-[#C83200] dark:text-[#FF6B3D]">PROJECTS.</span>
           </h2>
         </div>
 
@@ -169,6 +169,9 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
                 <img
                   src={slide.image}
                   alt={slide.title}
+                  width="800"
+                  height="450"
+                  loading="lazy"
                   decoding="async"
                   fetchPriority="low"
                   onError={(e) => {
@@ -199,7 +202,7 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
                 <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.97)_0%,rgba(0,0,0,0.82)_44%,rgba(0,0,0,0.3)_74%,rgba(0,0,0,0.08)_100%)] p-5 sm:p-10 pt-24 sm:pt-10 flex flex-col justify-end text-white z-20">
                   <div className="flex flex-wrap items-end justify-between gap-4 min-w-0">
                     <div className="max-w-2xl space-y-2 min-w-0">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF4F18] text-white font-mono-tech text-[10px] font-bold uppercase tracking-wider shadow">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C83200] text-white font-mono-tech text-[10px] font-bold uppercase tracking-wider shadow">
                         <span>{slide.badge}</span>
                       </div>
                       <h3 className="text-xl sm:text-4xl font-extrabold tracking-tight leading-tight">
@@ -276,8 +279,10 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
                   <div className="relative h-48 sm:h-60 bg-black overflow-hidden">
                     <img
                       src={selectedCaseStudy.image}
-                      decoding="async"
                       alt={selectedCaseStudy.title}
+                      width="800"
+                      height="450"
+                      decoding="async"
                       className="w-full h-full object-cover object-top"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#121216] via-black/30 to-transparent" />

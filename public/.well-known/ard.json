@@ -1,0 +1,51 @@
+{
+  "$schema": "https://agenticresourcediscovery.org/schemas/ard-manifest.schema.json",
+  "entries": [
+    {
+      "identifier": "urn:air:genzworks.in:studio:website",
+      "displayName": "GENZWORKS Technology & Creative Studio",
+      "type": "text/html",
+      "version": "1.0.0",
+      "description": "Coimbatore technology and creative studio specializing in fast custom websites, React and Next.js web apps, UI/UX systems, branding, commercial posters, video edits, and academic mentorship.",
+      "url": "https://genzworks.in/",
+      "representativeQueries": [
+        "Build a custom business website or React web app with GENZWORKS",
+        "Contact GENZWORKS web development and UI/UX studio in Coimbatore",
+        "View GENZWORKS portfolio case studies and service offerings"
+      ],
+      "capabilities": [
+        "web-development",
+        "ui-ux-design",
+        "branding",
+        "commercial-posters",
+        "video-editing",
+        "academic-mentorship"
+      ],
+      "trustManifest": {
+        "identity": "https://genzworks.in",
+        "identityType": "https"
+      }
+    },
+    {
+      "identifier": "urn:air:genzworks.in:docs:llms",
+      "displayName": "GENZWORKS Studio Directory (llms.txt)",
+      "type": "text/markdown",
+      "version": "1.0.0",
+      "description": "Concise Markdown index of GENZWORKS studio services, case studies, work process, FAQ, and direct client inquiry endpoints.",
+      "url": "https://genzworks.in/llms.txt",
+      "representativeQueries": [
+        "Summarize GENZWORKS services, timelines, and client ownership policy",
+        "Find GENZWORKS studio email, WhatsApp contact, and portfolio links"
+      ],
+      "capabilities": [
+        "documentation",
+        "service-catalog",
+        "contact-routing"
+      ],
+      "trustManifest": {
+        "identity": "https://genzworks.in",
+        "identityType": "https"
+      }
+    }
+  ]
+}

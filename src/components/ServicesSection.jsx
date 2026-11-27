@@ -26,10 +26,12 @@ const ServiceCard = React.memo(function ServiceCard({
       <div className="relative w-full h-[320px] sm:h-[360px] rounded-[26px] overflow-hidden bg-black/40">
         <img
           src={s.image}
+          alt={s.title}
+          width="640"
+          height="427"
           loading="lazy"
           decoding="async"
           fetchPriority="low"
-          alt={s.title}
           style={{
             transform: isCardHovered ? 'scale(1.08) translate3d(0, -4px, 0)' : 'scale(1) translate3d(0, 0, 0)',
             transition: 'transform 0.52s cubic-bezier(0.16, 1, 0.3, 1)'
@@ -159,7 +161,7 @@ const ServicesSection = React.memo(function ServicesSection({
     <section id="services" className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-black/10 dark:border-white/10 gap-6">
         <div>
-          <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3">[05] / OUR SERVICES</div>
+          <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-600 dark:text-zinc-400 mb-3">[05] / OUR SERVICES</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             Everything Your Idea Needs to <span className="font-editorial italic font-normal">Move Forward.</span>
           </h2>

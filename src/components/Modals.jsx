@@ -223,6 +223,9 @@ const Modals = React.memo(function Modals({
               <img
                 src="/logo.webp"
                 alt="GENZWORKS Studio"
+                width="128"
+                height="128"
+                fetchPriority="high"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = '/logo.png';

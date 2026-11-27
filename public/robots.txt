@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemap & Agent Discovery
 Sitemap: https://genzworks.in/sitemap.xml
+Agentmap: https://genzworks.in/.well-known/ard.json

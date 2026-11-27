@@ -292,6 +292,9 @@ const HeroSection = React.memo(function HeroSection({
                     <img
                       src="/logo.webp"
                       alt="GENZWORKS Studio Logo"
+                      width="128"
+                      height="128"
+                      fetchPriority="high"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src = '/logo.png';

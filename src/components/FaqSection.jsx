@@ -170,13 +170,13 @@ const FaqSection = React.memo(function FaqSection({ jumpTo }) {
     <section id="faq" className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10 border-t border-black/10 dark:border-white/10">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
         <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-28">
-          <div className="inline-flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold">
+          <div className="inline-flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#C83200] dark:text-[#FF6B3D] font-bold">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>[06] / FAQ &amp; CLARITY</span>
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.06]">
-            Questions Clients Ask <span className="font-editorial italic font-normal text-[#FF4F18]">Before Launch.</span>
+            Questions Clients Ask <span className="font-editorial italic font-normal text-[#C83200] dark:text-[#FF6B3D]">Before Launch.</span>
           </h2>
 
           <p className="text-sm sm:text-base opacity-75 leading-relaxed max-w-md">

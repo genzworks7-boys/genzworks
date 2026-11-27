@@ -71,7 +71,7 @@ const ProcessSection = React.memo(function ProcessSection() {
     <section id="process" ref={processRef} className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between pb-14 border-b border-black/10 dark:border-white/10 gap-6 reveal-on-scroll">
         <div>
-          <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3">[03] / OUR WORK PROCESS</div>
+          <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-600 dark:text-zinc-400 mb-3">[03] / OUR WORK PROCESS</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
             A Clear Direction. A <span className="font-editorial italic font-normal">Collaborative</span> Journey.
           </h2>
@@ -106,10 +106,10 @@ const ProcessSection = React.memo(function ProcessSection() {
                     style={{
                       textShadow: active ? '0 0 22px rgba(255, 79, 24, 0.35)' : 'none'
                     }}
-                    className={`text-3xl sm:text-5xl md:text-7xl font-extrabold font-mono-tech tracking-tighter select-none transition-[transform,opacity,color] duration-500 ${
+                    className={`text-3xl sm:text-5xl md:text-7xl font-extrabold font-mono-tech tracking-tighter select-none transition-[transform,color] duration-500 ${
                       active
-                        ? 'text-[#FF4F18] scale-105'
-                        : 'opacity-20 scale-95'
+                        ? 'text-[#C83200] dark:text-[#FF6B3D] scale-105'
+                        : 'text-zinc-500 dark:text-zinc-400 scale-95'
                     }`}
                   >
                     {cleanNum}
@@ -134,12 +134,12 @@ const ProcessSection = React.memo(function ProcessSection() {
                   className={`md:col-span-9 rounded-[24px] sm:rounded-[28px] p-5 sm:p-7 md:p-10 liquid-glass transition-[transform,opacity,border-color] duration-500 ${
                     active
                       ? 'border-[#FF4F18]/50 translate-y-0 opacity-100'
-                      : 'opacity-55 translate-y-3'
+                      : 'border-black/10 dark:border-white/10 translate-y-2'
                   }`}
                 >
-                  <div className="inline-flex flex-wrap items-center gap-x-2 gap-y-0.5 px-3 py-1 rounded-full bg-[#FF4F18]/15 border border-[#FF4F18]/30 text-[#FF4F18] font-mono-tech text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-3.5 sm:mb-4 leading-tight">
+                  <div className="inline-flex flex-wrap items-center gap-x-2 gap-y-0.5 px-3 py-1 rounded-full bg-[#FF4F18]/15 border border-[#C83200]/30 text-[#B02900] dark:border-[#FF4F18]/30 dark:text-[#FF6B3D] font-mono-tech text-[10px] sm:text-[11px] font-bold uppercase tracking-wider mb-3.5 sm:mb-4 leading-tight">
                     <span className="whitespace-nowrap">STEP {cleanNum}</span>
-                    <span>•</span>
+                    <span aria-hidden="true">•</span>
                     <span>{step.tag}</span>
                   </div>
 
@@ -147,7 +147,7 @@ const ProcessSection = React.memo(function ProcessSection() {
                     {step.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm md:text-base opacity-75 leading-relaxed mb-5 sm:mb-6">
+                  <p className="text-xs sm:text-sm md:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed mb-5 sm:mb-6">
                     {step.desc}
                   </p>
 

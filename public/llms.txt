@@ -1,0 +1,28 @@
+# GENZWORKS
+
+> GENZWORKS is a technology and creative studio in Coimbatore, India building fast React & Next.js websites, UI/UX design systems, commercial posters, video edits, and academic engineering mentorship for startups, businesses, and students worldwide.
+
+Based in Coimbatore, Tamil Nadu, GENZWORKS brings UI/UX design, full-stack web engineering, multimedia production, QA testing, and cloud deployment together under one coordinated studio at https://genzworks.in/.
+
+## Studio Pages & Sections
+
+- [Home & Studio Overview](https://genzworks.in/#home): Hero introduction, brand identity, and primary contact actions.
+- [Craft Tools & Tech Stack](https://genzworks.in/#tools): Design, frontend, motion media, and cloud stack (Figma, Framer, React, Next.js, Tailwind CSS, Node.js, Adobe Creative Suite, GitHub, Cloudflare).
+- [Featured Products & Case Studies](https://genzworks.in/#works): Live client launches including Sharp Crackers and Nandhakumar Demolition with technical case studies.
+- [Why Choose GENZWORKS](https://genzworks.in/#why-us): Six studio pillars covering purpose-driven design, modern architecture, integrated execution, clear communication, QA validation, and current web standards.
+- [Work Process](https://genzworks.in/#process): Six-step workflow from discovery and planning through testing and launch.
+- [Team & Careers](https://genzworks.in/#about): Studio mission, vision, 7-member multidisciplinary squad, and open contributor applications.
+- [Services](https://genzworks.in/#services): Web Development, Graphic Design, Commercial Poster Design, Academic Mentorship, Video & Multimedia, and Content & Copywriting.
+- [FAQ](https://genzworks.in/#faq): Frequently asked questions on launch timelines, client ownership, pricing estimates, academic mentorship, and remote global collaboration.
+- [Contact & Project Quote](https://genzworks.in/#contact): Project inquiry form with service & timeline selection, email (`contact@genzworks.in`), and phone/WhatsApp (`+91 87542 77982`, `+91 95669 80426`).
+
+## Flagship Client Launches
+
+- [Sharp Crackers E-Commerce](https://sharpcrackers.com): Mobile-first online fireworks storefront featuring instant product filtering, transparent cart totals, and direct WhatsApp ordering.
+- [Nandhakumar Demolition](https://nandhukumar-demolition.onrender.com/): Industrial engineering website showcasing diamond core-cutting and controlled demolition capabilities with quick quote routing.
+
+## Machine-Readable Discovery
+
+- [ARD Manifest](https://genzworks.in/.well-known/ard.json): Agentic Resource Discovery (ARD) JSON catalog for autonomous AI agents.
+- [XML Sitemap](https://genzworks.in/sitemap.xml): Canonical page URL and portfolio image index.
+- [Robots Directives](https://genzworks.in/robots.txt): Crawler permissions, sitemap location, and agent map reference.

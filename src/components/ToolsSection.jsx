@@ -42,12 +42,12 @@ const ToolsSection = React.memo(function ToolsSection() {
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal-on-scroll">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#FF4F18]/30 bg-[#FF4F18]/10 text-[#FF4F18] font-mono-tech text-[11px] uppercase tracking-widest font-bold mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#C83200]/30 bg-[#FF4F18]/10 text-[#B82C00] dark:border-[#FF4F18]/30 dark:text-[#FF6B3D] font-mono-tech text-[11px] uppercase tracking-widest font-bold mb-3">
               <Layers className="w-3.5 h-3.5" />
               <span>/ TOOLS &amp; ECOSYSTEM</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
-              Powered by <span className="font-editorial italic font-normal text-[#FF4F18]">Industry-Standard</span> Craft Tools.
+              Powered by <span className="font-editorial italic font-normal text-[#C83200] dark:text-[#FF6B3D]">Industry-Standard</span> Craft Tools.
             </h2>
           </div>
 
@@ -63,7 +63,7 @@ const ToolsSection = React.memo(function ToolsSection() {
                   className={`px-3 py-1.5 xl:px-4 xl:py-2 rounded-xl text-xs font-extrabold tracking-tight whitespace-nowrap transition-[transform,background-color,color,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 ${
                     active
                       ? 'bg-[#0E0E10] text-[#D9FF3F] dark:bg-white dark:text-[#0E0E10] shadow-lg scale-[1.03]'
-                      : 'opacity-65 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5'
+                      : 'text-zinc-700 dark:text-zinc-300 hover:bg-black/5 dark:hover:bg-white/5'
                   }`}
                 >
                   {cat}
@@ -116,7 +116,7 @@ const ToolsSection = React.memo(function ToolsSection() {
                       </h3>
                       <ArrowUpRight className="w-5 h-5 text-[#FF4F18] shrink-0 opacity-0 -translate-x-1.5 translate-y-1.5 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[transform,opacity] duration-300" />
                     </div>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium mt-1">
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400 font-medium mt-1">
                       {tool.category}
                     </p>
                   </div>

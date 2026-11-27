@@ -59,26 +59,26 @@ const AboutSection = React.memo(function AboutSection({
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-20 reveal-on-scroll">
           <div className="lg:col-span-7 space-y-6">
-            <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">[04] / ABOUT GENZWORKS</div>
+            <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-600 dark:text-zinc-400">[04] / ABOUT GENZWORKS</div>
             <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
               A New Generation of <span className="font-editorial italic font-normal underline decoration-[#FF4F18]">Digital Thinking.</span>
             </h2>
-            <p className="text-sm sm:text-base opacity-80 leading-relaxed">
+            <p className="text-sm sm:text-base opacity-85 leading-relaxed">
               GenzWorks is a technology and creative studio built on one simple idea: bring the right skills together to turn ideas into real products.
             </p>
           </div>
 
           <div className="lg:col-span-5 space-y-6">
             <div className="p-6 rounded-2xl liquid-glass shadow-md">
-              <h3 className="font-mono-tech text-xs uppercase font-bold text-[#FF4F18] mb-1">OUR MISSION</h3>
-              <p className="text-xs sm:text-sm opacity-85 leading-relaxed">
+              <h3 className="font-mono-tech text-xs uppercase font-bold text-[#C83200] dark:text-[#FF6B3D] mb-1">OUR MISSION</h3>
+              <p className="text-xs sm:text-sm opacity-90 leading-relaxed">
                 Combine technology and creative design to build useful, fast, and easy-to-use digital products.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl liquid-glass shadow-md">
-              <h3 className="font-mono-tech text-xs uppercase font-bold text-amber-500 mb-1">OUR VISION</h3>
-              <p className="text-xs sm:text-sm opacity-85 leading-relaxed">
+              <h3 className="font-mono-tech text-xs uppercase font-bold text-amber-700 dark:text-amber-400 mb-1">OUR VISION</h3>
+              <p className="text-xs sm:text-sm opacity-90 leading-relaxed">
                 Grow into a trusted studio known for fresh thinking, clean execution, and consistent quality.
               </p>
             </div>
@@ -112,7 +112,7 @@ const AboutSection = React.memo(function AboutSection({
           </div>
 
           <div className="lg:col-span-8 w-full">
-            <div className="sm:hidden flex items-center justify-end font-mono-tech text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2 px-0.5">
+            <div className="sm:hidden flex items-center justify-end font-mono-tech text-[10px] uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-2 px-0.5">
               <span>← Swipe to view team →</span>
             </div>
             <div className="w-full overflow-x-auto lg:overflow-visible pb-2">
@@ -173,8 +173,11 @@ const TeamCard = React.memo(function TeamCard({
       {/* Base color portrait */}
       <img
         src={member.photo}
-        decoding="async"
         alt={member.name}
+        width="540"
+        height="720"
+        loading="lazy"
+        decoding="async"
         style={{
           transform: isOpen ? 'scale(1)' : 'scale(1.08)'
         }}
@@ -191,8 +194,11 @@ const TeamCard = React.memo(function TeamCard({
       {hasBakedGray && (
         <img
           src={member.grayPhoto}
-          decoding="async"
           alt=""
+          width="540"
+          height="720"
+          loading="lazy"
+          decoding="async"
           aria-hidden="true"
           style={{
             opacity: isOpen ? 0 : 1,

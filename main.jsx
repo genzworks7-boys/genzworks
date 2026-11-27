@@ -45,12 +45,12 @@ export default function App() {
   const isScrolledRef = useRef(false);
   const toastTimerRef = useRef(null);
 
-  // Full-Screen "Are you ready?" Intro Loader (crisp 1.5s first-visit reveal, 0ms instant skip on session revisits for strong CWV LCP)
+  // Full-Screen "Are you ready?" Intro Loader (fast 480ms curtain lift on cold visits + 0ms instant skip on revisits for high PSI LCP/Speed Index)
   useEffect(() => {
     if (loaderPhase === 'done') return;
-    const t1 = setTimeout(() => setLoaderPhase('are-you'), 80);
-    const t2 = setTimeout(() => setLoaderPhase('ready'), 380);
-    const t3 = setTimeout(() => setLoaderPhase('curtain'), 920);
+    const t1 = setTimeout(() => setLoaderPhase('are-you'), 40);
+    const t2 = setTimeout(() => setLoaderPhase('ready'), 180);
+    const t3 = setTimeout(() => setLoaderPhase('curtain'), 480);
     const t4 = setTimeout(() => {
       setLoaderPhase('done');
       try {
@@ -58,7 +58,7 @@ export default function App() {
       } catch {
         // Ignore storage write errors in restricted privacy modes
       }
-    }, 1550);
+    }, 880);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
