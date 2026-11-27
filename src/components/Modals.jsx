@@ -222,11 +222,11 @@ const Modals = React.memo(function Modals({
             <div className="w-14 h-14 sm:w-16 sm:h-16 mb-5 flex items-center justify-center">
               <img
                 src="/logo.webp"
+                alt="GENZWORKS Studio"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = '/logo.png';
                 }}
-                alt="GENZWORKS Studio"
                 decoding="async"
                 className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(0,240,255,0.75)]"
               />
@@ -317,6 +317,7 @@ const Modals = React.memo(function Modals({
                 </div>
 
                 <button
+                  type="button"
                   onClick={() => setActiveLegalModal(null)}
                   className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/10 hover:bg-[#FF4F18] text-white text-[11px] sm:text-xs font-mono-tech font-bold uppercase tracking-wider flex items-center gap-1.5 shrink-0 whitespace-nowrap transition-colors"
                 >
@@ -396,11 +397,13 @@ const Modals = React.memo(function Modals({
                 </div>
 
                 <button
+                  type="button"
                   onClick={() => {
                     setIsJoinTeamModalOpen(false);
                     if (joinSubmitted) setJoinSubmitted(false);
                     setJoinError(null);
                   }}
+                  aria-label="Close Join Team Modal"
                   className="w-8 h-8 shrink-0 rounded-full bg-white/10 hover:bg-[#FF4F18] text-white flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <X className="w-4 h-4" />
@@ -417,6 +420,7 @@ const Modals = React.memo(function Modals({
                     Thanks for reaching out! Our team lead will review your profile, portfolio, and code repositories within 48 hours.
                   </p>
                   <button
+                    type="button"
                     onClick={() => {
                       setIsJoinTeamModalOpen(false);
                       setJoinSubmitted(false);

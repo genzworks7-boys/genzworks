@@ -28,15 +28,6 @@
   perspective: 1000px;
 }
 
-/* Isolate heavy internal recalculations without un-skip scroll stutter */
-#tools, #process, #faq {
-  contain: layout style;
-}
-
-#services {
-  contain: layout style;
-}
-
 /* Ambient liquid blobs: pre-blended multi-stop gradients (avoids expensive blur(100px) filter shaders) */
 @keyframes blobFloat {
   0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); }

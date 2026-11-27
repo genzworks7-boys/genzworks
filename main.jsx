@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
 import { resolveMemberPhoto } from './src/teamImages.js';
 import { INITIAL_TEAM } from './src/data/team';
@@ -53,7 +53,11 @@ export default function App() {
     const t3 = setTimeout(() => setLoaderPhase('curtain'), 920);
     const t4 = setTimeout(() => {
       setLoaderPhase('done');
-      try { window.sessionStorage?.setItem('gzw_intro_seen', '1'); } catch {}
+      try {
+        window.sessionStorage?.setItem('gzw_intro_seen', '1');
+      } catch {
+        // Ignore storage write errors in restricted privacy modes
+      }
     }, 1550);
     return () => {
       clearTimeout(t1);

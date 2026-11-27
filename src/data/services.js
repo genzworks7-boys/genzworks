@@ -17,7 +17,7 @@ export const DETAILED_SERVICES = [
     glow: "rgba(27, 132, 255, 0.55)",
     textColor: "text-white",
     subTextColor: "text-white/85",
-    tagBg: "bg-white/18 text-white border-white/30 hover:bg-white/28",
+    tagBg: "bg-white/[0.18] text-white border-white/30 hover:bg-white/[0.28]",
     bullets: ["Business Websites", "Portfolio Websites", "Landing Pages", "Full-Stack Web Apps"]
   },
   {
@@ -38,7 +38,7 @@ export const DETAILED_SERVICES = [
     glow: "rgba(255, 102, 31, 0.55)",
     textColor: "text-white",
     subTextColor: "text-white/85",
-    tagBg: "bg-white/18 text-white border-white/30 hover:bg-white/28",
+    tagBg: "bg-white/[0.18] text-white border-white/30 hover:bg-white/[0.28]",
     bullets: ["Brand Identity & Assets", "Social Media Creatives", "Logos & Vector Marks", "Banners & Flyers"]
   },
   {
@@ -59,7 +59,7 @@ export const DETAILED_SERVICES = [
     glow: "rgba(142, 53, 247, 0.55)",
     textColor: "text-white",
     subTextColor: "text-white/85",
-    tagBg: "bg-white/18 text-white border-white/30 hover:bg-white/28",
+    tagBg: "bg-white/[0.18] text-white border-white/30 hover:bg-white/[0.28]",
     bullets: ["Product Advertisements", "Event & Conference Posters", "Marketing Campaigns", "Launch Announcements"]
   },
   {
@@ -80,7 +80,7 @@ export const DETAILED_SERVICES = [
     glow: "rgba(16, 185, 129, 0.55)",
     textColor: "text-white",
     subTextColor: "text-white/85",
-    tagBg: "bg-white/18 text-white border-white/30 hover:bg-white/28",
+    tagBg: "bg-white/[0.18] text-white border-white/30 hover:bg-white/[0.28]",
     bullets: ["Architecture & Planning", "Full-Stack Prototypes", "Documentation & Viva Prep", "Code Review"]
   },
   {
@@ -101,7 +101,7 @@ export const DETAILED_SERVICES = [
     glow: "rgba(244, 63, 94, 0.55)",
     textColor: "text-white",
     subTextColor: "text-white/85",
-    tagBg: "bg-white/18 text-white border-white/30 hover:bg-white/28",
+    tagBg: "bg-white/[0.18] text-white border-white/30 hover:bg-white/[0.28]",
     bullets: ["Cinematic Cuts & Reels", "Motion Graphics & VFX", "Brand Teasers", "Audio Engineering"]
   },
   {
@@ -122,7 +122,7 @@ export const DETAILED_SERVICES = [
     glow: "rgba(245, 158, 11, 0.55)",
     textColor: "text-white",
     subTextColor: "text-white/85",
-    tagBg: "bg-white/18 text-white border-white/30 hover:bg-white/28",
+    tagBg: "bg-white/[0.18] text-white border-white/30 hover:bg-white/[0.28]",
     bullets: ["Website Copywriting", "Value Propositions", "Brand Tone & Voice", "Content Strategy"]
   }
 ];

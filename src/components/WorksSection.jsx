@@ -107,7 +107,7 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
 
   return (
     <section id="works" ref={sectionRef} className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-current/10 gap-6 reveal-on-scroll">
+      <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-black/10 dark:border-white/10 gap-6 reveal-on-scroll">
         <div>
           <div className="inline-flex items-center gap-2 font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
@@ -168,6 +168,7 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
 
                 <img
                   src={slide.image}
+                  alt={slide.title}
                   decoding="async"
                   fetchPriority="low"
                   onError={(e) => {
@@ -176,7 +177,6 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
                       e.currentTarget.src = slide.fallbackImage;
                     }
                   }}
-                  alt={slide.title}
                   className={`w-full h-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 ${
                     slide.isLiveBrowser ? 'pt-10' : ''
                   }`}
@@ -227,7 +227,7 @@ const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromC
                         {slide.tags.map((tag, tIdx) => (
                           <span
                             key={tIdx}
-                            className="px-3 py-1 rounded-full bg-white/12 border border-white/15 text-[11px] font-semibold text-white"
+                            className="px-3 py-1 rounded-full bg-white/[0.12] border border-white/15 text-[11px] font-semibold text-white"
                           >
                             {tag}
                           </span>

@@ -1,3 +1,5 @@
+/* global LockService, ContentService, SpreadsheetApp, Utilities, MailApp, Logger */
+/* eslint-disable no-unused-vars */
 /**
  * ==============================================================================
  * GENZWORKS STUDIO — Unified Google Sheets Automation Script

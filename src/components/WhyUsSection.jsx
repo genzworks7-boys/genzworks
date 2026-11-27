@@ -57,7 +57,7 @@ const WhyPillarCard = React.memo(function WhyPillarCard({
           </div>
         </div>
 
-        <div className="relative z-10 border-t border-current/10 px-8 sm:px-10 py-5">
+        <div className="relative z-10 border-t border-black/10 dark:border-white/10 px-8 sm:px-10 py-5">
           <button
             type="button"
             onClick={() => onToggle(i)}
@@ -71,7 +71,7 @@ const WhyPillarCard = React.memo(function WhyPillarCard({
               className={`w-9 h-9 rounded-xl flex items-center justify-center transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 isExpanded
                   ? 'bg-[#FF4F18] text-white scale-105'
-                  : 'bg-current/10 text-current group-hover/btn:bg-[#FF4F18] group-hover/btn:text-white group-hover/btn:scale-105'
+                  : 'bg-black/10 dark:bg-white/10 text-current group-hover/btn:bg-[#FF4F18] group-hover/btn:text-white group-hover/btn:scale-105'
               }`}
             >
               <Plus
@@ -84,7 +84,7 @@ const WhyPillarCard = React.memo(function WhyPillarCard({
 
           {isExpanded && (
             <div className="why-details-enter pt-4">
-              <div className="pt-4 border-t border-current/10 text-xs sm:text-sm opacity-85 leading-relaxed">
+              <div className="pt-4 border-t border-black/10 dark:border-white/10 text-xs sm:text-sm opacity-85 leading-relaxed">
                 {p.details}
               </div>
             </div>
@@ -122,7 +122,7 @@ const WhyUsSection = React.memo(function WhyUsSection() {
   useEffect(() => {
     return () => {
       animsRef.current.forEach((a) => {
-        try { a.cancel(); } catch {}
+        try { a.cancel(); } catch { /* ignore cancelled animations */ }
       });
       animsRef.current = [];
     };
@@ -144,7 +144,7 @@ const WhyUsSection = React.memo(function WhyUsSection() {
     const beforeRects = flipRefs.current.map((el) => (el ? el.getBoundingClientRect() : null));
 
     animsRef.current.forEach((a) => {
-      try { a.cancel(); } catch {}
+      try { a.cancel(); } catch { /* ignore cancelled animations */ }
     });
     animsRef.current = [];
 
@@ -266,7 +266,7 @@ const WhyUsSection = React.memo(function WhyUsSection() {
   }, []);
 
   return (
-    <section id="why-us" ref={sectionRef} className="py-24 border-y border-current/10 relative z-10">
+    <section id="why-us" ref={sectionRef} className="py-24 border-y border-black/10 dark:border-white/10 relative z-10">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="max-w-3xl mb-16">
           <div className="font-mono-tech text-xs uppercase tracking-widest text-[#FF4F18] font-bold mb-3">[02] / WHY GENZWORKS?</div>
@@ -290,6 +290,7 @@ const WhyUsSection = React.memo(function WhyUsSection() {
                 return (
                   <button
                     key={i}
+                    type="button"
                     onClick={() => {
                       activeRef.current = i;
                       setActiveWhyIndex(i);

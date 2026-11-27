@@ -55,7 +55,7 @@ const AboutSection = React.memo(function AboutSection({
   }, [heroRevealed, team]);
 
   return (
-    <section id="about" className="py-24 border-t border-current/10 relative z-10">
+    <section id="about" className="py-24 border-t border-black/10 dark:border-white/10 relative z-10">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-20 reveal-on-scroll">
           <div className="lg:col-span-7 space-y-6">
@@ -97,6 +97,7 @@ const AboutSection = React.memo(function AboutSection({
             </p>
 
             <button
+              type="button"
               onClick={() => setIsJoinTeamModalOpen(true)}
               className="group relative inline-flex items-center h-14 rounded-full bg-[#1C1C1F] dark:bg-white text-white dark:text-[#0E0E10] pr-7 pl-[3.5rem] overflow-hidden shadow-xl transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03] active:scale-95 cursor-pointer"
             >

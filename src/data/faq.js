@@ -5,11 +5,11 @@ export const FAQ_ITEMS = [
   },
   {
     q: "How long does it take to launch a custom website?",
-    a: "Most business websites and portfolio sites launch in 1 to 3 weeks depending on the number of pages and custom integrations. Full-stack web apps or custom e-commerce stores typically take 3 to 5 weeks."
+    a: "Most business websites and portfolio sites launch in 2 to 4 weeks depending on the number of pages and custom integrations. Full-stack web apps or custom e-commerce stores typically take 4 to 8 weeks."
   },
   {
     q: "Will I own the domain, source code, and hosting?",
-    a: "Yes. Every client retains 100% ownership of their domain name, GitHub code repository, cloud hosting (such as Cloudflare Pages), and final design files once completed."
+    a: "Yes. Every client retains 100% ownership of their domain name, cloud hosting, and final design files once completed."
   },
   {
     q: "How does your pricing and feedback process work?",
@@ -17,7 +17,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "How does Academic Project Mentorship work?",
-    a: "We guide students step-by-step on system architecture, working full-stack or AI/web prototypes, code reviews, documentation, and viva preparation so they fully understand and present their project."
+    a: "We guide students step-by-step on system architecture, working full-stack or AI/web prototypes so they fully understand and present their project."
   },
   {
     q: "Do you work with clients outside Coimbatore?",

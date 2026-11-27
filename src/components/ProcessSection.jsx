@@ -69,7 +69,7 @@ const ProcessSection = React.memo(function ProcessSection() {
 
   return (
     <section id="process" ref={processRef} className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between pb-14 border-b border-current/10 gap-6 reveal-on-scroll">
+      <div className="flex flex-col md:flex-row md:items-end justify-between pb-14 border-b border-black/10 dark:border-white/10 gap-6 reveal-on-scroll">
         <div>
           <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3">[03] / OUR WORK PROCESS</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
@@ -79,7 +79,7 @@ const ProcessSection = React.memo(function ProcessSection() {
 
         <div className="flex items-center justify-between sm:justify-start gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2.5 rounded-full liquid-glass font-mono-tech text-[11px] sm:text-xs shadow-sm w-full sm:w-auto">
           <span className="whitespace-nowrap">TIMELINE PROGRESS</span>
-          <div className="flex-1 sm:flex-initial min-w-[64px] sm:w-24 h-2 rounded-full bg-current/10 overflow-hidden">
+          <div className="flex-1 sm:flex-initial min-w-[64px] sm:w-24 h-2 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
             <div
               id="process-timeline-bar"
               ref={barRef}
@@ -117,7 +117,7 @@ const ProcessSection = React.memo(function ProcessSection() {
 
                   {/* Animated Timeline Connecting Line (pure GPU scaleY avoids layout reflow) */}
                   {idx < PROCESS_STEPS.length - 1 && (
-                    <div className="w-[2px] flex-1 min-h-[90px] md:h-36 md:flex-initial bg-current/10 relative mt-3 md:mt-4 overflow-hidden rounded-full">
+                    <div className="w-[2px] flex-1 min-h-[90px] md:h-36 md:flex-initial bg-black/10 dark:bg-white/10 relative mt-3 md:mt-4 overflow-hidden rounded-full">
                       <div
                         className="w-full h-full origin-top bg-gradient-to-b from-[#FF4F18] via-[#D9FF3F] to-transparent transition-transform duration-400 ease-out"
                         style={{
@@ -151,7 +151,7 @@ const ProcessSection = React.memo(function ProcessSection() {
                     {step.desc}
                   </p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5 pt-3.5 sm:pt-4 border-t border-current/10">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5 pt-3.5 sm:pt-4 border-t border-black/10 dark:border-white/10">
                     {step.deliverables.map((d, i) => (
                       <div key={i} className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl liquid-glass-chip text-[10px] sm:text-[11px] font-bold flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF4F18] shrink-0" />

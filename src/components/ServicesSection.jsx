@@ -157,7 +157,7 @@ const ServicesSection = React.memo(function ServicesSection({
 
   return (
     <section id="services" className="py-24 px-4 sm:px-10 max-w-[1280px] mx-auto relative z-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-current/10 gap-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between pb-12 border-b border-black/10 dark:border-white/10 gap-6">
         <div>
           <div className="font-mono-tech text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-3">[05] / OUR SERVICES</div>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight">

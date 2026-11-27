@@ -291,11 +291,11 @@ const HeroSection = React.memo(function HeroSection({
                   <div className="w-full h-full rounded-[10px] sm:rounded-[14px] flex items-center justify-center overflow-hidden">
                     <img
                       src="/logo.webp"
+                      alt="GENZWORKS Studio Logo"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src = '/logo.png';
                       }}
-                      alt="GENZWORKS Studio Logo"
                       decoding="async"
                       className="w-full h-full object-contain"
                     />
@@ -367,6 +367,7 @@ const HeroSection = React.memo(function HeroSection({
 
         <div className="framer-hero-cta flex flex-wrap items-center justify-center gap-3 sm:gap-4 w-full">
           <button
+            type="button"
             onClick={() => jumpTo('contact')}
             className="px-5 py-3.5 sm:px-8 sm:py-4 rounded-2xl text-xs font-extrabold uppercase tracking-wider whitespace-nowrap bg-[#0E0E10] text-white dark:bg-white dark:text-[#0E0E10] shadow-xl hover:scale-105 active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center gap-2.5 sm:gap-3"
           >
@@ -375,6 +376,7 @@ const HeroSection = React.memo(function HeroSection({
           </button>
 
           <button
+            type="button"
             onClick={() => jumpTo('works')}
             className="px-5 py-3.5 sm:px-8 sm:py-4 rounded-2xl text-xs font-extrabold uppercase tracking-wider whitespace-nowrap liquid-glass active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center gap-2.5 sm:gap-3"
           >

@@ -38,7 +38,7 @@ const ToolsSection = React.memo(function ToolsSection() {
   }, [activeToolCategory]);
 
   return (
-    <section id="tools" ref={sectionRef} className="py-20 border-y border-current/10 relative z-10 overflow-hidden">
+    <section id="tools" ref={sectionRef} className="py-20 border-y border-black/10 dark:border-white/10 relative z-10 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal-on-scroll">
           <div>
@@ -58,11 +58,12 @@ const ToolsSection = React.memo(function ToolsSection() {
               return (
                 <button
                   key={cat}
+                  type="button"
                   onClick={() => setActiveToolCategory(cat)}
                   className={`px-3 py-1.5 xl:px-4 xl:py-2 rounded-xl text-xs font-extrabold tracking-tight whitespace-nowrap transition-[transform,background-color,color,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 ${
                     active
                       ? 'bg-[#0E0E10] text-[#D9FF3F] dark:bg-white dark:text-[#0E0E10] shadow-lg scale-[1.03]'
-                      : 'opacity-65 hover:opacity-100 hover:bg-current/5'
+                      : 'opacity-65 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5'
                   }`}
                 >
                   {cat}
@@ -122,7 +123,7 @@ const ToolsSection = React.memo(function ToolsSection() {
                 </div>
 
                 {/* Animated Bottom Progress Accent Bar (GPU scaleX avoids width reflow) */}
-                <div className="mt-6 h-[2.5px] w-full bg-current/10 rounded-full overflow-hidden">
+                <div className="mt-6 h-[2.5px] w-full bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
                   <div
                     className="h-full w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{ backgroundColor: tool.accent === '#FFFFFF' ? '#FF4F18' : tool.accent }}

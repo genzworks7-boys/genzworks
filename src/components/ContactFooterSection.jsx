@@ -449,6 +449,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
             {FOOTER_NAV_LINKS.map((item) => (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => jumpTo(item.id)}
                 className="hover:text-[#D9FF3F] active:scale-95 transition-[transform,color] duration-150"
               >
@@ -492,11 +493,11 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
           <div className="flex items-center gap-2.5">
             <img
               src="/logo.webp"
+              alt="GENZWORKS Studio Logo"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = '/logo.png';
               }}
-              alt="GENZWORKS Studio Logo"
               decoding="async"
               className="w-5 h-5 object-contain"
             />
@@ -505,18 +506,21 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
 
           <div className="flex items-center gap-6">
             <button
+              type="button"
               onClick={() => setActiveLegalModal('terms')}
               className="hover:text-white active:scale-95 transition-[transform,color] duration-150"
             >
               Terms &amp; Conditions
             </button>
             <button
+              type="button"
               onClick={() => setActiveLegalModal('privacy')}
               className="hover:text-white active:scale-95 transition-[transform,color] duration-150"
             >
               Privacy Policy
             </button>
             <button
+              type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="text-zinc-300 hover:text-[#D9FF3F] active:scale-95 transition-[transform,color] duration-150 font-medium"
             >
