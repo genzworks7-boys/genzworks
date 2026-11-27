@@ -211,8 +211,6 @@ const Modals = React.memo(function Modals({
             loaderPhase === 'curtain' ? 'pointer-events-none' : ''
           }`}
         >
-          <div className="absolute top-0 left-0 w-1.5 h-24 bg-[#00F0FF] shadow-[0_0_18px_#00F0FF]" />
-
           <div
             style={{
               opacity: loaderPhase === 'curtain' ? 0 : 1,
@@ -613,7 +611,7 @@ const Modals = React.memo(function Modals({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.94 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-4 right-4 sm:top-6 sm:right-6 z-[9600] max-w-[calc(100vw-2rem)] flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#0E0E10] text-white text-xs font-bold tracking-wide shadow-2xl border border-white/15"
+            className="fixed top-20 right-4 sm:top-6 sm:right-6 z-[9600] max-w-[calc(100vw-2rem)] flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#0E0E10] text-white text-xs font-bold tracking-wide shadow-2xl border border-white/15"
           >
             <span className="w-2 h-2 rounded-full bg-[#D9FF3F] animate-pulse" />
             <span>{toast}</span>

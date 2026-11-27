@@ -193,7 +193,6 @@ export default function App() {
             heroRevealed={heroRevealed}
             resolvedTheme={resolvedTheme}
             setThemeChoice={setThemeChoice}
-            triggerToast={triggerToast}
             jumpTo={jumpTo}
           />
 

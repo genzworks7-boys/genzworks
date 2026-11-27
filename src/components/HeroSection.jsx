@@ -6,7 +6,6 @@ const HeroSection = React.memo(function HeroSection({
   heroRevealed,
   resolvedTheme,
   setThemeChoice,
-  triggerToast,
   jumpTo
 }) {
   const canvasRef = useRef(null);
@@ -263,8 +262,7 @@ const HeroSection = React.memo(function HeroSection({
   const handleThemeToggle = useCallback(() => {
     const next = resolvedTheme === 'dark' ? 'light' : 'dark';
     setThemeChoice(next);
-    triggerToast(`Theme set to ${next}`);
-  }, [resolvedTheme, setThemeChoice, triggerToast]);
+  }, [resolvedTheme, setThemeChoice]);
 
   const handleTouchUpdate = useCallback((e) => {
     if (!canvasRef.current || !e.touches || e.touches.length === 0) return;
