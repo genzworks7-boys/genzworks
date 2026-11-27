@@ -1,8 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { Globe, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { m, AnimatePresence } from 'framer-motion';
+import { Globe, ArrowUpRight, FileText, X, CheckCircle2 } from 'lucide-react';
 import { FEATURED_PRODUCTS_STACK } from '../data/products';
 
-const WorksSection = React.memo(function WorksSection() {
+const WorksSection = React.memo(function WorksSection({ handleSelectServiceFromCard }) {
+  const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
   const sectionRef = useRef(null);
   const outerRefs = useRef([]);
   const innerRefs = useRef([]);
@@ -184,7 +187,7 @@ const WorksSection = React.memo(function WorksSection() {
                 <a
                   href={slide.url}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className={`absolute right-5 sm:right-8 ${
                     slide.isLiveBrowser ? 'top-14 sm:top-16' : 'top-5 sm:top-8'
                   } z-30 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D9FF3F] text-[#0E0E10] text-xs font-extrabold uppercase tracking-wider whitespace-nowrap hover:scale-105 active:scale-95 transition-transform duration-200 shadow-xl border border-black/25`}
@@ -202,9 +205,21 @@ const WorksSection = React.memo(function WorksSection() {
                       <h3 className="text-xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                         {slide.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed line-clamp-3 sm:line-clamp-none">
+                      <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed line-clamp-2 sm:line-clamp-none">
                         {slide.desc}
                       </p>
+                      {slide.caseStudy && (
+                        <div className="pt-1">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedCaseStudy(slide)}
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white text-white hover:text-[#0E0E10] border border-white/25 text-[11px] font-bold tracking-wide transition-[transform,background-color,color] duration-200 active:scale-95 cursor-pointer"
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            <span>View Case Study</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="w-full sm:w-auto max-w-full min-w-0 flex flex-col items-start sm:items-end justify-end gap-3 sm:shrink-0">
@@ -233,6 +248,124 @@ const WorksSection = React.memo(function WorksSection() {
           );
         })}
       </div>
+
+      {/* Interactive Case Study Modal rendered at document.body portal level above FloatingDock */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {selectedCaseStudy && selectedCaseStudy.caseStudy && (
+              <m.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setSelectedCaseStudy(null)}
+                className="fixed inset-0 z-[9050] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+              >
+                <m.div
+                  initial={{ opacity: 0, scale: 0.95, y: 18 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 12 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={(e) => e.stopPropagation()}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={`${selectedCaseStudy.title} Case Study`}
+                  className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[28px] bg-[#121216] border border-white/15 text-white shadow-2xl my-auto"
+                >
+                  <div className="relative h-48 sm:h-60 bg-black overflow-hidden">
+                    <img
+                      src={selectedCaseStudy.image}
+                      decoding="async"
+                      alt={selectedCaseStudy.title}
+                      className="w-full h-full object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#121216] via-black/30 to-transparent" />
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCaseStudy(null)}
+                      aria-label="Close Case Study"
+                      className="absolute top-4 right-4 px-3.5 py-1.5 rounded-full bg-black/75 hover:bg-white text-white hover:text-black border border-white/20 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span>Close</span>
+                    </button>
+                  </div>
+
+                  <div className="p-6 sm:p-8 space-y-5 -mt-6 relative z-10">
+                    <div>
+                      <div className="font-mono-tech text-[11px] uppercase tracking-widest text-[#FF4F18] font-bold mb-1.5">
+                        {selectedCaseStudy.caseStudy.category} • {selectedCaseStudy.caseStudy.client}
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+                        {selectedCaseStudy.title}
+                      </h3>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                      {selectedCaseStudy.caseStudy.summary}
+                    </p>
+
+                    <div className="space-y-2.5">
+                      <div className="font-mono-tech text-[10px] uppercase tracking-widest text-zinc-400">
+                        Key Deliverables
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {selectedCaseStudy.caseStudy.deliverables.map((item) => (
+                          <div
+                            key={item}
+                            className="flex items-start gap-2 text-xs text-zinc-200 bg-white/[0.04] border border-white/10 rounded-xl p-2.5"
+                          >
+                            <CheckCircle2 className="w-4 h-4 text-[#D9FF3F] shrink-0 mt-0.5" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {selectedCaseStudy.caseStudy.stack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-mono-tech text-zinc-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+                      <a
+                        href={selectedCaseStudy.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D9FF3F] hover:bg-white text-[#08080A] text-xs font-extrabold uppercase tracking-wider active:scale-95 transition-[transform,background-color] duration-200"
+                      >
+                        <span>{selectedCaseStudy.buttonText || 'Visit Live Site'}</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </a>
+
+                      {handleSelectServiceFromCard && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedCaseStudy(null);
+                            handleSelectServiceFromCard('Web Development');
+                          }}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider active:scale-95 transition-[transform,background-color] duration-200 cursor-pointer"
+                        >
+                          <span>Build Similar Project</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </m.div>
+              </m.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </section>
   );
 });

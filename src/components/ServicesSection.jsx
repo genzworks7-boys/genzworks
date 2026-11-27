@@ -84,6 +84,7 @@ const ServiceCard = React.memo(function ServiceCard({
               e.stopPropagation();
               onSelectService(s.title);
             }}
+            aria-label={`Book ${s.title}`}
             title={`Book ${s.title}`}
             className="w-9 h-9 rounded-full bg-white text-zinc-950 hover:bg-[#D9FF3F] hover:text-black hover:scale-110 active:scale-95 transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg border border-white/40 flex items-center justify-center pointer-events-auto cursor-pointer group/arrow translate-y-1"
           >

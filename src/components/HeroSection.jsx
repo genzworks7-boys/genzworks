@@ -281,62 +281,68 @@ const HeroSection = React.memo(function HeroSection({
   }, []);
 
   return (
-    <section id="home" className={`hero-section relative pt-5 sm:pt-8 pb-20 z-10 px-4 sm:px-10 max-w-[1280px] mx-auto transition-opacity duration-500 ${heroRevealed ? 'hero-visible opacity-100' : 'opacity-0'}`}>
+    <section id="home" className={`hero-section relative pt-5 sm:pt-8 pb-20 z-10 px-4 sm:px-10 max-w-[1280px] mx-auto ${heroRevealed ? 'hero-visible' : ''}`}>
       <div className="flex flex-col items-center text-center relative z-10">
-        <div className="framer-hero-card hero-nav-pill w-full max-w-[820px] px-3.5 py-2 sm:px-5 sm:py-3 rounded-2xl sm:rounded-[28px] liquid-glass-nav mb-2 sm:mb-3">
-          <div className="relative z-10 flex items-center justify-between gap-2 sm:gap-4">
-            <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
-              <div className="relative w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-1 sm:p-1.5 liquid-glass-btn shadow-sm shrink-0 flex items-center justify-center">
-                <div className="w-full h-full rounded-[10px] sm:rounded-[14px] flex items-center justify-center overflow-hidden">
-                  <img
-                    src="/logo.webp"
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = '/logo.png';
-                    }}
-                    alt="GENZWORKS Studio Logo"
-                    decoding="async"
-                    className="w-full h-full object-contain"
-                  />
+        <header className="w-full flex justify-center">
+          <div className="framer-hero-card hero-nav-pill w-full max-w-[820px] px-3.5 py-2 sm:px-5 sm:py-3 rounded-2xl sm:rounded-[28px] liquid-glass-nav mb-2 sm:mb-3">
+            <div className="relative z-10 flex items-center justify-between gap-2 sm:gap-4">
+              <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+                <div className="relative w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-1 sm:p-1.5 liquid-glass-btn shadow-sm shrink-0 flex items-center justify-center">
+                  <div className="w-full h-full rounded-[10px] sm:rounded-[14px] flex items-center justify-center overflow-hidden">
+                    <img
+                      src="/logo.webp"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '/logo.png';
+                      }}
+                      alt="GENZWORKS Studio Logo"
+                      decoding="async"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                </div>
+                <div className="text-left min-w-0">
+                  <span className="block font-extrabold text-xs sm:text-base tracking-tight text-zinc-950 dark:text-white truncate">{BRAND_CONFIG.brandName}</span>
+                  <p className="text-[10px] sm:text-xs text-zinc-600 dark:text-zinc-300 font-medium truncate">Technology &amp; Creative Studio</p>
                 </div>
               </div>
-              <div className="text-left min-w-0">
-                <h3 className="font-extrabold text-xs sm:text-base tracking-tight text-zinc-950 dark:text-white truncate">{BRAND_CONFIG.brandName}</h3>
-                <p className="text-[10px] sm:text-xs text-zinc-600 dark:text-zinc-300 font-medium truncate">Technology &amp; Creative Studio</p>
-              </div>
-            </div>
 
-            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-              <div className="flex items-center gap-1 sm:gap-1.5">
-                <a
-                  href={BRAND_CONFIG.instagramUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-7 h-7 sm:w-9 sm:h-9 rounded-full liquid-glass-btn text-zinc-800 hover:text-black dark:text-zinc-100 dark:hover:text-white"
-                  title={`Instagram (${BRAND_CONFIG.instagram})`}
-                >
-                  <Instagram className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                </a>
-                <a
-                  href={BRAND_CONFIG.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-7 h-7 sm:w-9 sm:h-9 rounded-full liquid-glass-btn text-zinc-800 hover:text-black dark:text-zinc-100 dark:hover:text-white"
-                  title="GitHub (genzworks7-boys)"
-                >
-                  <Github className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                </a>
-                <button
-                  onClick={handleThemeToggle}
-                  className="w-7 h-7 sm:w-9 sm:h-9 rounded-full liquid-glass-btn text-zinc-800 hover:text-black dark:text-zinc-100 dark:hover:text-white"
-                  title="Toggle Light / Dark Mode"
-                >
-                  {resolvedTheme === 'dark' ? <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9FF3F]" /> : <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
-                </button>
-              </div>
+              <nav aria-label="Studio links and theme" className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+                <div className="flex items-center gap-1 sm:gap-1.5">
+                  <a
+                    href={BRAND_CONFIG.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-7 h-7 sm:w-9 sm:h-9 rounded-full liquid-glass-btn text-zinc-800 hover:text-black dark:text-zinc-100 dark:hover:text-white"
+                    aria-label={`GENZWORKS Instagram (${BRAND_CONFIG.instagram})`}
+                    title={`Instagram (${BRAND_CONFIG.instagram})`}
+                  >
+                    <Instagram className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </a>
+                  <a
+                    href={BRAND_CONFIG.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-7 h-7 sm:w-9 sm:h-9 rounded-full liquid-glass-btn text-zinc-800 hover:text-black dark:text-zinc-100 dark:hover:text-white"
+                    aria-label="GENZWORKS GitHub (genzworks7-boys)"
+                    title="GitHub (genzworks7-boys)"
+                  >
+                    <Github className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleThemeToggle}
+                    className="w-7 h-7 sm:w-9 sm:h-9 rounded-full liquid-glass-btn text-zinc-800 hover:text-black dark:text-zinc-100 dark:hover:text-white"
+                    aria-label={resolvedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                    title="Toggle Light / Dark Mode"
+                  >
+                    {resolvedTheme === 'dark' ? <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9FF3F]" /> : <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                  </button>
+                </div>
+              </nav>
             </div>
           </div>
-        </div>
+        </header>
 
         {/* Interactive React Bits Particle Text — High-DPI Retina Sharp with Mobile Touch */}
         <div className="hero-canvas-wrap w-full max-w-[1080px] h-[86px] sm:h-[155px] md:h-[175px] my-0.5 sm:my-1.5 flex items-center justify-center relative select-none">

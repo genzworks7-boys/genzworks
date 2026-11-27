@@ -42,7 +42,8 @@ const FloatingDock = React.memo(function FloatingDock({
   }, []);
 
   return (
-    <div
+    <nav
+      aria-label="Section Navigation"
       className={`fixed bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-50 transition-[transform,opacity] duration-700 ${
         heroRevealed ? 'framer-floating-dock' : 'opacity-0 translate-y-12'
       }`}
@@ -194,7 +195,7 @@ const FloatingDock = React.memo(function FloatingDock({
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 });
 

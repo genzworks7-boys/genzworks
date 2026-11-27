@@ -11,13 +11,16 @@ const SERVICE_CHIPS = [
   'Content & Copywriting'
 ];
 
+const TIMELINE_OPTIONS = ['Flexible', '2–4 Weeks', 'ASAP (1–2 Weeks)'];
+
 const FOOTER_NAV_LINKS = [
   { id: 'home', label: 'Home' },
   { id: 'works', label: 'Products' },
   { id: 'why-us', label: 'Why Us' },
   { id: 'process', label: 'Process' },
   { id: 'about', label: 'Team' },
-  { id: 'services', label: 'Services' }
+  { id: 'services', label: 'Services' },
+  { id: 'faq', label: 'FAQ' }
 ];
 
 const WORDMARK_CHARS = 'GenzWorks'.split('');
@@ -29,6 +32,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
   setActiveLegalModal
 }) {
   const [selectedServices, setSelectedServices] = useState(['Web Development']);
+  const [selectedTimeline, setSelectedTimeline] = useState('Flexible');
   const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmittingForm, setIsSubmittingForm] = useState(false);
@@ -153,12 +157,15 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
       const rawPhone = contactForm.phone.trim();
       const safePhone = rawPhone.startsWith('+') ? `'${rawPhone}` : rawPhone;
 
+      const trimmedMsg = contactForm.message.trim();
+      const timelinePrefix = selectedTimeline ? `[Timeline: ${selectedTimeline}] ` : '';
+
       const payload = {
         name: contactForm.name.trim(),
         email: contactForm.email.trim(),
         phone: safePhone,
         services: selectedServices.length > 0 ? selectedServices.join(', ') : 'General Inquiry',
-        message: contactForm.message.trim()
+        message: `${timelinePrefix}${trimmedMsg}`
       };
 
       try {
@@ -196,7 +203,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
         setIsSubmittingForm(false);
       }
     },
-    [contactForm, selectedServices, isSubmittingForm, triggerToast]
+    [contactForm, selectedServices, selectedTimeline, isSubmittingForm, triggerToast]
   );
 
   return (
@@ -271,7 +278,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
                     <a
                       href={`https://wa.me/918754277982?text=Hi%20GenzWorks,%20I'd%20like%20to%20discuss%20a%20project.`}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       title="Chat on WhatsApp (+91 87542 77982)"
                       aria-label="WhatsApp (+91 87542 77982)"
                       className="w-8 h-8 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 shadow-[0_2px_10px_rgba(37,211,102,0.35)] shrink-0"
@@ -294,7 +301,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
                     <a
                       href={`https://wa.me/919566980426?text=Hi%20GenzWorks,%20I'd%20like%20to%20discuss%20a%20project.`}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       title="Chat on WhatsApp (+91 95669 80426)"
                       aria-label="WhatsApp (+91 95669 80426)"
                       className="w-8 h-8 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 shadow-[0_2px_10px_rgba(37,211,102,0.35)] shrink-0"
@@ -316,29 +323,56 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
           {/* Right Side: Simple, Effortless Form */}
           <div className="lg:col-span-6 lg:pl-8">
             <form onSubmit={handleContactSubmit} className="space-y-8">
-              <div className="space-y-3">
-                <span className="text-xs uppercase tracking-widest text-zinc-400 block font-mono-tech">
-                  I'm interested in:
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {SERVICE_CHIPS.map((svc) => {
-                    const isSelected = selectedServices.includes(svc);
-                    return (
-                      <button
-                        key={svc}
-                        type="button"
-                        onClick={() => toggleServiceChip(svc)}
-                        className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-[transform,background-color,border-color,color] duration-150 active:scale-95 ${
-                          isSelected
-                            ? 'bg-[#D9FF3F] text-[#08080A] border-[#D9FF3F] font-bold'
-                            : 'bg-white/[0.05] text-zinc-400 border-white/15 hover:border-white/30 hover:text-white'
-                        }`}
-                      >
-                        {isSelected ? '✓ ' : '+ '}
-                        {svc}
-                      </button>
-                    );
-                  })}
+              <div className="space-y-4">
+                <div className="space-y-3">
+                  <span className="text-xs uppercase tracking-widest text-zinc-400 block font-mono-tech">
+                    I'm interested in:
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {SERVICE_CHIPS.map((svc) => {
+                      const isSelected = selectedServices.includes(svc);
+                      return (
+                        <button
+                          key={svc}
+                          type="button"
+                          onClick={() => toggleServiceChip(svc)}
+                          className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-[transform,background-color,border-color,color] duration-150 active:scale-95 ${
+                            isSelected
+                              ? 'bg-[#D9FF3F] text-[#08080A] border-[#D9FF3F] font-bold'
+                              : 'bg-white/[0.05] text-zinc-400 border-white/15 hover:border-white/30 hover:text-white'
+                          }`}
+                        >
+                          {isSelected ? '✓ ' : '+ '}
+                          {svc}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="space-y-2.5 pt-1">
+                  <span className="text-[11px] uppercase tracking-widest text-zinc-400 block font-mono-tech">
+                    Target Timeline:
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {TIMELINE_OPTIONS.map((tl) => {
+                      const activeTl = selectedTimeline === tl;
+                      return (
+                        <button
+                          key={tl}
+                          type="button"
+                          onClick={() => setSelectedTimeline(tl)}
+                          className={`px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide border transition-[transform,background-color,border-color,color] duration-150 active:scale-95 ${
+                            activeTl
+                              ? 'bg-white text-[#08080A] border-white font-bold'
+                              : 'bg-white/[0.03] text-zinc-400 border-white/15 hover:border-white/30 hover:text-white'
+                          }`}
+                        >
+                          {tl}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
@@ -411,7 +445,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
 
         {/* Minimalist Navigation & Original Brand Social Icons Row */}
         <div className="py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 border-b border-white/10 text-sm">
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-medium text-zinc-300">
+          <nav aria-label="Footer Navigation" className="flex flex-wrap items-center gap-x-8 gap-y-3 font-medium text-zinc-300">
             {FOOTER_NAV_LINKS.map((item) => (
               <button
                 key={item.id}
@@ -421,14 +455,14 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
                 {item.label}
               </button>
             ))}
-          </div>
+          </nav>
 
           {/* Official Original Brand SVG Icons */}
           <div className="flex items-center gap-3">
             <a
               href={BRAND_CONFIG.instagramUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="Instagram"
               title={`Instagram (${BRAND_CONFIG.instagram})`}
               className="group w-11 h-11 rounded-full bg-white/[0.05] border border-white/15 hover:border-pink-500/50 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] flex items-center justify-center text-zinc-300 hover:text-white transition-[transform,border-color,color] duration-200 hover:-translate-y-1 active:scale-95 shadow-md"
@@ -441,7 +475,7 @@ const ContactFooterSection = React.memo(function ContactFooterSection({
             <a
               href={BRAND_CONFIG.githubUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="GitHub"
               title="GitHub (genzworks7-boys)"
               className="group w-11 h-11 rounded-full bg-white/[0.05] border border-white/15 hover:border-white hover:bg-white flex items-center justify-center text-zinc-300 hover:text-[#08080A] transition-[transform,border-color,background-color,color] duration-200 hover:-translate-y-1 active:scale-95 shadow-md"

@@ -46,9 +46,9 @@ const ToolsSection = React.memo(function ToolsSection() {
               <Layers className="w-3.5 h-3.5" />
               <span>/ TOOLS &amp; ECOSYSTEM</span>
             </div>
-            <h3 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
               Powered by <span className="font-editorial italic font-normal text-[#FF4F18]">Industry-Standard</span> Craft Tools.
-            </h3>
+            </h2>
           </div>
 
           {/* Interactive Category Filter Pills with Framer Spring Physics */}
@@ -110,9 +110,9 @@ const ToolsSection = React.memo(function ToolsSection() {
                   {/* Middle Content: Title, Category & Arrow */}
                   <div>
                     <div className="flex items-center justify-between gap-2">
-                      <h4 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug group-hover:text-[#FF4F18] transition-colors duration-300">
+                      <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug group-hover:text-[#FF4F18] transition-colors duration-300">
                         {tool.name}
-                      </h4>
+                      </h3>
                       <ArrowUpRight className="w-5 h-5 text-[#FF4F18] shrink-0 opacity-0 -translate-x-1.5 translate-y-1.5 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-[transform,opacity] duration-300" />
                     </div>
                     <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium mt-1">

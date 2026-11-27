@@ -29,7 +29,7 @@
 }
 
 /* Isolate heavy internal recalculations without un-skip scroll stutter */
-#tools, #process {
+#tools, #process, #faq {
   contain: layout style;
 }
 

@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://genzworks.in/</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://genzworks.in/og-banner.png</image:loc>
+      <image:title>GENZWORKS — Technology &amp; Creative Studio</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://genzworks.in/logo.png</image:loc>
+      <image:title>GENZWORKS Studio Logo</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://genzworks.in/sharpcrackers.webp</image:loc>
+      <image:title>Sharp Crackers E-Commerce Website by GENZWORKS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://genzworks.in/nandhakumar-demolition.webp</image:loc>
+      <image:title>Nandhakumar Demolition Website by GENZWORKS</image:title>
+    </image:image>
   </url>
 </urlset>

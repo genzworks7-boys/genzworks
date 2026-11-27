@@ -70,14 +70,14 @@ const AboutSection = React.memo(function AboutSection({
 
           <div className="lg:col-span-5 space-y-6">
             <div className="p-6 rounded-2xl liquid-glass shadow-md">
-              <h4 className="font-mono-tech text-xs uppercase font-bold text-[#FF4F18] mb-1">OUR MISSION</h4>
+              <h3 className="font-mono-tech text-xs uppercase font-bold text-[#FF4F18] mb-1">OUR MISSION</h3>
               <p className="text-xs sm:text-sm opacity-85 leading-relaxed">
                 Combine technology and creative design to build useful, fast, and easy-to-use digital products.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl liquid-glass shadow-md">
-              <h4 className="font-mono-tech text-xs uppercase font-bold text-amber-500 mb-1">OUR VISION</h4>
+              <h3 className="font-mono-tech text-xs uppercase font-bold text-amber-500 mb-1">OUR VISION</h3>
               <p className="text-xs sm:text-sm opacity-85 leading-relaxed">
                 Grow into a trusted studio known for fresh thinking, clean execution, and consistent quality.
               </p>
@@ -254,9 +254,10 @@ const TeamCard = React.memo(function TeamCard({
             <a
               href={member.socials.linkedin}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               tabIndex={isOpen ? 0 : -1}
               className="w-9 h-9 rounded-full bg-white/20 hover:bg-white hover:text-black active:scale-95 border border-white/20 text-white flex items-center justify-center transition-[transform,background-color,color] duration-150"
+              aria-label={`${member.name} on LinkedIn`}
               title="LinkedIn"
             >
               <Linkedin className="w-3.5 h-3.5" />
@@ -264,9 +265,10 @@ const TeamCard = React.memo(function TeamCard({
             <a
               href={member.socials.instagram}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               tabIndex={isOpen ? 0 : -1}
               className="w-9 h-9 rounded-full bg-white/20 hover:bg-white hover:text-black active:scale-95 border border-white/20 text-white flex items-center justify-center transition-[transform,background-color,color] duration-150"
+              aria-label={`${member.name} on Instagram`}
               title="Instagram"
             >
               <Instagram className="w-3.5 h-3.5" />
@@ -274,9 +276,10 @@ const TeamCard = React.memo(function TeamCard({
             <a
               href={member.socials.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               tabIndex={isOpen ? 0 : -1}
               className="w-9 h-9 rounded-full bg-white/20 hover:bg-white hover:text-black active:scale-95 border border-white/20 text-white flex items-center justify-center transition-[transform,background-color,color] duration-150"
+              aria-label={`${member.name} on GitHub`}
               title="GitHub"
             >
               <Github className="w-3.5 h-3.5" />
@@ -285,6 +288,7 @@ const TeamCard = React.memo(function TeamCard({
               href={`mailto:${BRAND_CONFIG.email}`}
               tabIndex={isOpen ? 0 : -1}
               className="w-9 h-9 rounded-full bg-white/20 hover:bg-white hover:text-black active:scale-95 border border-white/20 text-white flex items-center justify-center transition-[transform,background-color,color] duration-150"
+              aria-label={`Email ${member.name} via GENZWORKS`}
               title="Email"
             >
               <Globe className="w-3.5 h-3.5" />

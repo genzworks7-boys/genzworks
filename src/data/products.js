@@ -9,9 +9,21 @@ export const FEATURED_PRODUCTS_STACK = [
     url: "https://sharpcrackers.com",
     urlClean: "https://sharpcrackers.com",
     buttonText: "Explore Live Store",
-    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsharpcrackers.com?w=960",
-    fallbackImage: "https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?auto=format&fit=crop&w=960&q=80",
-    isLiveBrowser: true
+    image: "/sharpcrackers.webp",
+    fallbackImage: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fsharpcrackers.com?w=960",
+    isLiveBrowser: true,
+    caseStudy: {
+      client: "Sharp Crackers, Sivakasi",
+      category: "E-Commerce Web Application",
+      summary: "Designed and engineered a fast, mobile-first online store tailored for high festive traffic, quick product filtering, transparent cart totals, and direct WhatsApp order checkout.",
+      deliverables: [
+        "Responsive E-Commerce Storefront",
+        "Product Catalog & Instant Search Filtering",
+        "Live Cart Price Calculation & WhatsApp Order Flow",
+        "SEO Metadata & Fast Static Asset Delivery"
+      ],
+      stack: ["React", "Tailwind CSS", "Responsive UI", "Cloudflare Edge"]
+    }
   },
   {
     id: "02",
@@ -25,6 +37,18 @@ export const FEATURED_PRODUCTS_STACK = [
     buttonText: "Explore Live Site",
     image: "/nandhakumar-demolition.webp",
     fallbackImage: "/nandhakumar-demolition.png",
-    isLiveBrowser: true
+    isLiveBrowser: true,
+    caseStudy: {
+      client: "Nandhakumar Demolition, Coimbatore",
+      category: "Corporate Service Showcase",
+      summary: "Built a high-contrast industrial service website presenting diamond core cutting, controlled demolition capabilities, safety clarity, and one-tap call or inquiry routing for commercial contractors.",
+      deliverables: [
+        "Service & Equipment Capability Showcase",
+        "Coimbatore Local SEO Architecture",
+        "Mobile-First Quick Quote Routing",
+        "Clean Industrial Visual Identity"
+      ],
+      stack: ["React", "Tailwind CSS", "Modern Web UI", "Cloud Hosting"]
+    }
   }
 ];

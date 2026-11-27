@@ -11,6 +11,7 @@ import WhyUsSection from './src/components/WhyUsSection';
 import ProcessSection from './src/components/ProcessSection';
 import AboutSection from './src/components/AboutSection';
 import ServicesSection from './src/components/ServicesSection';
+import FaqSection from './src/components/FaqSection';
 import ContactFooterSection from './src/components/ContactFooterSection';
 import FloatingDock from './src/components/FloatingDock';
 
@@ -19,7 +20,7 @@ const RESOLVED_TEAM = INITIAL_TEAM.map((m) => {
   return { ...m, photo: resolved.photo, grayPhoto: resolved.grayPhoto };
 });
 
-const NAV_SECTION_IDS = ['home', 'works', 'why-us', 'process', 'about', 'services', 'contact'];
+const NAV_SECTION_IDS = ['home', 'works', 'why-us', 'process', 'about', 'services', 'faq', 'contact'];
 
 export default function App() {
   const [themeChoice, setThemeChoice] = useState('light');
@@ -30,18 +31,30 @@ export default function App() {
   const [activeLegalModal, setActiveLegalModal] = useState(null);
   const [isJoinTeamModalOpen, setIsJoinTeamModalOpen] = useState(false);
   const [preselectedService, setPreselectedService] = useState(null);
-  const [loaderPhase, setLoaderPhase] = useState('start');
+  const [loaderPhase, setLoaderPhase] = useState(() => {
+    try {
+      return typeof window !== 'undefined' && window.sessionStorage?.getItem('gzw_intro_seen') === '1'
+        ? 'done'
+        : 'start';
+    } catch {
+      return 'start';
+    }
+  });
 
   const activeNavRef = useRef('home');
   const isScrolledRef = useRef(false);
   const toastTimerRef = useRef(null);
 
-  // Full-Screen "Are you ready?" Intro Loader
+  // Full-Screen "Are you ready?" Intro Loader (crisp 1.5s first-visit reveal, 0ms instant skip on session revisits for strong CWV LCP)
   useEffect(() => {
-    const t1 = setTimeout(() => setLoaderPhase('are-you'), 120);
-    const t2 = setTimeout(() => setLoaderPhase('ready'), 780);
-    const t3 = setTimeout(() => setLoaderPhase('curtain'), 1850);
-    const t4 = setTimeout(() => setLoaderPhase('done'), 2750);
+    if (loaderPhase === 'done') return;
+    const t1 = setTimeout(() => setLoaderPhase('are-you'), 80);
+    const t2 = setTimeout(() => setLoaderPhase('ready'), 380);
+    const t3 = setTimeout(() => setLoaderPhase('curtain'), 920);
+    const t4 = setTimeout(() => {
+      setLoaderPhase('done');
+      try { window.sessionStorage?.setItem('gzw_intro_seen', '1'); } catch {}
+    }, 1550);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -189,28 +202,32 @@ export default function App() {
           <div className="liquid-blob-1" />
           <div className="liquid-blob-2" />
 
-          <HeroSection
-            heroRevealed={heroRevealed}
-            resolvedTheme={resolvedTheme}
-            setThemeChoice={setThemeChoice}
-            jumpTo={jumpTo}
-          />
+          <main>
+            <HeroSection
+              heroRevealed={heroRevealed}
+              resolvedTheme={resolvedTheme}
+              setThemeChoice={setThemeChoice}
+              jumpTo={jumpTo}
+            />
 
-          <ToolsSection />
+            <ToolsSection />
 
-          <WorksSection />
+            <WorksSection handleSelectServiceFromCard={handleSelectServiceFromCard} />
 
-          <WhyUsSection />
+            <WhyUsSection />
 
-          <ProcessSection />
+            <ProcessSection />
 
-          <AboutSection
-            team={RESOLVED_TEAM}
-            heroRevealed={heroRevealed}
-            setIsJoinTeamModalOpen={setIsJoinTeamModalOpen}
-          />
+            <AboutSection
+              team={RESOLVED_TEAM}
+              heroRevealed={heroRevealed}
+              setIsJoinTeamModalOpen={setIsJoinTeamModalOpen}
+            />
 
-          <ServicesSection handleSelectServiceFromCard={handleSelectServiceFromCard} />
+            <ServicesSection handleSelectServiceFromCard={handleSelectServiceFromCard} />
+
+            <FaqSection jumpTo={jumpTo} />
+          </main>
 
           <ContactFooterSection
             preselectedService={preselectedService}
