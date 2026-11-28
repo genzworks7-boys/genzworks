@@ -286,7 +286,11 @@ const HeroSection = React.memo(function HeroSection({
         <header className="w-full flex justify-center">
           <div className="framer-hero-card hero-nav-pill w-full max-w-[820px] px-3.5 py-2 sm:px-5 sm:py-3 rounded-2xl sm:rounded-[28px] liquid-glass-nav mb-2 sm:mb-3">
             <div className="relative z-10 flex items-center justify-between gap-2 sm:gap-4">
-              <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+              <a
+                href="#home"
+                aria-label="GENZWORKS — Technology & Creative Studio"
+                className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 rounded-xl focus:outline-none"
+              >
                 <div className="relative w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-1 sm:p-1.5 liquid-glass-btn shadow-sm shrink-0 flex items-center justify-center">
                   <div className="w-full h-full rounded-[10px] sm:rounded-[14px] flex items-center justify-center overflow-hidden">
                     <img
@@ -308,7 +312,7 @@ const HeroSection = React.memo(function HeroSection({
                   <span className="block font-extrabold text-xs sm:text-base tracking-tight text-zinc-950 dark:text-white truncate">{BRAND_CONFIG.brandName}</span>
                   <p className="text-[10px] sm:text-xs text-zinc-600 dark:text-zinc-300 font-medium truncate">Technology &amp; Creative Studio</p>
                 </div>
-              </div>
+              </a>
 
               <nav aria-label="Studio links and theme" className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                 <div className="flex items-center gap-1 sm:gap-1.5">
@@ -351,11 +355,15 @@ const HeroSection = React.memo(function HeroSection({
         <div className="hero-canvas-wrap w-full max-w-[1080px] h-[86px] sm:h-[155px] md:h-[175px] my-0.5 sm:my-1.5 flex items-center justify-center relative select-none">
           <canvas
             ref={canvasRef}
+            role="img"
+            aria-label="GENZWORKS Interactive Wordmark"
             onTouchStart={handleTouchUpdate}
             onTouchMove={handleTouchUpdate}
             onTouchEnd={handleTouchEnd}
             className="w-full h-full block cursor-pointer touch-pan-y"
-          />
+          >
+            GENZWORKS
+          </canvas>
         </div>
 
         <h1 className="framer-hero-title max-w-[940px] text-[2.75rem] sm:text-[4.8rem] lg:text-[5.8rem] font-extrabold tracking-[-0.04em] leading-[0.98] mb-4 sm:mb-5">

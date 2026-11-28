@@ -33,7 +33,7 @@ export const BRAND_CONFIG = {
   roleTitle: "TECHNOLOGY & CREATIVE STUDIO",
   tagline: "We Build Digital. We Design Possibilities.",
   heroHeading: "We craft websites that hustle as hard as you do",
-  heroSubheading: "We design and build clean websites and digital products that help your business grow.",
+  heroSubheading: "GENZWORKS designs and builds clean websites, React web apps, and creative digital products that help your business grow.",
   heroText: "Ideas are everywhere. What makes the difference is how you bring them to life. GenzWorks is a technology and creative studio where development meets design, and imagination meets execution.",
   location: "Coimbatore, TN — Working Worldwide",
   email: "contact@genzworks.in",
